@@ -1,0 +1,61 @@
+<div id="sidebar" class="app-sidebar">
+
+	<div class="auth-bg auth-bg-scroll" style="background-image: url(assets/images/login-bg.jpg);">
+		<div class="auth-mask"></div>
+	</div>
+
+	<!-- BEGIN scrollbar -->
+	<div class="app-sidebar-content" data-scrollbar="true" data-height="100%">
+
+		<!-- BEGIN mobile-toggler -->
+		<div class="mobile-toggler">
+		<!--	
+			<button type="button" class="menu-toggler" data-dismiss="sidebar-mobile">
+				<span class="mdi mdi-arrow-left">toggle mobile</span>
+			</button>
+		-->
+		</div>                              
+		
+		<!-- END mobile-toggler -->
+
+		<div class="desktop-toggler">
+		<!--	
+			<button type="button" class="menu-toggler" data-toggle="sidebar-minify">
+				<span class="mdi mdi-arrow-left"> toggle desktop</span>
+			</button>
+		-->
+		</div>
+
+		<!-- BEGIN brand -->
+		<div class="brand">
+
+			<a class="brand-logo" title="Template Base">
+				<img src="assets/images/escudo-sonora-blanco.svg" class="logo" alt="Template Base" width="48px">
+				<h1>SIPINNA</h1>
+			</a>
+
+		</div>
+		<!-- END brand -->
+
+		<!-- BEGIN menu -->
+		<div class="menu">
+
+			<div class="menu-header">{{ "Navegación" }}</div>
+			
+			<app-sidebar-item [nombre]="'Inicio'" [ruta]="''" [opcion]="1" (click)="optionHandler(1)"></app-sidebar-item>
+			<app-sidebar-item [nombre]="'Dominios'"  [ruta]="'/dominios'"[opcion]="2" (click)="optionHandler(2)"></app-sidebar-item>
+			<app-sidebar-item [nombre]="'Indicadores'" [ruta]="'/indicadores'"[opcion]="3" (click)="optionHandler(3)"></app-sidebar-item>
+			<app-sidebar-item [nombre]="'Noticias'" [ruta]="'/noticias'"[opcion]="4" (click)="optionHandler(4)"></app-sidebar-item>
+			<app-sidebar-item [nombre]="'Enlaces'" [ruta]="'/enlaces'"[opcion]="5"(click)="optionHandler(5)"></app-sidebar-item>
+
+			<div class="menu-divider"></div>
+
+		</div>
+		<!-- END menu -->
+	</div>
+	<!-- END scrollbar -->
+
+	<!-- BEGIN mobile-sidebar-backdrop -->
+	<!-- <button class="app-sidebar-mobile-backdrop" data-dismiss="sidebar-mobile"></button> -->
+	<!-- END mobile-sidebar-backdrop -->
+</div>

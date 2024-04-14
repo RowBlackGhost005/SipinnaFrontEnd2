@@ -1,0 +1,21 @@
+.topMenu {
+    border: none;
+    position: absolute;
+    right: 0;
+    top: 0;
+    padding: 0;
+    z-index: 1030;
+    height: 6rem;
+    background: #FFFFFF;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    transition: box-shadow .2s linear;
+    border-bottom: 1px solid #cccccc;
+    width: calc(100% - 18rem); 
+    padding-left: 20px;
+    color: #5D3B46;
+    font-size: 32px;
+    font-weight: bold;
+}
