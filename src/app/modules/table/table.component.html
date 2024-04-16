@@ -1,0 +1,23 @@
+<div class="container div-custom px-5 py-3">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col"><input type="checkbox" disabled></th>
+                @for(column of columns; track $index){
+                <th scope="col">{{ column.header }}</th>
+                }
+            </tr>
+        </thead>
+    
+        <tbody class="table-group-divider">
+            @for(item of data; track $index){
+            <tr>
+                <td><input type="checkbox" [checked]="selectedItemIndex == $index" (change)="selectItem($index)"></td>
+                @for(column of columns; track $index){
+                <td>{{ isText(item[column.field]) ? (item[column.field] | uppercase) : item[column.field] }} </td>
+                }
+            </tr>
+            }
+        </tbody>
+    </table>
+</div>
