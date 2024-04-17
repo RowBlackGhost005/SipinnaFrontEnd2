@@ -42,12 +42,15 @@
 
 			<div class="menu-header">{{ "Navegación" }}</div>
 			
-			<app-sidebar-item [nombre]="'Inicio'" [ruta]="''" [opcion]="1" (click)="optionHandler(1)"></app-sidebar-item>
-			<app-sidebar-item [nombre]="'Dominios'"  [ruta]="'/dominios'"[opcion]="2" (click)="optionHandler(2)"></app-sidebar-item>
-			<app-sidebar-item [nombre]="'Indicadores'" [ruta]="'/indicadores'"[opcion]="3" (click)="optionHandler(3)"></app-sidebar-item>
-			<app-sidebar-item [nombre]="'Noticias'" [ruta]="'/noticias'"[opcion]="4" (click)="optionHandler(4)"></app-sidebar-item>
-			<app-sidebar-item [nombre]="'Enlaces'" [ruta]="'/enlaces'"[opcion]="5"(click)="optionHandler(5)"></app-sidebar-item>
+			<app-sidebar-item [nombre]="'Inicio'" [ruta]="''" [opcion]="1" (click)="optionHandler(1)" [nombreSpan]="'mdi mdi-home'"></app-sidebar-item>
+			<app-sidebar-item [nombre]="'Dominios'"  [ruta]="'/dominios'"[opcion]="2" (click)="optionHandler(2)" [nombreSpan]="'mdi mdi-server'"></app-sidebar-item>
+			<app-sidebar-item [nombre]="'Indicadores'" [ruta]="'/indicadores'"[opcion]="3" (click)="optionHandler(3)" [nombreSpan]="'mdi mdi-format-list-bulleted-square'"></app-sidebar-item>
+			<app-sidebar-item [nombre]="'Noticias'" [ruta]="'/noticias'"[opcion]="4" (click)="optionHandler(4)" [nombreSpan]="'mdi mdi-book-open-outline'"></app-sidebar-item>
+			<app-sidebar-item [nombre]="'Enlaces'" [ruta]="'/enlaces'"[opcion]="5"(click)="optionHandler(5)" [nombreSpan]="'mdi mdi-link'"></app-sidebar-item>
 
+			<div class="menu-header">{{ "Administración" }}</div>
+			<app-sidebar-item [nombre]="'Usuarios'" [ruta]="''"[opcion]="1"(click)="optionHandler(1)" [nombreSpan]="'mdi mdi-account-multiple'"></app-sidebar-item>
+			<app-sidebar-item [nombre]="'Roles'" [ruta]="''"[opcion]="1"(click)="optionHandler(1)" [nombreSpan]="'mdi mdi-account-multiple'"></app-sidebar-item>
 			<div class="menu-divider"></div>
 
 		</div>

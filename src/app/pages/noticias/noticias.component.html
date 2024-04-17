@@ -1,4 +1,5 @@
 <app-buttons></app-buttons>
 <div class="content">
+    <app-export-table [tableContent]="tableJson" [fileName]="'Noticias'"></app-export-table>
     <app-table [columns]="tableColumns" [data]="tableData"></app-table>
 </div>

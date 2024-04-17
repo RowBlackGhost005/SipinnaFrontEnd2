@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ExportTableComponent } from '../../modules/export-table/export-table.component';
 import { TableModel } from '../../models/table';
 import { TableComponent } from '../../modules/table/table.component';
 import { ButtonsComponent } from '../../modules/buttons/buttons.component';
@@ -6,7 +7,7 @@ import { ButtonsComponent } from '../../modules/buttons/buttons.component';
 @Component({
   selector: 'app-dominios',
   standalone: true,
-  imports: [TableComponent, ButtonsComponent],
+  imports: [TableComponent, ButtonsComponent, ExportTableComponent],
   templateUrl: './dominios.component.html',
   styleUrl: './dominios.component.scss'
 })
@@ -22,4 +23,8 @@ export class DominiosComponent {
     { id: 3, dominio: 'Desarrollo' },
     { id: 4, dominio: 'Protección' },
   ];
+
+  //esta variable es el contenido de la tabla mostrada en pantalla convertida a JSON
+  //para mandarselo al componente de exportar tabla
+  tableJson = JSON.stringify(this.tableData)
 }
