@@ -22,4 +22,8 @@ export class DominiosComponent {
     { id: 3, dominio: 'Desarrollo' },
     { id: 4, dominio: 'Protección' },
   ];
+
+  //esta variable es el contenido de la tabla mostrada en pantalla convertida a JSON
+  //para mandarselo al componente de exportar tabla
+  tableJson = JSON.stringify(this.tableData)
 }

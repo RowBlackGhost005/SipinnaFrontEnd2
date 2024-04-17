@@ -48,6 +48,9 @@
 			<app-sidebar-item [nombre]="'Noticias'" [ruta]="'/noticias'"[opcion]="4" (click)="optionHandler(4)" [nombreSpan]="'mdi mdi-book-open-outline'"></app-sidebar-item>
 			<app-sidebar-item [nombre]="'Enlaces'" [ruta]="'/enlaces'"[opcion]="5"(click)="optionHandler(5)" [nombreSpan]="'mdi mdi-link'"></app-sidebar-item>
 
+			<div class="menu-header">{{ "Administración" }}</div>
+			<app-sidebar-item [nombre]="'Usuarios'" [ruta]="''"[opcion]="1"(click)="optionHandler(1)" [nombreSpan]="'mdi mdi-account-multiple'"></app-sidebar-item>
+			<app-sidebar-item [nombre]="'Roles'" [ruta]="''"[opcion]="1"(click)="optionHandler(1)" [nombreSpan]="'mdi mdi-account-multiple'"></app-sidebar-item>
 			<div class="menu-divider"></div>
 
 		</div>
