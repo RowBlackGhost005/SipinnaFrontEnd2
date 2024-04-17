@@ -13,5 +13,6 @@ export class SidebarItemComponent {
   @Input({required:true}) nombre!:String;
   @Input({required:true}) ruta!:String;
   @Input({required:true}) opcion!:number;
+  @Input({required:true}) nombreSpan!:String;
   
 }
