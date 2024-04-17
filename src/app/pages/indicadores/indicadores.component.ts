@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
 import { TableModel } from '../../models/table';
 import { TableComponent } from '../../modules/table/table.component';
+import { ButtonsComponent } from '../../modules/buttons/buttons.component';
 
 @Component({
   selector: 'app-indicadores',
   standalone: true,
-  imports: [TableComponent],
+  imports: [TableComponent, ButtonsComponent],
   templateUrl: './indicadores.component.html',
   styleUrl: './indicadores.component.scss'
 })
