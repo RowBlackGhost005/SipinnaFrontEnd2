@@ -1,12 +1,13 @@
 import { Component } from '@angular/core';
 import { TableComponent } from '../../modules/table/table.component';
 import { TableModel } from '../../models/table';
+import { ButtonsComponent } from '../../modules/buttons/buttons.component';
 import { ExportTableComponent } from '../../modules/export-table/export-table.component';
 
 @Component({
   selector: 'app-enlaces',
   standalone: true,
-  imports: [TableComponent, ExportTableComponent],
+  imports: [TableComponent,ButtonsComponent, ExportTableComponent],
   templateUrl: './enlaces.component.html',
   styleUrl: './enlaces.component.scss'
 })
