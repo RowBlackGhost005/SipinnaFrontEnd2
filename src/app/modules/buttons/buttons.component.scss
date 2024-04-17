@@ -1,0 +1,48 @@
+.button-container {
+    display: flex;
+}
+
+.button {
+    color: white;
+    border: none;
+    padding: 4px 15px;
+    border-radius: 50px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    margin: 3px;
+}
+
+.agregar-button {
+    background-color: #47827a;
+}
+
+.agregar-button:hover {
+    background-color: #36635d;
+}
+
+.editar-button {
+    background-color: #e6925d;
+    padding: 4px 24px; /* Solo ajustamos el padding para este botón */
+}
+
+.editar-button:hover {
+    background-color: #dc8b58;
+}
+
+.eliminar-button {
+    background-color: #b35556;
+    padding: 4px 18px; /* Solo ajustamos el padding para este botón */
+}
+
+.eliminar-button:hover {
+    background-color: #98494a;
+}
+
+.button i {
+    margin-right: 5px;
+}
+
+.button-text {
+    margin-left: 0px;
+}

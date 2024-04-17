@@ -2,11 +2,12 @@ import { Component } from '@angular/core';
 import { ExportTableComponent } from '../../modules/export-table/export-table.component';
 import { TableModel } from '../../models/table';
 import { TableComponent } from '../../modules/table/table.component';
+import { ButtonsComponent } from '../../modules/buttons/buttons.component';
 
 @Component({
   selector: 'app-dominios',
   standalone: true,
-  imports: [ExportTableComponent, TableComponent],
+  imports: [TableComponent, ButtonsComponent, ExportTableComponent],
   templateUrl: './dominios.component.html',
   styleUrl: './dominios.component.scss'
 })
