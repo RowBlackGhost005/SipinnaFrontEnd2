@@ -1,11 +1,13 @@
 import { Component } from '@angular/core';
 import { TableModel } from '../../models/table';
 import { TableComponent } from '../../modules/table/table.component';
+import { ButtonsComponent } from '../../modules/buttons/buttons.component';
+import { ExportTableComponent } from '../../modules/export-table/export-table.component';
 
 @Component({
   selector: 'app-noticias',
   standalone: true,
-  imports: [TableComponent],
+  imports: [TableComponent,ButtonsComponent, ExportTableComponent],
   templateUrl: './noticias.component.html',
   styleUrl: './noticias.component.scss'
 })
@@ -22,4 +24,8 @@ export class NoticiasComponent {
     { id: 2, fotografia: '', titulo: 'Sitio web Gobierno de Sonora', enlace: 'https://sonora.gob.mx'},
     { id: 3, fotografia: '', titulo: 'Sitio web Gobierno de México', enlace: 'https://gob.mx'}
   ];
+
+  //esta variable es el contenido de la tabla mostrada en pantalla convertida a JSON
+  //para mandarselo al componente de exportar tabla
+  tableJson = JSON.stringify(this.tableData)
 }

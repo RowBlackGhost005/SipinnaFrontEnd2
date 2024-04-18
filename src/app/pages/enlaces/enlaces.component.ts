@@ -1,11 +1,13 @@
 import { Component } from '@angular/core';
 import { TableComponent } from '../../modules/table/table.component';
 import { TableModel } from '../../models/table';
+import { ButtonsComponent } from '../../modules/buttons/buttons.component';
+import { ExportTableComponent } from '../../modules/export-table/export-table.component';
 
 @Component({
   selector: 'app-enlaces',
   standalone: true,
-  imports: [TableComponent],
+  imports: [TableComponent,ButtonsComponent, ExportTableComponent],
   templateUrl: './enlaces.component.html',
   styleUrl: './enlaces.component.scss'
 })
@@ -21,4 +23,8 @@ export class EnlacesComponent {
     { id: 2, titulo: 'Sitio web Gobierno de Sonora', enlace: 'https://sonora.gob.mx'},
     { id: 3, titulo: 'Sitio web Gobierno de México', enlace: 'https://gob.mx'}
   ];
+
+  //esta variable es el contenido de la tabla mostrada en pantalla convertida a JSON
+  //para mandarselo al componente de exportar tabla
+  tableJson = JSON.stringify(this.tableData)
 }
