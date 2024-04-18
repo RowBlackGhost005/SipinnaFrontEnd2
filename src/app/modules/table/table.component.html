@@ -14,7 +14,11 @@
             <tr>
                 <td><input type="checkbox" [checked]="selectedItemIndex == $index" (change)="selectItem($index)"></td>
                 @for(column of columns; track $index){
-                <td>{{ isText(item[column.field]) ? (item[column.field] | uppercase) : item[column.field] }} </td>
+                    @if(column.field == 'enlace'){
+                        <td>{{ item[column.field] }} </td>
+                    } @else {
+                        <td>{{ isText(item[column.field]) ? (item[column.field] | uppercase) : item[column.field] }} </td>
+                    }
                 }
             </tr>
             }

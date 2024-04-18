@@ -1,29 +1,35 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { TableModel } from '../../models/table';
 import { TableComponent } from '../../modules/table/table.component';
 import { ButtonsComponent } from '../../modules/buttons/buttons.component';
 import { ExportTableComponent } from '../../modules/export-table/export-table.component';
+import { NoticiaService } from '../../services/noticia.service';
+import { INoticia } from '../../models/noticia.model';
 
 @Component({
   selector: 'app-noticias',
   standalone: true,
-  imports: [TableComponent,ButtonsComponent, ExportTableComponent],
+  imports: [TableComponent, ButtonsComponent, ExportTableComponent],
   templateUrl: './noticias.component.html',
   styleUrl: './noticias.component.scss'
 })
 export class NoticiasComponent {
+  private _noticiaService = inject(NoticiaService);
+
+  tableData: INoticia[] = [];
   tableColumns: TableModel[] = [
-    { header: 'ID', field: 'id' },
-    { header: 'Fotografia', field: 'fotografia' },
+    { header: 'ID', field: 'idnoticias' },
+    { header: 'Fotografia', field: 'imagen' },
     { header: 'Titulo', field: 'titulo' },
     { header: 'Enlace', field: 'enlace' }
   ];
 
-  tableData = [
-    { id: 1, fotografia: '', titulo: 'Sitio web Sipinna', enlace: 'https://sipinna.sonora.gob.mx'},
-    { id: 2, fotografia: '', titulo: 'Sitio web Gobierno de Sonora', enlace: 'https://sonora.gob.mx'},
-    { id: 3, fotografia: '', titulo: 'Sitio web Gobierno de México', enlace: 'https://gob.mx'}
-  ];
+  ngOnInit(): void {
+    this._noticiaService.getNoticias().subscribe((data: INoticia[]) => {
+      console.log(data);
+      this.tableData = data;
+    })
+  }
 
   //esta variable es el contenido de la tabla mostrada en pantalla convertida a JSON
   //para mandarselo al componente de exportar tabla
