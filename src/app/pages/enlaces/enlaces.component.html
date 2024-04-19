@@ -1,4 +1,9 @@
-<app-buttons></app-buttons>
+<app-modal></app-modal>
+<app-buttons 
+(agregar)="agregarFunc()"
+(editar)="editarFunc()"
+(eliminar)="eliminarFunc()">
+</app-buttons>
 <div class="content">
     <app-export-table [tableContent]="tableJson" [fileName]="'Enlaces'"></app-export-table>
     <app-table [columns]="tableColumns" [data]="tableData"></app-table>

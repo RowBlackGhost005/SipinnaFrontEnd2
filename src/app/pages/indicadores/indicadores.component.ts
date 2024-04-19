@@ -1,18 +1,21 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { TableModel } from '../../models/table';
 import { TableComponent } from '../../modules/table/table.component';
 import { ButtonsComponent } from '../../modules/buttons/buttons.component';
 import { ExportTableComponent } from '../../modules/export-table/export-table.component';
+import { ModalComponent } from '../../modules/modal/modal.component';
 
 
 @Component({
   selector: 'app-indicadores',
   standalone: true,
-  imports: [TableComponent, ButtonsComponent, ExportTableComponent],
+  imports: [TableComponent, ButtonsComponent, ExportTableComponent,ModalComponent],
   templateUrl: './indicadores.component.html',
   styleUrl: './indicadores.component.scss'
 })
 export class IndicadoresComponent {
+
+
   tableColumns: TableModel[] = [
     { header: 'ID', field: 'id' },
     { header: 'Indicador', field: 'indicador' },
@@ -29,4 +32,17 @@ export class IndicadoresComponent {
   //esta variable es el contenido de la tabla mostrada en pantalla convertida a JSON
   //para mandarselo al componente de exportar tabla
   tableJson = JSON.stringify(this.tableData)
+
+  agregarFunc() {
+
+  }
+
+  editarFunc() {
+    // Lógica para la funcionalidad de editar
+  }
+
+  eliminarFunc() {
+    // Lógica para la funcionalidad de eliminar
+  }
+  
 }

@@ -1,6 +1,7 @@
 <div class="button-container">
+    <app-modal></app-modal>
     <div>
-    <button class="button agregar-button">
+    <button (click)="agregar.emit()" class="button agregar-button">
         <i class="fas fa-plus"></i><span class="button-text">Agregar</span>
     </button>
 </div>
