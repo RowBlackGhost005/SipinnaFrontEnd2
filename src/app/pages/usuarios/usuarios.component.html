@@ -1,0 +1,9 @@
+<div class="content">
+    <div class="horizontalView">
+        <app-buttons></app-buttons>
+        <div class="topRight">
+            <app-export-table [tableContent]="tableJson()" [fileName]="'Usuarios'"></app-export-table>
+        </div>
+    </div>
+    <app-table [columns]="tableColumns" [data]="tableData"></app-table>
+</div>

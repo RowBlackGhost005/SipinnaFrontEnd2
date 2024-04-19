@@ -3,6 +3,17 @@
     flex-direction: column;
     margin-left: 2rem;
     margin-top: 2rem;
-
+    width: 77vw;
 }
 
+.horizontalView{
+    display: flex;
+    flex-direction: row;
+}
+
+.topRight{
+    display: flex;
+    width: 100%;
+    flex-direction: row-reverse;
+    margin-right: 10px;
+}

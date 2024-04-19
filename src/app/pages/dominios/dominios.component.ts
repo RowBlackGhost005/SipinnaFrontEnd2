@@ -1,9 +1,12 @@
-import { Component, ViewChild } from '@angular/core';
+
+import { Component, OnInit, inject, signal, ViewChild } from '@angular/core';
 import { ExportTableComponent } from '../../modules/export-table/export-table.component';
 import { TableModel } from '../../models/table';
 import { TableComponent } from '../../modules/table/table.component';
 import { ButtonsComponent } from '../../modules/buttons/buttons.component';
 import { ModalComponent } from '../../modules/modal/modal.component';
+import { DominioService } from '../../services/dominio.service';
+import { IDominio } from '../../models/dominio.model';
 
 @Component({
   selector: 'app-dominios',
@@ -12,25 +15,27 @@ import { ModalComponent } from '../../modules/modal/modal.component';
   templateUrl: './dominios.component.html',
   styleUrl: './dominios.component.scss'
 })
-export class DominiosComponent {
+
+export class DominiosComponent implements OnInit{
+  private _dominioService = inject(DominioService);
   @ViewChild(ModalComponent) modal?: ModalComponent;
-
-
+  tableData: IDominio[] = [];
   tableColumns: TableModel[] = [
-    { header: 'ID', field: 'id' },
-    { header: 'Dominio', field: 'dominio' }
+    { header: 'ID', field: 'iddominio' },
+    { header: 'Dominio', field: 'nombre' }
   ];
 
-  tableData = [
-    { id: 1, dominio: 'Contexto Demográfico' },
-    { id: 2, dominio: 'Supervivencia' },
-    { id: 3, dominio: 'Desarrollo' },
-    { id: 4, dominio: 'Protección' },
-  ];
+  tableJson = signal("")
 
-  //esta variable es el contenido de la tabla mostrada en pantalla convertida a JSON
-  //para mandarselo al componente de exportar tabla
-  tableJson = JSON.stringify(this.tableData)
+  ngOnInit(): void {
+    this._dominioService.getDominios().subscribe((data: IDominio[]) => {
+      console.log(data);
+      this.tableData = data;
+      this.tableJson.set(JSON.stringify(this.tableData))
+      console.log(this.tableJson())
+    }
+  )
+  }
 
   agregarFunc() {
     this.openModal('Agregar Dominios', 'Agrega un dominio');

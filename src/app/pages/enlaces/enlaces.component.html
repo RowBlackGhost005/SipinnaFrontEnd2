@@ -4,7 +4,13 @@
 (editar)="editarFunc()"
 (eliminar)="eliminarFunc()">
 </app-buttons>
+
 <div class="content">
-    <app-export-table [tableContent]="tableJson" [fileName]="'Enlaces'"></app-export-table>
+    <div class="horizontalView">
+        poner aqui los botones
+        <div class="topRight">
+            <app-export-table [tableContent]="tableJson()" [fileName]="'Enlaces'"></app-export-table>
+        </div>
+    </div>
     <app-table [columns]="tableColumns" [data]="tableData"></app-table>
 </div>

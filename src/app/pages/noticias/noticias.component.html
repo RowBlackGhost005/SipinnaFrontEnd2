@@ -1,10 +1,17 @@
+
 <app-modal></app-modal>
 <app-buttons 
 (agregar)="agregarFunc()"
 (editar)="editarFunc()"
 (eliminar)="eliminarFunc()">
 </app-buttons>
+
 <div class="content">
-    <app-export-table [tableContent]="tableJson" [fileName]="'Noticias'"></app-export-table>
+    <div class="horizontalView">
+        poner botones aqui
+        <div class="topRight">
+            <app-export-table [tableContent]="tableJson()" [fileName]="'Noticias'"></app-export-table>
+        </div>
+    </div>
     <app-table [columns]="tableColumns" [data]="tableData"></app-table>
 </div>

@@ -27,5 +27,10 @@ export const routes: Routes = [
         loadComponent: () =>
 			import('./pages/enlaces/enlaces.component').then((c) => c.EnlacesComponent),
     },
+    {
+        path:'usuarios',
+        loadComponent: () =>
+			import('./pages/usuarios/usuarios.component').then((c) => c.UsuariosComponent),
+    }
 
 ];

@@ -1,9 +1,11 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, inject, signal, ViewChild } from '@angular/core';
 import { TableComponent } from '../../modules/table/table.component';
 import { TableModel } from '../../models/table';
 import { ButtonsComponent } from '../../modules/buttons/buttons.component';
 import { ExportTableComponent } from '../../modules/export-table/export-table.component';
 import { ModalComponent } from '../../modules/modal/modal.component';
+import { EnlaceService } from '../../services/enlace.service';
+import { IEnlace } from '../../models/enlace.model';
 
 @Component({
   selector: 'app-enlaces',
@@ -14,23 +16,26 @@ import { ModalComponent } from '../../modules/modal/modal.component';
 })
 export class EnlacesComponent {
   @ViewChild(ModalComponent) modal?: ModalComponent;
-
-
+  private _enlaceService = inject(EnlaceService); 
+  tableData: IEnlace[] = [];
   tableColumns: TableModel[] = [
-    { header: 'ID', field: 'id' },
+    { header: 'ID', field: 'idenlaces' },
     { header: 'Titulo', field: 'titulo' },
     { header: 'Enlace', field: 'enlace' }
   ];
 
-  tableData = [
-    { id: 1, titulo: 'Sitio web Sipinna', enlace: 'https://sipinna.sonora.gob.mx'},
-    { id: 2, titulo: 'Sitio web Gobierno de Sonora', enlace: 'https://sonora.gob.mx'},
-    { id: 3, titulo: 'Sitio web Gobierno de México', enlace: 'https://gob.mx'}
-  ];
+  tableJson = signal("")
 
-  //esta variable es el contenido de la tabla mostrada en pantalla convertida a JSON
-  //para mandarselo al componente de exportar tabla
-  tableJson = JSON.stringify(this.tableData)
+  ngOnInit(): void {
+      this._enlaceService.getEnlaces().subscribe((data: IEnlace[]) => {
+      console.log(data);
+      this.tableData = data;
+
+      this.tableJson.set(JSON.stringify(this.tableData))
+      console.log(this.tableJson())
+    })
+  }
+
 
   agregarFunc() {
     this.openModal('Agregar Indicador', 'Agrega un indicador');
