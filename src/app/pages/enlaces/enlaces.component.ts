@@ -38,7 +38,7 @@ export class EnlacesComponent {
 
 
   agregarFunc() {
-    this.openModal('Agregar Indicador', 'Agrega un indicador');
+    this.openModal('Agregar Dominio', 'Dominio','CAPTURE EL NOMBRE DEL DOMINIO');
 
   }
 
@@ -49,7 +49,7 @@ export class EnlacesComponent {
   eliminarFunc() {
     // Lógica para la funcionalidad de eliminar
   }
-  openModal(title: string, message: string) {
-    this.modal?.openModal(title, message);
+  openModal(title: string, label: string,placeholder:string) {
+    this.modal?.openModal(title, label,placeholder);
   }
 }

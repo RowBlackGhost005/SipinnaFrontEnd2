@@ -41,7 +41,7 @@ export class NoticiasComponent {
   }
 
   agregarFunc() {
-    this.openModal('Agregar Noticia', 'Agrega una noticia');
+    this.openModal('Agregar Dominio', 'Dominio','CAPTURE EL NOMBRE DEL DOMINIO');
 
   }
 
@@ -52,7 +52,7 @@ export class NoticiasComponent {
   eliminarFunc() {
     // Lógica para la funcionalidad de eliminar
   }
-  openModal(title: string, message: string) {
-    this.modal?.openModal(title, message);
+  openModal(title: string, label: string,placeholder:string) {
+    this.modal?.openModal(title, label,placeholder);
   }
 }

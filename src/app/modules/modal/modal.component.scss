@@ -1,0 +1,52 @@
+h3{
+  color: #A84868;
+  text-align: center;
+  margin-top: 20px;
+  font-weight: bold;
+
+}
+.required {
+  color: red;
+  margin-left: 3px;
+}
+
+.botones {
+  display: flex; 
+  justify-content: center; 
+}
+
+.btn {
+  padding: 4px 25px;
+  border-radius: 50px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  margin-right: 20px;
+  margin-bottom: 30px;
+}
+
+.btn-cancelar {
+  background-color: #B5B6B9; 
+  color: white;
+  border: none;
+}
+
+.btn-cancelar:hover {
+  background-color: #939496;
+}
+
+.btn-guardar {
+  background-color: #A84868; 
+  color: white;
+  border: none;
+}
+
+.btn-guardar:hover {
+  background-color: #923f5b;
+}
+
+.linea-final {
+  border-top: 2px solid #ccc; 
+  margin-bottom: 10px; 
+  padding-bottom: 10px;
+}

@@ -38,7 +38,7 @@ export class DominiosComponent implements OnInit{
   }
 
   agregarFunc() {
-    this.openModal('Agregar Dominios', 'Agrega un dominio');
+    this.openModal('Agregar Dominio', 'Dominio','CAPTURE EL NOMBRE DEL DOMINIO');
 
   }
 
@@ -49,7 +49,7 @@ export class DominiosComponent implements OnInit{
   eliminarFunc() {
     // Lógica para la funcionalidad de eliminar
   }
-  openModal(title: string, message: string) {
-    this.modal?.openModal(title, message);
+  openModal(title: string, label: string,placeholder:string) {
+    this.modal?.openModal(title, label,placeholder);
   }
 }
