@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { TableComponent } from '../../modules/table/table.component';
 import { TableModel } from '../../models/table';
 import { ButtonsComponent } from '../../modules/buttons/buttons.component';
@@ -22,15 +22,20 @@ export class EnlacesComponent {
     { header: 'Titulo', field: 'titulo' },
     { header: 'Enlace', field: 'enlace' }
   ];
-  
+
+  tableJson = signal("")
+
   ngOnInit(): void {
       this._enlaceService.getEnlaces().subscribe((data: IEnlace[]) => {
       console.log(data);
       this.tableData = data;
+
+      this.tableJson.set(JSON.stringify(this.tableData))
+      console.log(this.tableJson())
     })
   }
 
   //esta variable es el contenido de la tabla mostrada en pantalla convertida a JSON
   //para mandarselo al componente de exportar tabla
-  tableJson = JSON.stringify(this.tableData)
+  //tableJson = JSON.stringify(this.tableData)
 }

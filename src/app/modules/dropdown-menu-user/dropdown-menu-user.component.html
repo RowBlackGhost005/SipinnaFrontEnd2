@@ -1,0 +1,35 @@
+
+<div class="menu-item dropdown ">
+    <a href="#" data-bs-toggle="dropdown" title=" Usuario Verificado " data-bs-display="static" class="menu-link">
+        <div class="menu-img">
+            <i class="mdi mdi-account-circle "></i>
+        </div>
+        
+        <div class="menu-text lh-1 rightSide ">
+            {{"Usuario" + " " + "Prueba" | uppercase}} <span id="logoUser" class="mdi mdi-chevron-down"></span>
+            <small class="d-block fw-normal">{{"admin@admin.com"}}</small>
+        </div>
+    </a>
+<div class="dropdown-menu dropdown-menu-end me-lg-3 py-0 border">
+    <a class="dropdown-item d-flex align-items-center" routerLink="">
+        <span class="mdi mdi-account-circle fs-4 me-2 text-pink dropdown-custom"></span> Mi perfil
+    </a>
+    <div class="dropdown-divider my-0"></div>
+
+    <a class="dropdown-item d-flex align-items-center">
+        <span class="mdi mdi-face-agent fs-4 me-2 text-pink dropdown-custom"></span> Soporte
+    </a>
+
+
+    <div class="dropdown-divider my-0"></div>
+
+    <a class="dropdown-item d-flex align-items-center">
+        <span class="mdi mdi-exit-to-app fs-4 me-2 text-pink dropdown-custom"></span> Salir
+    </a>
+
+
+
+    <form id="logout-form" action="public/salir" method="POST" class="d-none">
+        <input type="hidden" name="_token" value="iorh6kkMTq7f5aJ3V9oTu2c0lTCjOcED6fDDzyfi">
+    </form>
+</div>

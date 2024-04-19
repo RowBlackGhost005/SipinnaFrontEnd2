@@ -1,5 +1,9 @@
-<app-buttons></app-buttons>
 <div class="content">
-    <app-export-table [tableContent]="tableJson" [fileName]="'Indicadores'"></app-export-table>
+    <div class="horizontalView">
+        <app-buttons></app-buttons>
+        <div class="topRight">
+            <app-export-table [tableContent]="tableJson()" [fileName]="'Indicadores'"></app-export-table>
+        </div>
+    </div>
     <app-table [columns]="tableColumns" [data]="tableData"></app-table>
 </div>

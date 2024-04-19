@@ -1,0 +1,30 @@
+:host {
+    display: contents;
+  }
+  
+  a {
+    display: flex;
+    cursor: pointer;
+    text-decoration: none;
+    color: inherit;
+    font-size: 1rem;
+    margin-right: 24px;
+  }
+
+  i {
+    font-size: 2.5rem;
+    margin-right: 2px;
+    color: #960E53;
+    position: relative;
+  }
+
+  .rightSide{
+    margin-top: 15px;
+  }
+
+  .dropdown-custom {
+    color: #960E53;
+    }
+
+  
+  
