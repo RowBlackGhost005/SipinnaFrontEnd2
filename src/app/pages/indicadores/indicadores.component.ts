@@ -1,8 +1,9 @@
-import { Component, OnInit, inject, signal } from '@angular/core';
+import { Component, OnInit, inject, signal, ViewChild } from '@angular/core';
 import { TableModel } from '../../models/table';
 import { TableComponent } from '../../modules/table/table.component';
 import { ButtonsComponent } from '../../modules/buttons/buttons.component';
 import { ExportTableComponent } from '../../modules/export-table/export-table.component';
+import { ModalComponent } from '../../modules/modal/modal.component';
 import { IndicadorService } from '../../services/indicador.service';
 import { DominioService } from '../../services/dominio.service';
 import { IIndicador } from '../../models/indicador.model';
@@ -12,10 +13,11 @@ import { IDominio } from '../../models/dominio.model';
 @Component({
   selector: 'app-indicadores',
   standalone: true,
-  imports: [TableComponent, ButtonsComponent, ExportTableComponent],
+  imports: [TableComponent, ButtonsComponent, ExportTableComponent,ModalComponent],
   templateUrl: './indicadores.component.html',
   styleUrl: './indicadores.component.scss'
 })
+
 export class IndicadoresComponent implements OnInit{
   private _indicadorService = inject(IndicadorService);
   private _dominioService = inject(DominioService);
@@ -27,6 +29,20 @@ export class IndicadoresComponent implements OnInit{
     { header: 'Dominio', field: 'dominio' }
   ];
 
+
+
+  agregarFunc() {
+
+  }
+
+  editarFunc() {
+    // Lógica para la funcionalidad de editar
+  }
+
+  eliminarFunc() {
+    // Lógica para la funcionalidad de eliminar
+  }
+  
   tableJson = signal("")
 
   ngOnInit(): void {
@@ -55,5 +71,3 @@ export class IndicadoresComponent implements OnInit{
 
     });
   }
-
-}

@@ -1,21 +1,24 @@
-import { Component, OnInit, inject, signal } from '@angular/core';
+
+import { Component, OnInit, inject, signal, ViewChild } from '@angular/core';
 import { ExportTableComponent } from '../../modules/export-table/export-table.component';
 import { TableModel } from '../../models/table';
 import { TableComponent } from '../../modules/table/table.component';
 import { ButtonsComponent } from '../../modules/buttons/buttons.component';
+import { ModalComponent } from '../../modules/modal/modal.component';
 import { DominioService } from '../../services/dominio.service';
 import { IDominio } from '../../models/dominio.model';
 
 @Component({
   selector: 'app-dominios',
   standalone: true,
-  imports: [TableComponent, ButtonsComponent, ExportTableComponent],
+  imports: [TableComponent, ButtonsComponent, ExportTableComponent, ModalComponent],
   templateUrl: './dominios.component.html',
   styleUrl: './dominios.component.scss'
 })
+
 export class DominiosComponent implements OnInit{
   private _dominioService = inject(DominioService);
-
+  @ViewChild(ModalComponent) modal?: ModalComponent;
   tableData: IDominio[] = [];
   tableColumns: TableModel[] = [
     { header: 'ID', field: 'iddominio' },
@@ -34,7 +37,19 @@ export class DominiosComponent implements OnInit{
   )
   }
 
-  //esta variable es el contenido de la tabla mostrada en pantalla convertida a JSON
-  //para mandarselo al componente de exportar tabla
-  //tableJson = JSON.stringify(this.tableData)
+  agregarFunc() {
+    this.openModal('Agregar Dominios', 'Agrega un dominio');
+
+  }
+
+  editarFunc() {
+    // Lógica para la funcionalidad de editar
+  }
+
+  eliminarFunc() {
+    // Lógica para la funcionalidad de eliminar
+  }
+  openModal(title: string, message: string) {
+    this.modal?.openModal(title, message);
+  }
 }

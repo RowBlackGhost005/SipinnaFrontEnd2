@@ -1,6 +1,13 @@
+
+
+
 <div class="content">
     <div class="horizontalView">
-        <app-buttons></app-buttons>
+        <app-buttons 
+        (agregar)="agregarFunc()"
+        (editar)="editarFunc()"
+        (eliminar)="eliminarFunc()">
+        </app-buttons>
         <div class="topRight">
             <app-export-table [tableContent]="tableJson()" [fileName]="'Indicadores'"></app-export-table>
         </div>
