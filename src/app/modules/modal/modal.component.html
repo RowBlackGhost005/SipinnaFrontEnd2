@@ -1,21 +1,33 @@
-
-  <!-- Modal -->
-  <div #modal class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h1 class="modal-title fs-5" id="exampleModalLabel">{{title}}</h1>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+<div #modal class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div>
+        <h3 class="modal-title">{{title}}</h3>
+      </div>
+      <div class="modal-body">
+        <div class="mb-3">
+          <label for="domainName" class="form-label">{{lblNombre}}<span class="required" *ngIf="isDomainNameRequired">*</span></label>
+          <input type="text" class="form-control" id="domainName" placeholder="{{placeholderNombre}}" [(ngModel)]="domainName">
         </div>
-        <div class="modal-body">
-         {{content}}
+        <div class="mb-3" *ngIf="showUrlInput">
+          <label for="url" class="form-label">{{lblUrl}}<span class="required" *ngIf="isDomainNameRequired">*</span></label>
+          <input type="text" class="form-control" id="url" placeholder="{{placeholderUrl}}">
         </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Save changes</button>
+        <div class="mb-3" *ngIf="showImagenInput">
+          <label for="imagen" class="form-label">{{lblImagen}}<span class="required" *ngIf="isDomainNameRequired">*</span></label>
+          <div class="file-upload-container">
+            <input type="file" class="hidden-input" id="imagen" (change)="onFileSelected($event)">
+            <label class="custom-file-button" for="imagen">
+              <i class="fas fa-upload"></i> Cargar Archivo
+            </label>
+          </div>
         </div>
+      </div>
+        <div class="linea-final"></div> 
+        <div class="botones">
+          <button type="button" class="btn btn-cancelar" data-bs-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn-guardar" [disabled]="!domainName">Guardar</button>
       </div>
     </div>
   </div>
-
-  
+</div>
