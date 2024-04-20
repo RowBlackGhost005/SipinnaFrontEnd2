@@ -6,8 +6,21 @@
       </div>
       <div class="modal-body">
         <div class="mb-3">
-          <label for="domainName" class="form-label">{{label}}<span class="required" *ngIf="isDomainNameRequired">*</span></label>
-          <input type="text" class="form-control" id="domainName" placeholder="{{placeholder}}" [(ngModel)]="domainName">
+          <label for="domainName" class="form-label">{{lblNombre}}<span class="required" *ngIf="isDomainNameRequired">*</span></label>
+          <input type="text" class="form-control" id="domainName" placeholder="{{placeholderNombre}}" [(ngModel)]="domainName">
+        </div>
+        <div class="mb-3" *ngIf="showUrlInput">
+          <label for="url" class="form-label">{{lblUrl}}<span class="required" *ngIf="isDomainNameRequired">*</span></label>
+          <input type="text" class="form-control" id="url" placeholder="{{placeholderUrl}}">
+        </div>
+        <div class="mb-3" *ngIf="showImagenInput">
+          <label for="imagen" class="form-label">{{lblImagen}}<span class="required" *ngIf="isDomainNameRequired">*</span></label>
+          <div class="file-upload-container">
+            <input type="file" class="hidden-input" id="imagen" (change)="onFileSelected($event)">
+            <label class="custom-file-button" for="imagen">
+              <i class="fas fa-upload"></i> Cargar Archivo
+            </label>
+          </div>
         </div>
       </div>
         <div class="linea-final"></div> 

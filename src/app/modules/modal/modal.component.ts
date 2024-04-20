@@ -13,13 +13,28 @@ const $:any=window['$']
 export class ModalComponent {
 @ViewChild('modal') modal?: ElementRef;
 title:string='';
-label:string='';
-placeholder:string='';
+lblNombre:string='';
+placeholderNombre:string='';
+lblUrl:string='';
+placeholderUrl:string='';
+isDomainNameRequired: boolean = true; 
+domainName: string = '';
+showUrlInput: boolean = false;
+lblImagen:string=''
+showImagenInput=false;
 
-openModal(title:string,label:string,placeholder:string){
+
+openModal(title:string,lblNombre:string,placeholderNombre:string,
+  lblUrl:string,placeholderUrl:string,showUrlInput:boolean,
+lblImagen:string,showImagenInput:boolean){
   this.title=title;
-  this.label=label;
-  this.placeholder=placeholder;
+  this.lblNombre=lblNombre;
+  this.placeholderNombre=placeholderNombre;
+  this.lblUrl=lblUrl;
+  this.placeholderUrl=placeholderUrl;
+  this.showUrlInput = showUrlInput;
+  this.lblImagen=lblImagen;
+  this.showImagenInput=showImagenInput
 
   $(this.modal?.nativeElement).modal('show');
 
@@ -28,15 +43,10 @@ openModal(title:string,label:string,placeholder:string){
 closeModal(){
   $(this.modal?.nativeElement).modal('hide');
 }
-
-isDomainNameRequired: boolean = true; 
-isSubmitted: boolean = false; 
-domainName: string = '';
-
-submitForm() {
-  this.isSubmitted = true; 
-  if (this.domainName) {
-    console.log('Domain Name:', this.domainName);
-  }
+onFileSelected(event: any) {
+  const file: File = event.target.files[0];
+  //realizar acciones como cargar la imagen al servidor o mostrarla en la interfaz de usuario
 }
+
+
 }

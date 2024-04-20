@@ -10,13 +10,14 @@ import { IEnlace } from '../../models/enlace.model';
 @Component({
   selector: 'app-enlaces',
   standalone: true,
-  imports: [TableComponent,ButtonsComponent, ExportTableComponent,ModalComponent],
+  imports: [TableComponent, ButtonsComponent, ExportTableComponent, ModalComponent],
   templateUrl: './enlaces.component.html',
   styleUrl: './enlaces.component.scss'
 })
 export class EnlacesComponent {
   @ViewChild(ModalComponent) modal?: ModalComponent;
-  private _enlaceService = inject(EnlaceService); 
+  private _enlaceService = inject(EnlaceService);
+
   tableData: IEnlace[] = [];
   tableColumns: TableModel[] = [
     { header: 'ID', field: 'idenlaces' },
@@ -27,7 +28,7 @@ export class EnlacesComponent {
   tableJson = signal("")
 
   ngOnInit(): void {
-      this._enlaceService.getEnlaces().subscribe((data: IEnlace[]) => {
+    this._enlaceService.getEnlaces().subscribe((data: IEnlace[]) => {
       console.log(data);
       this.tableData = data;
 
@@ -38,7 +39,9 @@ export class EnlacesComponent {
 
 
   agregarFunc() {
-    this.openModal('Agregar Dominio', 'Dominio','CAPTURE EL NOMBRE DEL DOMINIO');
+    this.openModal('Agregar Enlace', 'Titulo del enlace', 'CAPTURE EL TITULO DEL ENLACE',
+      'Url', 'CAPTURE LA URL DEL ENLACE', true,
+      '', false);
 
   }
 
@@ -49,7 +52,12 @@ export class EnlacesComponent {
   eliminarFunc() {
     // Lógica para la funcionalidad de eliminar
   }
-  openModal(title: string, label: string,placeholder:string) {
-    this.modal?.openModal(title, label,placeholder);
+
+  openModal(title: string, lblNombre: string, placeholderNombre: string,
+    lblUrl: string, placeholderUrl: string, showUrlInput: boolean,
+    lblImagen: string, showImagenInput: boolean) {
+    this.modal?.openModal(title, lblNombre, placeholderNombre,
+      lblUrl, placeholderUrl, showUrlInput,
+      lblImagen, showImagenInput);
   }
 }

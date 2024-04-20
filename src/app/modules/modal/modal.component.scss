@@ -50,3 +50,26 @@ h3{
   margin-bottom: 10px; 
   padding-bottom: 10px;
 }
+
+.hidden-input {
+  display: none;
+}
+
+.file-upload-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center; 
+}
+
+.custom-file-button {
+  background-color: #47827a;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 8px; 
+}
+
+.custom-file-button:hover {
+  background-color: #35605b;
+}
