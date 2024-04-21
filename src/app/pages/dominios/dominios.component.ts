@@ -1,5 +1,5 @@
 
-import { Component, OnInit, inject, signal, ViewChild } from '@angular/core';
+import { Component, OnInit, inject, signal, ViewChild, SimpleChanges } from '@angular/core';
 import { ExportTableComponent } from '../../modules/export-table/export-table.component';
 import { TableModel } from '../../models/table';
 import { TableComponent } from '../../modules/table/table.component';
@@ -7,6 +7,7 @@ import { ButtonsComponent } from '../../modules/buttons/buttons.component';
 import { ModalComponent } from '../../modules/modal/modal.component';
 import { DominioService } from '../../services/dominio.service';
 import { IDominio } from '../../models/dominio.model';
+import { SearchbarService } from '../../services/searchbar.service';
 
 @Component({
   selector: 'app-dominios',
@@ -18,8 +19,12 @@ import { IDominio } from '../../models/dominio.model';
 
 export class DominiosComponent implements OnInit {
   private _dominioService = inject(DominioService);
+  private _searchbarService = inject(SearchbarService)
   @ViewChild(ModalComponent) modal?: ModalComponent;
   tableData: IDominio[] = [];
+  dataAux:  IDominio[] = [];
+  filteredTable: IDominio[] = [];
+
   tableColumns: TableModel[] = [
     { header: 'ID', field: 'iddominio' },
     { header: 'Dominio', field: 'nombre' }
@@ -31,10 +36,18 @@ export class DominiosComponent implements OnInit {
     this._dominioService.getDominios().subscribe((data: IDominio[]) => {
       console.log(data);
       this.tableData = data;
+      this.dataAux = data;
       this.tableJson.set(JSON.stringify(this.tableData))
       console.log(this.tableJson())
+      console.log(this.tableData)
     }
     )
+
+    //Se queda escuchando para ver si se emite el evento de búsqueda
+    this._searchbarService.eventObservable$.subscribe((event)=>{
+      this.filtrar(event)
+    })
+    
   }
 
   agregarFunc() {
@@ -57,5 +70,22 @@ export class DominiosComponent implements OnInit {
     this.modal?.openModal(title, lblNombre, placeholderNombre,
       lblUrl, placeholderUrl, showUrlInput,
       lblImagen, showImagenInput);
+  }
+
+
+
+  
+  /**
+   * Función para filtrar los datos que se van a mostrar dentro de la tabla, utiliza filteredTable
+   * para guardar la lista de todos los objetos cuyos nombres coincidan con el texto ingresado;
+   * dataAux se usa para que no se pierda la lista que contiene todos los objetos a la hora de reemplazar
+   * los valores de tableData.
+   * 
+   * @param text el texto que fue ingresado dentro del buscador
+   */
+  filtrar(text: string){
+    const lowercaseText = text.toLowerCase();
+    this.filteredTable = this.dataAux.filter(data => data.nombre.toLowerCase().includes(lowercaseText));
+    this.tableData = this.filteredTable
   }
 }
