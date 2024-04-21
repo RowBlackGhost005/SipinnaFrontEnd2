@@ -1,0 +1,27 @@
+.input-container{
+    position:relative;
+
+    & i{
+        position:absolute;
+        left: 8px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #999999;
+    }
+
+    & input {
+        background-image: "mdi mdi-magnify";
+        width: 42vw;
+        border-radius: 28px  !important;
+        border: 0.5px solid #999999 !important;
+        padding: 8px 8px 8px 42px;
+        font-size: 21px;
+        background-image: none !important;
+        
+        &::placeholder{
+            color: #999999;
+        }
+        
+    }
+}
+

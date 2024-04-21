@@ -1,13 +1,8 @@
-<app-modal></app-modal>
-<app-buttons 
-(agregar)="agregarFunc()"
-(editar)="editarFunc()"
-(eliminar)="eliminarFunc()">
-</app-buttons>
-
 <div class="content">
     <div class="horizontalView">
-        poner aqui los botones
+        <app-modal></app-modal>
+        <app-buttons (agregar)="agregarFunc()" (editar)="editarFunc()" (eliminar)="eliminarFunc()">
+        </app-buttons>
         <div class="topRight">
             <app-export-table [tableContent]="tableJson()" [fileName]="'Enlaces'"></app-export-table>
         </div>

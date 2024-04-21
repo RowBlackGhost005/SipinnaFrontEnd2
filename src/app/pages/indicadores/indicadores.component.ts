@@ -71,3 +71,4 @@ export class IndicadoresComponent implements OnInit{
 
     });
   }
+}

@@ -1,4 +1,7 @@
 <div class="topMenu">
-    <p>{{title}}</p>
+    <div class="title">
+        <p>{{title}}</p>
+    </div>
+    <app-searchbar *ngIf="needSearchbar"></app-searchbar>
     <app-dropdown-menu-user></app-dropdown-menu-user>
 </div>

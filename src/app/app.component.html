@@ -1,5 +1,5 @@
 <div>
-  <app-top-menu [title]="titleTop()"></app-top-menu>
+  <app-top-menu [title]="titleTop()" [needSearchbar]="showSearch()"></app-top-menu>
   <div class="content">
     <app-sidebar (optionSelected)="changeTitleTop($event)"></app-sidebar>
     <div class="router">
