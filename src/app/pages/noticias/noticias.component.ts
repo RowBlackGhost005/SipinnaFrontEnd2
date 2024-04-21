@@ -41,7 +41,9 @@ export class NoticiasComponent {
   }
 
   agregarFunc() {
-    this.openModal('Agregar Noticia', 'Agrega una noticia');
+    this.openModal('Agregar Dominio', 'Dominio','CAPTURE EL NOMBRE DEL DOMINIO',
+    'Url','CAPTURE LA URL DE LA NOTICIA',true,
+    'Fotografia de la noticia',true);
 
   }
 
@@ -52,7 +54,11 @@ export class NoticiasComponent {
   eliminarFunc() {
     // Lógica para la funcionalidad de eliminar
   }
-  openModal(title: string, message: string) {
-    this.modal?.openModal(title, message);
+  openModal(title: string, lblNombre: string, placeholderNombre: string,
+    lblUrl: string, placeholderUrl: string, showUrlInput: boolean,
+    lblImagen: string, showImagenInput: boolean) {
+    this.modal?.openModal(title, lblNombre, placeholderNombre,
+      lblUrl, placeholderUrl, showUrlInput,
+      lblImagen, showImagenInput);
   }
 }

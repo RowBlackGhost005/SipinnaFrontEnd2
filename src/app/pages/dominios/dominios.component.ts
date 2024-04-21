@@ -16,7 +16,7 @@ import { IDominio } from '../../models/dominio.model';
   styleUrl: './dominios.component.scss'
 })
 
-export class DominiosComponent implements OnInit{
+export class DominiosComponent implements OnInit {
   private _dominioService = inject(DominioService);
   @ViewChild(ModalComponent) modal?: ModalComponent;
   tableData: IDominio[] = [];
@@ -34,11 +34,13 @@ export class DominiosComponent implements OnInit{
       this.tableJson.set(JSON.stringify(this.tableData))
       console.log(this.tableJson())
     }
-  )
+    )
   }
 
   agregarFunc() {
-    this.openModal('Agregar Dominios', 'Agrega un dominio');
+    this.openModal('Agregar Dominio', 'Dominio', 'CAPTURE EL NOMBRE DEL DOMINIO',
+      '', '', false,
+      '', false);
 
   }
 
@@ -49,7 +51,11 @@ export class DominiosComponent implements OnInit{
   eliminarFunc() {
     // Lógica para la funcionalidad de eliminar
   }
-  openModal(title: string, message: string) {
-    this.modal?.openModal(title, message);
+  openModal(title: string, lblNombre: string, placeholderNombre: string,
+    lblUrl: string, placeholderUrl: string, showUrlInput: boolean,
+    lblImagen: string, showImagenInput: boolean) {
+    this.modal?.openModal(title, lblNombre, placeholderNombre,
+      lblUrl, placeholderUrl, showUrlInput,
+      lblImagen, showImagenInput);
   }
 }

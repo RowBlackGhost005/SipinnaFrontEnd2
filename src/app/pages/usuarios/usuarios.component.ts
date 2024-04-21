@@ -37,4 +37,18 @@ export class UsuariosComponent {
     })
   }
   */
+
+  //BOTONES DE AGREGAR, EDITAR Y ELIMINAR
+
+  agregarFunc() {
+        // Lógica para la funcionalidad de guardar
+  }
+
+  editarFunc() {
+    // Lógica para la funcionalidad de editar
+  }
+
+  eliminarFunc() {
+    // Lógica para la funcionalidad de eliminar
+  }
 }
