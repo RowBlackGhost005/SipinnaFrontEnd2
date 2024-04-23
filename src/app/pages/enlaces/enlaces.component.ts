@@ -33,27 +33,27 @@ export class EnlacesComponent {
   tableJson = signal("")
 
   ngOnInit(): void {
-    this._enlaceService.getEnlaces().subscribe((data: IEnlace[]) => {
-      console.log(data);
-      this.tableData = data;
-      this.dataAux = data;
-
-      this.tableJson.set(JSON.stringify(this.tableData))
-      console.log(this.tableJson())
-    })
-
-
+    this.cargarDatos();
     //Se queda escuchando para ver si se emite el evento de búsqueda
     this._searchbarService.eventObservable$.subscribe((event) => {
       this.filtrar(event)
     })
   }
 
-
+  cargarDatos(): void {
+    this._enlaceService.getEnlaces().subscribe((data: IEnlace[]) => {
+      console.log(data);
+      this.tableData = data;
+      this.dataAux = data;
+      this.tableJson.set(JSON.stringify(this.tableData));
+      console.log(this.tableJson());
+      console.log(this.tableData);
+    });
+  }
   agregarFunc() {
     this.openModal('Agregar Enlace', 'Titulo del enlace', 'CAPTURE EL TITULO DEL ENLACE',
       'Url', 'CAPTURE LA URL DEL ENLACE', true,
-      '', false,'enlace');
+      '', false, 'enlace');
 
   }
 
@@ -65,13 +65,19 @@ export class EnlacesComponent {
     // Lógica para la funcionalidad de eliminar
   }
 
-   // Funcion para el boton de agregar, se abre el modal.
-   openModal(title: string, lblNombre: string, placeholderNombre: string,
+  // Funcion para el boton de agregar, se abre el modal.
+  openModal(title: string, lblNombre: string, placeholderNombre: string,
     lblUrl: string, placeholderUrl: string, showUrlInput: boolean,
-    lblImagen: string, showImagenInput: boolean,accion:string) {
+    lblImagen: string, showImagenInput: boolean, accion: string) {
     this.modal?.openModal(title, lblNombre, placeholderNombre,
       lblUrl, placeholderUrl, showUrlInput,
-      lblImagen, showImagenInput,accion);
+      lblImagen, showImagenInput, accion);
+
+    // Escuchar el evento de dominio guardado y actualizar la tabla
+    this.modal?.nuevoGuardado.subscribe(() => {
+      this.cargarDatos();
+
+    });
   }
 
 
