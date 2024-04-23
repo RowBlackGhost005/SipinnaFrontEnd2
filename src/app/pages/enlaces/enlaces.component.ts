@@ -61,9 +61,10 @@ export class EnlacesComponent {
     // Lógica para la funcionalidad de editar
   }
 
+
   eliminarFunc() {
-    // Lógica para la funcionalidad de eliminar
-  }
+  
+    }
 
   // Funcion para el boton de agregar, se abre el modal.
   openModal(title: string, lblNombre: string, placeholderNombre: string,
