@@ -1,4 +1,4 @@
 export interface IDominio {
-    iddominio: number;
+    iddominio?: number;
     nombre: string;
 }
