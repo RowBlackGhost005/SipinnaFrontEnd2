@@ -1,5 +1,5 @@
 export interface IEnlace {
-    idenlaces: number;
+    idenlaces?: number;
     titulo: string;
     enlace: string;
 }

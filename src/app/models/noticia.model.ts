@@ -1,5 +1,5 @@
 export interface INoticia {
-    idnoticias: number;
+    idnoticias?: number;
     titulo: string;
     imagen: string;
     enlace: string;
