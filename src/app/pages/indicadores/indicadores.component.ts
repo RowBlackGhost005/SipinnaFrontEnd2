@@ -55,6 +55,8 @@ export class IndicadoresComponent implements OnInit {
     this._indicadorService.getIndicadores().subscribe((data: IIndicador[]) => {
       this.tableData = data;
       let pendientes = data.length
+      //esta tablaAux es para hacer el filtro de los campos que no seran necesarios exportar en el excel (metadato y dominioNav)
+      let tableAux:any = []
 
       //Debido a que en la base de datos, la entidad de indicador guarda nomas el número de referencia al dominio
       //a través de estas iteraciones se cambian los números por los propios nombres de los dominios para que esto 
@@ -68,33 +70,57 @@ export class IndicadoresComponent implements OnInit {
           //columna de dominios le aparezca al usuario el nombre del dominio en lugar del número 
           pendientes--;
           if (pendientes === 0) {
-            this.tableJson.set(JSON.stringify(data))
+            tableAux = data.map(({ metadato, dominioNav, ...resto }) => {
+              // La desestructuración extrae "metadato" y "dominioNav" del objeto, y "resto" contiene el resto de las claves
+              return resto;
+            });
+
+            //Para el json que sera exportado a excel, le mandamos el tableAux que va a omitir los valores de metadato y dominioNav.
+            //La razon de esto, es porque metadato solo guarda una referencia dentro del sistema de archivos y dominioNav es una referencia usada en la base de datos
+            this.tableJson.set(JSON.stringify(tableAux))
+
+            console.log("el json")
+            console.log(tableAux)
             console.log(this.tableJson())
             this.dataAux = data
           }
         })
       })
 
+      //Se queda escuchando para ver si se emite el evento de búsqueda
+      this._searchbarService.eventObservable$.subscribe((event) => {
+        this.filtrar(event, tableAux)
+      })
+
     });
 
-    //Se queda escuchando para ver si se emite el evento de búsqueda
-    this._searchbarService.eventObservable$.subscribe((event) => {
-      this.filtrar(event)
-    })
+
   }
 
-/**
-* Función para filtrar los datos que se van a mostrar dentro de la tabla, utiliza filteredTable
-* para guardar la lista de todos los objetos cuyos nombres coincidan con el texto ingresado;
-* dataAux se usa para que no se pierda la lista que contiene todos los objetos a la hora de reemplazar
-* los valores de tableData.
-* 
-* @param text el texto que fue ingresado dentro del buscador
-*/
-  filtrar(text: string) {
-    const lowercaseText = text.toLowerCase();
-    this.filteredTable = this.dataAux.filter(data => data.nombre.toLowerCase().includes(lowercaseText));
+  /**
+  * Función para filtrar los datos que se van a mostrar dentro de la tabla, utiliza filteredTable
+  * para guardar la lista de todos los objetos cuyos nombres coincidan con el texto ingresado;
+  * dataAux se usa para que no se pierda la lista que contiene todos los objetos a la hora de reemplazar
+  * los valores de tableData.
+  * 
+  * @param text el texto que fue ingresado dentro del buscador
+  * @param tableAux Es la tabla que tiene guardado solo el ID, el nombre del indicador y el nombre del dominio para  omitir los otros 2 valores del objeto (metadato y dominioNav)
+  */
+  filtrar(text: string, tableAux:any[]) {
+    const normalizedText = this.normalizeText(text);
+
+    this.filteredTable = tableAux.filter(item => {
+      const normalizedField = this.normalizeText(item.nombre)
+      return normalizedField.includes(normalizedText)
+    });
     this.tableData = this.filteredTable
+    //para que se exporte el excel de solo lo que ve el usuario
+    this.tableJson.set(JSON.stringify(this.tableData))
+  }
+
+  normalizeText(text: string): string {
+    // Para normalizar el texto quitando acentos y convirtiendo a minúsculas
+    return text.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
   }
 
 }

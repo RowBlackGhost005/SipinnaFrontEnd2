@@ -1,7 +1,7 @@
 .app-sidebar {
     top: 0;
     bottom: 0;
-    width: 18rem;
+    width: 270px;
     height: 100vh;
     z-index: 1020;
     overflow: hidden;
@@ -46,6 +46,7 @@ div {
         margin-top: 9px;
         margin-left: 9px;
         font-weight: bold;
+        font-size: 2rem;
     }
 
 }
@@ -57,3 +58,11 @@ div {
     color: #CF8EAC;
     font-weight: bold;
 }
+
+
+@media (max-width: 860px) {
+    .app-sidebar {
+      display: none; 
+    }
+
+  }

@@ -24,6 +24,7 @@ export class DominiosComponent implements OnInit {
   tableData: IDominio[] = [];
   dataAux:  IDominio[] = [];
   filteredTable: IDominio[] = [];
+  filteredItems: IDominio[] = [];
 
   tableColumns: TableModel[] = [
     { header: 'ID', field: 'iddominio' },
@@ -84,8 +85,21 @@ export class DominiosComponent implements OnInit {
    * @param text el texto que fue ingresado dentro del buscador
    */
   filtrar(text: string){
-    const lowercaseText = text.toLowerCase();
-    this.filteredTable = this.dataAux.filter(data => data.nombre.toLowerCase().includes(lowercaseText));
+    const normalizedText = this.normalizeText(text);
+    this.filteredTable = this.dataAux.filter(item => {
+      const normalizedField = this.normalizeText(item.nombre)
+      return normalizedField.includes(normalizedText)
+    });
+
     this.tableData = this.filteredTable
+    //para que se exporte el excel de solo lo que ve el usuario
+    this.tableJson.set(JSON.stringify(this.tableData))
   }
+
+  normalizeText(text: string): string {
+    // Para normalizar el texto quitando acentos y convirtiendo a minúsculas
+    return text.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+  }
+
+
 }

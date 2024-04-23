@@ -25,3 +25,15 @@
     }
 }
 
+@media (max-width: 1256px) {
+    .input-container{
+       margin-left: 10px;
+       width: 39vw;
+    }
+ }
+
+@media (max-width: 860px) {
+    .input-container{
+       margin-left: 20px;
+    }
+ }

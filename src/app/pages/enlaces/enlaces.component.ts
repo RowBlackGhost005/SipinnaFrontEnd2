@@ -37,14 +37,14 @@ export class EnlacesComponent {
       console.log(data);
       this.tableData = data;
       this.dataAux = data;
-      
+
       this.tableJson.set(JSON.stringify(this.tableData))
       console.log(this.tableJson())
     })
 
-    
+
     //Se queda escuchando para ver si se emite el evento de búsqueda
-    this._searchbarService.eventObservable$.subscribe((event)=>{
+    this._searchbarService.eventObservable$.subscribe((event) => {
       this.filtrar(event)
     })
   }
@@ -74,17 +74,30 @@ export class EnlacesComponent {
   }
 
 
-    /**
-   * Función para filtrar los datos que se van a mostrar dentro de la tabla, utiliza filteredTable
-   * para guardar la lista de todos los objetos cuyos títulos coincidan con el texto ingresado;
-   * dataAux se usa para que no se pierda la lista que contiene todos los objetos a la hora de reemplazar
-   * los valores de tableData.
-   * 
-   * @param text el texto que fue ingresado dentro del buscador
-   */
-    filtrar(text: string){
-      const lowercaseText = text.toLowerCase();
-      this.filteredTable = this.dataAux.filter(data => data.titulo.toLowerCase().includes(lowercaseText));
-      this.tableData = this.filteredTable
-    }
+  /**
+ * Función para filtrar los datos que se van a mostrar dentro de la tabla, utiliza filteredTable
+ * para guardar la lista de todos los objetos cuyos títulos coincidan con el texto ingresado;
+ * dataAux se usa para que no se pierda la lista que contiene todos los objetos a la hora de reemplazar
+ * los valores de tableData.
+ * 
+ * @param text el texto que fue ingresado dentro del buscador
+ */
+  filtrar(text: string) {
+    const normalizedText = this.normalizeText(text);
+
+    this.filteredTable = this.dataAux.filter(item => {
+      const normalizedField = this.normalizeText(item.titulo)
+      return normalizedField.includes(normalizedText)
+    });
+
+    this.tableData = this.filteredTable
+    //para que se exporte el excel de solo lo que ve el usuario
+    this.tableJson.set(JSON.stringify(this.tableData))
+  }
+
+  normalizeText(text: string): string {
+    // Para normalizar el texto quitando acentos y convirtiendo a minúsculas
+    return text.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+  }
+
 }

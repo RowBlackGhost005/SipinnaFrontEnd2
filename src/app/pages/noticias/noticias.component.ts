@@ -82,12 +82,21 @@ export class NoticiasComponent {
   * @param text el texto que fue ingresado dentro del buscador
   */
   filtrar(text: string) {
-    const lowercaseText = text.toLowerCase();
-    if (text == "") {
-      this.tableData = this.dataAux
-    } else {
-      this.filteredTable = this.dataAux.filter(data => data.titulo.toLowerCase().includes(lowercaseText));
-      this.tableData = this.filteredTable
-    }
+    const normalizedText = this.normalizeText(text);
+
+    this.filteredTable = this.dataAux.filter(item => {
+      const normalizedField = this.normalizeText(item.titulo)
+      return normalizedField.includes(normalizedText)
+    });
+
+    this.tableData = this.filteredTable
+    //para que se exporte el excel de solo lo que ve el usuario
+    this.tableJson.set(JSON.stringify(this.tableData))
   }
+
+  normalizeText(text: string): string {
+    // Para normalizar el texto quitando acentos y convirtiendo a minúsculas
+    return text.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+  }
+
 }
