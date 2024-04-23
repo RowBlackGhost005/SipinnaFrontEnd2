@@ -14,3 +14,9 @@ button{
 p {
     color: #999999;
 }
+
+@media (max-width: 678px) {
+    p{
+       text-align: center;
+    }
+ }

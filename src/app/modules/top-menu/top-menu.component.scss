@@ -13,7 +13,7 @@
     justify-content: space-between;
     transition: box-shadow .2s linear;
     border-bottom: 1px solid #cccccc;
-    width: calc(100% - 18rem); 
+    width: calc(100% - 270px); 
     padding-left: 20px;
     color: #5D3B46;
     font-size: 32px;
@@ -23,3 +23,9 @@
 .title{
 width: 11vw;
 }
+
+@media (max-width: 860px) {
+     .topMenu{
+        width: 100vw;
+     }
+  }

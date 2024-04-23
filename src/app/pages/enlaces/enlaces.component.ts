@@ -6,6 +6,7 @@ import { ExportTableComponent } from '../../modules/export-table/export-table.co
 import { ModalComponent } from '../../modules/modal/modal.component';
 import { EnlaceService } from '../../services/enlace.service';
 import { IEnlace } from '../../models/enlace.model';
+import { SearchbarService } from '../../services/searchbar.service';
 
 @Component({
   selector: 'app-enlaces',
@@ -17,8 +18,12 @@ import { IEnlace } from '../../models/enlace.model';
 export class EnlacesComponent {
   @ViewChild(ModalComponent) modal?: ModalComponent;
   private _enlaceService = inject(EnlaceService);
+  private _searchbarService = inject(SearchbarService);
 
   tableData: IEnlace[] = [];
+  dataAux: IEnlace[] = [];
+  filteredTable: IEnlace[] = [];
+
   tableColumns: TableModel[] = [
     { header: 'ID', field: 'idenlaces' },
     { header: 'Titulo', field: 'titulo' },
@@ -31,9 +36,16 @@ export class EnlacesComponent {
     this._enlaceService.getEnlaces().subscribe((data: IEnlace[]) => {
       console.log(data);
       this.tableData = data;
+      this.dataAux = data;
 
       this.tableJson.set(JSON.stringify(this.tableData))
       console.log(this.tableJson())
+    })
+
+
+    //Se queda escuchando para ver si se emite el evento de búsqueda
+    this._searchbarService.eventObservable$.subscribe((event) => {
+      this.filtrar(event)
     })
   }
 
@@ -61,4 +73,32 @@ export class EnlacesComponent {
       lblUrl, placeholderUrl, showUrlInput,
       lblImagen, showImagenInput,accion);
   }
+
+
+  /**
+ * Función para filtrar los datos que se van a mostrar dentro de la tabla, utiliza filteredTable
+ * para guardar la lista de todos los objetos cuyos títulos coincidan con el texto ingresado;
+ * dataAux se usa para que no se pierda la lista que contiene todos los objetos a la hora de reemplazar
+ * los valores de tableData.
+ * 
+ * @param text el texto que fue ingresado dentro del buscador
+ */
+  filtrar(text: string) {
+    const normalizedText = this.normalizeText(text);
+
+    this.filteredTable = this.dataAux.filter(item => {
+      const normalizedField = this.normalizeText(item.titulo)
+      return normalizedField.includes(normalizedText)
+    });
+
+    this.tableData = this.filteredTable
+    //para que se exporte el excel de solo lo que ve el usuario
+    this.tableJson.set(JSON.stringify(this.tableData))
+  }
+
+  normalizeText(text: string): string {
+    // Para normalizar el texto quitando acentos y convirtiendo a minúsculas
+    return text.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+  }
+
 }

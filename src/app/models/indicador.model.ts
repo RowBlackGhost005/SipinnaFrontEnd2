@@ -3,4 +3,5 @@ export interface IIndicador {
     nombre: string;
     metadato: string;
     dominio: any;
+    dominioNav: any;
 }

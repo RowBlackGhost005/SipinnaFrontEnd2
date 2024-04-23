@@ -18,6 +18,12 @@ export class AppComponent {
   //es para mostrar o no la barra de búsqueda
   showSearch = signal(true);
 
+  ngOnInit(): void {
+    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
+    //Add 'implements OnInit' to the class.
+    this.getTitle()
+  }
+
   //Función para cambiar el título del header de la aplicación dependiendo de la sección en la que se encuentre el usuario
   //Los numeros del switch hacen referencia al orden en el que estan los botones del menú.
   //En el sidebar component, en los eventos click hay una función llamada OptionHandler(), esa funcion recibe un número como parámetro,
@@ -27,29 +33,59 @@ export class AppComponent {
     case 1:
       this.titleTop.set("Inicio");
       this.showSearch.set(false);
+      this.saveTitle()
       break;
     case 2:
       this.titleTop.set("Dominios");
       this.showSearch.set(true);
+      this.saveTitle()
       break;
     case 3:
       this.titleTop.set("Indicadores");
       this.showSearch.set(true);
+      this.saveTitle()
       break;
     case 4:
       this.titleTop.set("Noticias");
       this.showSearch.set(true);
+      this.saveTitle()
       break;
     case 5:
       this.titleTop.set("Enlaces");
       this.showSearch.set(true);
+      this.saveTitle()
       break;
     case 6:
       this.titleTop.set("Usuarios");
       this.showSearch.set(true);
+      this.saveTitle()
       break;
     default:
       break;
+    }
+  }
+  /**
+   * Cuando recargas la página y te encuentras en dominio, indicadores, etc..., el titulo dice que se encuentra en 
+   * inicio, con esta funcion guardamos el titulo en el localstorage para que ya no aparezca
+   */
+  saveTitle(){
+    const titleTop:string = this.titleTop()
+
+    const jsonTitle = JSON.stringify(titleTop)
+
+    localStorage.setItem('titleTop', jsonTitle)
+  }
+  /**
+   * Para recuperar el titulo del localstorage
+   */
+  getTitle(){
+    const titleTopJSON = localStorage.getItem('titleTop')
+
+    if(titleTopJSON !==null){
+      const titleTop = JSON.parse(titleTopJSON)
+      this.titleTop.set(titleTop)
+    } else {
+      this.titleTop.set("Inicio")
     }
   }
 
