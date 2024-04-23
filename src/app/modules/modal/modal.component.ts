@@ -8,6 +8,8 @@ import { IEnlace } from '../../models/enlace.model';
 import { NoticiaService } from '../../services/noticia.service';
 import { HttpClient } from '@angular/common/http';
 import { INoticia } from '../../models/noticia.model';
+import { Output } from '@angular/core';
+import { EventEmitter } from '@angular/core';
 // @ts-ignore
 const $: any = window['$']
 @Component({
@@ -18,6 +20,7 @@ const $: any = window['$']
   styleUrl: './modal.component.scss'
 })
 export class ModalComponent {
+  @Output() nuevoGuardado:EventEmitter<void>=new EventEmitter<void>();
   @ViewChild('modal') modal?: ElementRef;
   title: string = '';
   lblNombre: string = '';
@@ -86,6 +89,7 @@ export class ModalComponent {
     this.dominioService.postDominio(nuevoDominio).subscribe(
       response => {
         console.log('Dominio guardado correctamente: ', response);
+        this.nuevoGuardado.emit();
       },
       error => {
         console.error('error al guardar el dominio: ', error);
@@ -106,6 +110,7 @@ export class ModalComponent {
     this.enlaceService.postEnlace(nuevoEnlace).subscribe(
       response => {
         console.log('Enlace guardado correctamente: ', response);
+        this.nuevoGuardado.emit();
       },
       error => {
         console.error('error al guardar el Enlace: ', error);

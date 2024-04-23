@@ -22,7 +22,7 @@ export class DominiosComponent implements OnInit {
   private _searchbarService = inject(SearchbarService)
   @ViewChild(ModalComponent) modal?: ModalComponent;
   tableData: IDominio[] = [];
-  dataAux:  IDominio[] = [];
+  dataAux: IDominio[] = [];
   filteredTable: IDominio[] = [];
   filteredItems: IDominio[] = [];
 
@@ -34,27 +34,30 @@ export class DominiosComponent implements OnInit {
   tableJson = signal("")
 
   ngOnInit(): void {
+    this.cargarDatos();
+
+    //Se queda escuchando para ver si se emite el evento de búsqueda
+    this._searchbarService.eventObservable$.subscribe((event) => {
+      this.filtrar(event)
+    })
+
+  }
+
+  cargarDatos(): void {
     this._dominioService.getDominios().subscribe((data: IDominio[]) => {
       console.log(data);
       this.tableData = data;
       this.dataAux = data;
-      this.tableJson.set(JSON.stringify(this.tableData))
-      console.log(this.tableJson())
-      console.log(this.tableData)
-    }
-    )
-
-    //Se queda escuchando para ver si se emite el evento de búsqueda
-    this._searchbarService.eventObservable$.subscribe((event)=>{
-      this.filtrar(event)
-    })
-    
+      this.tableJson.set(JSON.stringify(this.tableData));
+      console.log(this.tableJson());
+      console.log(this.tableData);
+    });
   }
 
   agregarFunc() {
     this.openModal('Agregar Dominio', 'Dominio', 'CAPTURE EL NOMBRE DEL DOMINIO',
       '', '', false,
-      '', false,'dominio');
+      '', false, 'dominio');
 
   }
 
@@ -69,15 +72,22 @@ export class DominiosComponent implements OnInit {
   // Funcion para el boton de agregar, se abre el modal.
   openModal(title: string, lblNombre: string, placeholderNombre: string,
     lblUrl: string, placeholderUrl: string, showUrlInput: boolean,
-    lblImagen: string, showImagenInput: boolean,accion:string) {
+    lblImagen: string, showImagenInput: boolean, accion: string) {
     this.modal?.openModal(title, lblNombre, placeholderNombre,
       lblUrl, placeholderUrl, showUrlInput,
-      lblImagen, showImagenInput,accion);
+      lblImagen, showImagenInput, accion);
+
+    // Escuchar el evento de dominio guardado y actualizar la tabla
+    this.modal?.nuevoGuardado.subscribe(() => {
+      this.cargarDatos();
+
+    });
   }
 
 
 
-  
+
+
   /**
    * Función para filtrar los datos que se van a mostrar dentro de la tabla, utiliza filteredTable
    * para guardar la lista de todos los objetos cuyos nombres coincidan con el texto ingresado;
@@ -86,7 +96,7 @@ export class DominiosComponent implements OnInit {
    * 
    * @param text el texto que fue ingresado dentro del buscador
    */
-  filtrar(text: string){
+  filtrar(text: string) {
     const normalizedText = this.normalizeText(text);
     this.filteredTable = this.dataAux.filter(item => {
       const normalizedField = this.normalizeText(item.nombre)
