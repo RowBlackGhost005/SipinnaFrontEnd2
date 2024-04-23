@@ -52,9 +52,9 @@ export class NoticiasComponent {
   }
 
   agregarFunc() {
-    this.openModal('Agregar Dominio', 'Dominio', 'CAPTURE EL NOMBRE DEL DOMINIO',
-      'Url', 'CAPTURE LA URL DE LA NOTICIA', true,
-      'Fotografia de la noticia', true);
+    // this.openModal('Agregar Noticia', 'Titulo', 'CAPTURE EL TITULO DE LA NOTICIA',
+    // 'Url', 'CAPTURE LA URL DE LA NOTICIA', false,
+    // 'Fotografia de la noticia',true,'noticia');
 
   }
 
@@ -67,10 +67,10 @@ export class NoticiasComponent {
   }
   openModal(title: string, lblNombre: string, placeholderNombre: string,
     lblUrl: string, placeholderUrl: string, showUrlInput: boolean,
-    lblImagen: string, showImagenInput: boolean) {
+    lblImagen: string, showImagenInput: boolean,accion:string) {
     this.modal?.openModal(title, lblNombre, placeholderNombre,
       lblUrl, placeholderUrl, showUrlInput,
-      lblImagen, showImagenInput);
+      lblImagen, showImagenInput,accion);
   }
 
   /**
@@ -100,3 +100,4 @@ export class NoticiasComponent {
   }
 
 }
+

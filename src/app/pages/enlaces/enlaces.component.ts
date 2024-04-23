@@ -53,7 +53,7 @@ export class EnlacesComponent {
   agregarFunc() {
     this.openModal('Agregar Enlace', 'Titulo del enlace', 'CAPTURE EL TITULO DEL ENLACE',
       'Url', 'CAPTURE LA URL DEL ENLACE', true,
-      '', false);
+      '', false,'enlace');
 
   }
 
@@ -65,12 +65,13 @@ export class EnlacesComponent {
     // Lógica para la funcionalidad de eliminar
   }
 
-  openModal(title: string, lblNombre: string, placeholderNombre: string,
+   // Funcion para el boton de agregar, se abre el modal.
+   openModal(title: string, lblNombre: string, placeholderNombre: string,
     lblUrl: string, placeholderUrl: string, showUrlInput: boolean,
-    lblImagen: string, showImagenInput: boolean) {
+    lblImagen: string, showImagenInput: boolean,accion:string) {
     this.modal?.openModal(title, lblNombre, placeholderNombre,
       lblUrl, placeholderUrl, showUrlInput,
-      lblImagen, showImagenInput);
+      lblImagen, showImagenInput,accion);
   }
 
 

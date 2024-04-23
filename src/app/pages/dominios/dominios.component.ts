@@ -54,7 +54,7 @@ export class DominiosComponent implements OnInit {
   agregarFunc() {
     this.openModal('Agregar Dominio', 'Dominio', 'CAPTURE EL NOMBRE DEL DOMINIO',
       '', '', false,
-      '', false);
+      '', false,'dominio');
 
   }
 
@@ -65,12 +65,14 @@ export class DominiosComponent implements OnInit {
   eliminarFunc() {
     // Lógica para la funcionalidad de eliminar
   }
+
+  // Funcion para el boton de agregar, se abre el modal.
   openModal(title: string, lblNombre: string, placeholderNombre: string,
     lblUrl: string, placeholderUrl: string, showUrlInput: boolean,
-    lblImagen: string, showImagenInput: boolean) {
+    lblImagen: string, showImagenInput: boolean,accion:string) {
     this.modal?.openModal(title, lblNombre, placeholderNombre,
       lblUrl, placeholderUrl, showUrlInput,
-      lblImagen, showImagenInput);
+      lblImagen, showImagenInput,accion);
   }
 
 
