@@ -1,0 +1,27 @@
+.container {
+    display: flex;
+}
+
+.app-sidebar-indicator {
+    width: 20%;
+}
+
+.main-content {
+    flex: 1;
+    padding: 30px;
+}
+
+
+.horizontalView {
+    display: flex;
+    flex-direction: row;
+
+
+}
+
+.topRight {
+    display: flex;
+    width: 100%;
+    flex-direction: row-reverse;
+    margin-right: 10px;
+}

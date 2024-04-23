@@ -2,3 +2,21 @@
     border: 1px solid #dad4d4;
     border-radius: 5px;
 }
+
+.ngx-pagination {
+    display: flex !important;
+    justify-content: center !important;
+}
+
+.ngx-pagination li {
+    border: 1px solid #dbd6d6 !important;
+}
+
+.ngx-pagination li a {
+    color: #dbd6d6 !important;
+}
+
+.ngx-pagination .current,
+.btn-info {
+    background: #960e53 !important;
+}

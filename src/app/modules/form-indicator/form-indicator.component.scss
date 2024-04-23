@@ -1,0 +1,43 @@
+.container {
+    width: 50%;
+    background: #960E53;
+}
+
+.button-container>div {
+    display: inline-block;
+    margin-right: 10px;
+}
+
+.button {
+    width: 100px;
+    height: 40px;
+    color: white;
+    border: none;
+    border-radius: 50px;
+    margin: 3px;
+}
+
+.required-star {
+    color: red;
+}
+
+.label-custom {
+    color: #adb5bd;
+    padding: 0px
+}
+
+.cancel-button {
+    background-color: #b1b1b1;
+}
+
+.cancel-button:hover {
+    background-color: #929191;
+}
+
+.save-button {
+    background-color: #960E53;
+}
+
+.save-button:hover {
+    background-color: #6d0a3b;
+}

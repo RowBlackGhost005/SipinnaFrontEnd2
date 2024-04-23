@@ -10,7 +10,11 @@
         </thead>
     
         <tbody class="table-group-divider">
-            @for(item of data; track $index){
+            @for(item of data | paginate: {
+                itemsPerPage: pageSize,
+                currentPage: page,
+                totalItems: total
+                }; track $index){
             <tr>
                 <td><input type="checkbox" [checked]="selectedItemIndex == $index" (change)="selectItem($index)"></td>
                 @for(column of columns; track $index){
@@ -24,4 +28,5 @@
             }
         </tbody>
     </table>
+    <pagination-controls previousLabel="" nextLabel="" (pageChange)="page = $event"></pagination-controls>
 </div>

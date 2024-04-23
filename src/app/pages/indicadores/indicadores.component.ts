@@ -9,6 +9,7 @@ import { DominioService } from '../../services/dominio.service';
 import { IIndicador } from '../../models/indicador.model';
 import { IDominio } from '../../models/dominio.model';
 import { SearchbarService } from '../../services/searchbar.service';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -23,7 +24,7 @@ export class IndicadoresComponent implements OnInit {
   private _indicadorService = inject(IndicadorService);
   private _dominioService = inject(DominioService);
   private _searchbarService = inject(SearchbarService);
-
+  private router = inject(Router);
 
   tableData: IIndicador[] = [];
   dataAux: IIndicador[] = [];
@@ -35,10 +36,8 @@ export class IndicadoresComponent implements OnInit {
     { header: 'Dominio', field: 'dominio' }
   ];
 
-
-
   agregarFunc() {
-
+    this.router.navigateByUrl('/datos');
   }
 
   editarFunc() {
@@ -56,7 +55,7 @@ export class IndicadoresComponent implements OnInit {
       this.tableData = data;
       let pendientes = data.length
       //esta tablaAux es para hacer el filtro de los campos que no seran necesarios exportar en el excel (metadato y dominioNav)
-      let tableAux:any = []
+      let tableAux: any = []
 
       //Debido a que en la base de datos, la entidad de indicador guarda nomas el número de referencia al dominio
       //a través de estas iteraciones se cambian los números por los propios nombres de los dominios para que esto 
@@ -106,7 +105,7 @@ export class IndicadoresComponent implements OnInit {
   * @param text el texto que fue ingresado dentro del buscador
   * @param tableAux Es la tabla que tiene guardado solo el ID, el nombre del indicador y el nombre del dominio para  omitir los otros 2 valores del objeto (metadato y dominioNav)
   */
-  filtrar(text: string, tableAux:any[]) {
+  filtrar(text: string, tableAux: any[]) {
     const normalizedText = this.normalizeText(text);
 
     this.filteredTable = tableAux.filter(item => {
