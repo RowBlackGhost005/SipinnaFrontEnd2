@@ -1,0 +1,25 @@
+.sidebar {
+    width: 200px;
+    height: calc(100vh - 6rem);
+    background-color: #f4f4f4;
+}
+
+.menu {
+    list-style-type: none;
+    padding: 0;
+}
+
+.menu-item {
+    border-bottom: 1px solid #ccc;
+}
+
+.menu-item a {
+    display: block;
+    padding: 10px;
+    color: black;
+    text-decoration: none;
+}
+
+.menu-item a:hover {
+    background-color: #ddd;
+}
