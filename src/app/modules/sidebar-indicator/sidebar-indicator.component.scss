@@ -1,6 +1,6 @@
 .sidebar {
     width: 200px;
-    height: calc(100vh - 6rem);
+    height: calc(100vh - 10rem);
     background-color: #f4f4f4;
 }
 
@@ -11,15 +11,44 @@
 
 .menu-item {
     border-bottom: 1px solid #ccc;
+    position: relative;
 }
 
 .menu-item a {
     display: block;
     padding: 10px;
-    color: black;
+    color: gray;
     text-decoration: none;
+    padding-right: 25px;
+    position: relative;
 }
 
 .menu-item a:hover {
-    background-color: #ddd;
+    background-color: #dfdede;
+}
+
+.triangle {
+    position: absolute;
+    top: 50%;
+    right: -10px; 
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 15px 0 15px 15px; 
+    border-color: transparent transparent transparent #8e9093; 
+    transform: translateY(-50%);
+}
+
+.menu-item.active a {
+    background-color: #8e9093;
+    color: white; 
+    font-weight: bold;
+}
+
+.menu-item .triangle {
+    display: none; 
+}
+
+.menu-item.active .triangle {
+    display: block;
 }

@@ -1,14 +1,18 @@
 <div class="container">
-    <app-sidebar-indicator></app-sidebar-indicator>
-    <div class="main-content">
-        <div class="content">
-            <div class="horizontalView">
-                <app-buttons></app-buttons>
-                <div class="topRight">
-                    <app-export-table [tableContent]="tableJson()" [fileName]="'Dominios'"></app-export-table>
+    <div class="sidebar">
+        <app-sidebar-indicator></app-sidebar-indicator>
+    </div>
+    <div class="table">
+        <div class="main-content">
+            <div class="content">
+                <div class="horizontalView">
+                    <app-buttons></app-buttons>
+                    <div class="topRight">
+                        <app-export-table [tableContent]="tableJson()" [fileName]="'Dominios'"></app-export-table>
+                    </div>
                 </div>
+                <app-table [columns]="tableColumns" [data]="tableData"></app-table>
             </div>
-            <app-table [columns]="tableColumns" [data]="tableData"></app-table>
         </div>
     </div>
 </div>

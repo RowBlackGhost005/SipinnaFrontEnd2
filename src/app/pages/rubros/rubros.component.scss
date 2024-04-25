@@ -1,9 +1,20 @@
-.container {
+.container{
     display: flex;
+    height: 100%;
+    justify-content: flex-start
 }
 
-.app-sidebar-indicator {
+.sidebar {
+    display: flex;
+    justify-content: center; 
+    align-items: flex-end; 
     width: 20%;
+}
+
+.table {
+    display: flex;
+    padding-top: 4%;
+    width: 80%;
 }
 
 .main-content {
@@ -11,12 +22,9 @@
     padding: 30px;
 }
 
-
 .horizontalView {
     display: flex;
     flex-direction: row;
-
-
 }
 
 .topRight {
