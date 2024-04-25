@@ -1,10 +1,12 @@
 <div class="sidebar">
     <ul class="menu">
-        <li class="menu-item">
-            <a routerLink="/datos" routerLinkActive="active">Datos</a>
+        <li class="menu-item" [class.active]="isActiveRoute('/datos')">
+            <a routerLink="/datos">Datos</a>
+            <div class="triangle" [class.active]="isActiveRoute('/datos')"></div>
         </li>
-        <li class="menu-item">
-            <a routerLink="/rubros" routerLinkActive="active">Rubros</a>
+        <li class="menu-item" [class.active]="isActiveRoute('/rubros')">
+            <a routerLink="/rubros">Rubros</a>
+            <div class="triangle" [class.active]="isActiveRoute('/rubros')"></div>
         </li>
     </ul>
 </div>

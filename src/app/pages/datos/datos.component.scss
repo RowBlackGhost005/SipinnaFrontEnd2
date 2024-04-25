@@ -1,12 +1,18 @@
-.container {
+.container{
     display: flex;
+    height: 100%;
+    justify-content: flex-start
 }
-
-.app-sidebar-indicator {
+.sidebar {
+    display: flex;
+    justify-content: center; 
+    align-items: flex-end; 
     width: 20%;
 }
 
-.content {
-    flex: 1;
-    padding: 30px;
+.form {
+    display: flex;
+    padding-top: 7%;
+    padding-left: 15px;
+    width: 50%;
 }
