@@ -22,10 +22,32 @@
 
 .title{
 width: 11vw;
+margin-top: 8px;
 }
 
 @media (max-width: 860px) {
      .topMenu{
         width: 100vw;
      }
+
+     .title{
+      margin-left: 26px;
+     }
   }
+
+  @media (max-width:620px) {
+   .title{
+      font-size: smaller;
+   }
+}
+
+@media (max-width:420px) {
+   .title{
+      display: none;
+   }
+
+   .dropdown{
+      position:absolute;
+      margin-left: 78vw;
+   }
+}
