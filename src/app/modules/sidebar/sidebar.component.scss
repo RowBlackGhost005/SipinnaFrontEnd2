@@ -21,7 +21,7 @@
     -moz-background-size: cover;
     transition: all .3s ease-in-out;
     background-blend-mode: multiply;
-    background-color: #BD287C;
+    //background-color: #BD287C;
     filter: blur(0px);
 }
 
@@ -58,11 +58,3 @@ div {
     color: #CF8EAC;
     font-weight: bold;
 }
-
-
-@media (max-width: 860px) {
-    .app-sidebar {
-      display: none; 
-    }
-
-  }

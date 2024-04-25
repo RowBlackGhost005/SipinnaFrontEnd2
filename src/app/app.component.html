@@ -1,7 +1,13 @@
 <div>
   <app-top-menu [title]="titleTop()" [needSearchbar]="showSearch()"></app-top-menu>
   <div class="content">
-    <app-sidebar (optionSelected)="changeTitleTop($event)"></app-sidebar>
+    <button class="toggle-sidebar" (click)="showSidebar()">
+      <span class="mdi mdi-menu"></span>
+    </button>
+    <div #sidebar class="sidebar">
+      <button class="hide" (click)="hideSidebar()"> <span class="mdi mdi-arrow-left"></span> </button>
+      <app-sidebar (optionSelected)="changeTitleTop($event)" [style.position]="''" [style.display]="''"></app-sidebar>
+    </div>
     <div class="router">
       <router-outlet></router-outlet>
     </div>
