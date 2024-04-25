@@ -37,3 +37,13 @@
        margin-left: 20px;
     }
  }
+
+ @media (max-width: 420px) {
+    .input-container{
+        margin-left: 32px;
+
+        & input {
+            width: 58vw;
+        }
+     }
+ }

@@ -18,23 +18,48 @@
     margin-right: 10px;
 }
 
-
 //Responsive design
 
 @media (max-width: 1280px) {
-    .content{
-       width: 69vw;
-    }
- }
+   .content{
+      width: 69vw;
+   }
+}
 
- @media (max-width: 930px) {
-    .content{
-       width: 65vw;
-    }
- }
+@media (max-width: 930px) {
+   .content{
+      width: 65vw;
+   }
+}
 
- @media (max-width: 860px) {
-    .content{
-       width: 90vw;
-    }
- }
+@media (max-width: 860px) {
+   .content{
+      width: 95vw;
+   }
+}
+
+@media (max-width: 480px){
+
+   .content{
+      margin-left: 0.6rem;
+      justify-content: center;
+   }
+   
+   //Botones de agregar, editar y eliminar
+   .horizontalView {
+      flex-direction: column;
+
+      & app-buttons{
+         margin: 0 auto;
+      }
+   }
+
+   //Botón de exportar a excel
+   .topRight {
+      flex-direction: row;
+      justify-content: center;
+      margin-top: 8px;
+   }
+
+   
+}
