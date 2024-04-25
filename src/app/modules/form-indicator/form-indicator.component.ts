@@ -1,10 +1,8 @@
-import { Component, inject } from '@angular/core';
+import { Component, EventEmitter, Output, ViewChild, inject } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { IDominio } from '../../models/dominio.model';
 import { DominioService } from '../../services/dominio.service';
 import { CommonModule } from '@angular/common';
-import { IndicadorService } from '../../services/indicador.service';
-import { IIndicador } from '../../models/indicador.model';
 
 @Component({
   selector: 'app-form-indicator',
@@ -14,16 +12,18 @@ import { IIndicador } from '../../models/indicador.model';
   styleUrl: './form-indicator.component.scss'
 })
 export class FormIndicatorComponent {
-  private _indicadorService = inject(IndicadorService);
-  formularioContacto: FormGroup
+  formularioIndicador: FormGroup
   dominiosData: IDominio[] = [];
-  data: IIndicador[] = [];
+
   private _dominioService = inject(DominioService);
 
+  @Output() submitForm: EventEmitter<FormData> = new EventEmitter<FormData>();
+  @ViewChild('fileInput') fileInput: any;
+
   constructor(private form: FormBuilder) {
-    this.formularioContacto = this.form.group({
+    this.formularioIndicador = this.form.group({
       nombre: ['', Validators.required],
-      dominio: ['', Validators.required],
+      dominioNavId: ['', Validators.required],
       metadato: [null, Validators.required]
     })
   }
@@ -35,10 +35,30 @@ export class FormIndicatorComponent {
   }
 
   hasErrors(controlName: string, errorType: string) {
-    return this.formularioContacto.get(controlName)?.hasError(errorType) && this.formularioContacto.get(controlName)?.touched
+    return this.formularioIndicador.get(controlName)?.hasError(errorType) && this.formularioIndicador.get(controlName)?.touched
   }
 
-  onSubmit(formData: any) {
-    console.log(formData);
+  onSubmit() {
+    const formData = new FormData();
+
+    // Itera sobre los controles del formulario y agrega sus valores al objeto FormData
+    Object.keys(this.formularioIndicador.controls).forEach(controlName => {
+      const controlValue = this.formularioIndicador.controls[controlName].value;
+
+      if (controlName == 'metadato') {
+        const fileInputElement: HTMLInputElement = this.fileInput.nativeElement;
+
+        if (fileInputElement.files && fileInputElement.files.length > 0) {
+          const file: File = fileInputElement.files[0];
+          formData.append(controlName, file);
+        }
+      
+      } else {
+        formData.append(controlName, controlValue);
+      }
+    });
+
+    this.submitForm.emit(formData);
+    this.formularioIndicador.reset();
   }
 }
