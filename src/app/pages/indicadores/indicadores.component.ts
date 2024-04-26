@@ -26,6 +26,8 @@ export class IndicadoresComponent implements OnInit {
   private _searchbarService = inject(SearchbarService);
   private router = inject(Router);
 
+mostrarEliminar:boolean=false;
+
   tableData: IIndicador[] = [];
   dataAux: IIndicador[] = [];
   filteredTable: IIndicador[] = [];
@@ -36,6 +38,8 @@ export class IndicadoresComponent implements OnInit {
     { header: 'Dominio', field: 'dominio' }
   ];
 
+
+
   agregarFunc() {
     this.router.navigateByUrl('/datos');
   }
@@ -43,11 +47,6 @@ export class IndicadoresComponent implements OnInit {
   editarFunc() {
     // Lógica para la funcionalidad de editar
   }
-
-  eliminarFunc() {
-    // Lógica para la funcionalidad de eliminar
-  }
-
   tableJson = signal("")
 
   ngOnInit(): void {
