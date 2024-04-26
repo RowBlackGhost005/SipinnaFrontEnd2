@@ -15,7 +15,7 @@ const $: any = window['$']
 @Component({
   selector: 'app-modal',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule,],
   templateUrl: './modal.component.html',
   styleUrl: './modal.component.scss'
 })
@@ -25,6 +25,7 @@ export class ModalComponent {
   title: string = '';
   lblNombre: string = '';
   placeholderNombre: string = '';
+  activo: boolean = true;
   lblUrl: string = '';
   placeholderUrl: string = '';
   isDomainNameRequired: boolean = true;
