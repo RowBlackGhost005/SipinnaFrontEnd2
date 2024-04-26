@@ -52,9 +52,9 @@ export class NoticiasComponent {
   }
 
   agregarFunc() {
-    // this.openModal('Agregar Noticia', 'Titulo', 'CAPTURE EL TITULO DE LA NOTICIA',
-    // 'Url', 'CAPTURE LA URL DE LA NOTICIA', false,
-    // 'Fotografia de la noticia',true,'noticia');
+    this.openModal('Agregar Noticia', 'Titulo', 'CAPTURE EL TITULO DE LA NOTICIA', false,
+    'Url', 'CAPTURE LA URL DE LA NOTICIA', true,
+    'Fotografia de la noticia',true,'noticia');
 
   }
 
@@ -65,10 +65,11 @@ export class NoticiasComponent {
   eliminarFunc() {
     // Lógica para la funcionalidad de eliminar
   }
-  openModal(title: string, lblNombre: string, placeholderNombre: string,
+
+  openModal(title: string, lblNombre: string, placeholderNombre: string,showSwitchInput:boolean,
     lblUrl: string, placeholderUrl: string, showUrlInput: boolean,
     lblImagen: string, showImagenInput: boolean,accion:string) {
-    this.modal?.openModal(title, lblNombre, placeholderNombre,
+    this.modal?.openModal(title, lblNombre, placeholderNombre,showSwitchInput,
       lblUrl, placeholderUrl, showUrlInput,
       lblImagen, showImagenInput,accion);
   }

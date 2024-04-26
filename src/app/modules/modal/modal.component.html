@@ -9,7 +9,7 @@
           <label for="domainName" class="form-label">{{lblNombre}}<span class="required" *ngIf="isDomainNameRequired">*</span></label>
           <input type="text" class="form-control" id="name" placeholder="{{placeholderNombre}}" [(ngModel)]="name">
         </div>
-        <div class="mb-3 form-check form-switch">
+        <div class="mb-3 form-check form-switch" *ngIf="showSwitchInput">
           <label class="form-check-label" for="activoSwitch">{{ activo ? 'Activo' : 'Inactivo' }}</label>
           <input class="form-check-input" type="checkbox" id="activoSwitch" [(ngModel)]="activo">
         </div>

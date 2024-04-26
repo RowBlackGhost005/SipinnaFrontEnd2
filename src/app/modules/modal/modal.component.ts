@@ -26,6 +26,7 @@ export class ModalComponent {
   lblNombre: string = '';
   placeholderNombre: string = '';
   activo: boolean = true;
+  showSwitchInput:boolean=true;
   lblUrl: string = '';
   placeholderUrl: string = '';
   isDomainNameRequired: boolean = true;
@@ -37,12 +38,13 @@ export class ModalComponent {
   accionBtnGuardar: string = '';
 
 
-  openModal(title: string, lblNombre: string, placeholderNombre: string,
+  openModal(title: string, lblNombre: string, placeholderNombre: string,showSwitchInput:boolean,
     lblUrl: string, placeholderUrl: string, showUrlInput: boolean,
     lblImagen: string, showImagenInput: boolean, accion: string) {
     this.title = title;
     this.lblNombre = lblNombre;
     this.placeholderNombre = placeholderNombre;
+    this.showSwitchInput=showSwitchInput;
     this.lblUrl = lblUrl;
     this.placeholderUrl = placeholderUrl;
     this.showUrlInput = showUrlInput;

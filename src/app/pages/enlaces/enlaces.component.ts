@@ -57,7 +57,7 @@ export class EnlacesComponent {
   }
 
   agregarFunc() {
-    this.openModal('Agregar Enlace', 'Titulo del enlace', 'CAPTURE EL TITULO DEL ENLACE',
+    this.openModal('Agregar Enlace', 'Titulo del enlace', 'CAPTURE EL TITULO DEL ENLACE',false,
       'Url', 'CAPTURE LA URL DEL ENLACE', true,
       '', false, 'enlace');
 
@@ -82,10 +82,10 @@ export class EnlacesComponent {
   }
 
   // Funcion para el boton de agregar, se abre el modal.
-  openModal(title: string, lblNombre: string, placeholderNombre: string,
+  openModal(title: string, lblNombre: string, placeholderNombre: string,showSwitchInput:boolean,
     lblUrl: string, placeholderUrl: string, showUrlInput: boolean,
     lblImagen: string, showImagenInput: boolean, accion: string) {
-    this.modal?.openModal(title, lblNombre, placeholderNombre,
+    this.modal?.openModal(title, lblNombre, placeholderNombre,showSwitchInput,
       lblUrl, placeholderUrl, showUrlInput,
       lblImagen, showImagenInput, accion);
 
