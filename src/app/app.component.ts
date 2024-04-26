@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, ElementRef, HostListener, ViewChild, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { SidebarComponent } from './modules/sidebar/sidebar.component';
 import { SidebarItemComponent } from './modules/sidebar-item/sidebar-item.component';
@@ -18,11 +18,21 @@ export class AppComponent {
   //es para mostrar o no la barra de búsqueda
   showSearch = signal(true);
 
+  showsidebar = signal(false);
+
+  @ViewChild('sidebar') sidebar!: ElementRef<HTMLDivElement>;
+
   ngOnInit(): void {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
     //Add 'implements OnInit' to the class.
-    this.getTitle()
+    this.getTitle();
+    this.getSearchbarStatus();
   }
+
+   @HostListener('window:resize')
+   onWindowResize(){
+    this.updateSidebarDisplay();
+   }
 
   //Función para cambiar el título del header de la aplicación dependiendo de la sección en la que se encuentre el usuario
   //Los numeros del switch hacen referencia al orden en el que estan los botones del menú.
@@ -33,32 +43,38 @@ export class AppComponent {
     case 1:
       this.titleTop.set("Inicio");
       this.showSearch.set(false);
-      this.saveTitle()
+      this.saveSearchbarStatus();
+      this.saveTitle();
       break;
     case 2:
       this.titleTop.set("Dominios");
       this.showSearch.set(true);
+      this.saveSearchbarStatus();
       this.saveTitle()
       break;
     case 3:
       this.titleTop.set("Indicadores");
       this.showSearch.set(true);
-      this.saveTitle()
+      this.saveSearchbarStatus();
+      this.saveTitle();
       break;
     case 4:
       this.titleTop.set("Noticias");
       this.showSearch.set(true);
-      this.saveTitle()
+      this.saveSearchbarStatus();
+      this.saveTitle();
       break;
     case 5:
       this.titleTop.set("Enlaces");
       this.showSearch.set(true);
-      this.saveTitle()
+      this.saveSearchbarStatus();
+      this.saveTitle();
       break;
     case 6:
       this.titleTop.set("Usuarios");
       this.showSearch.set(true);
-      this.saveTitle()
+      this.saveSearchbarStatus();
+      this.saveTitle();
       break;
     default:
       break;
@@ -88,5 +104,54 @@ export class AppComponent {
       this.titleTop.set("Inicio")
     }
   }
+
+  /**
+   * Cuando se recarga la página y te encuentras en el inicio, vuelve a aparecer el buscador, para evitar que aparezca
+   * en inicio, se guarda el boolean en el localstorage
+   */
+  saveSearchbarStatus(){
+    const showSearch:boolean = this.showSearch()
+
+    const jsonShow = JSON.stringify(showSearch)
+
+    localStorage.setItem('showSearch', jsonShow)
+  }
+
+  /**
+   * Para recuperar el estatus verdadero o falso para mostrar el buscador
+   */
+  getSearchbarStatus(){
+    const searchbarStatusJSON = localStorage.getItem('showSearch')
+
+    if(searchbarStatusJSON !==null){
+      const showSearch = JSON.parse(searchbarStatusJSON)
+      this.showSearch.set(showSearch)
+    } else {
+      this.showSearch.set(false)
+    }
+  }
+
+  hideSidebar(){      
+    this.sidebar.nativeElement.style.display = 'none';
+  }
+
+  showSidebar(){
+    this.sidebar.nativeElement.style.display = 'flex';
+    this.sidebar.nativeElement.style.position = 'absolute';
+    this.sidebar.nativeElement.style.zIndex = '1090';
+  }
+
+  updateSidebarDisplay(){
+    const width = window.innerWidth
+    
+    if(width>860){
+      this.sidebar.nativeElement.style.display = 'flex';
+      this.sidebar.nativeElement.style.position = 'relative';
+    } else{
+      this.sidebar.nativeElement.style.display = 'none';
+    }
+  }
+
+
 
 }

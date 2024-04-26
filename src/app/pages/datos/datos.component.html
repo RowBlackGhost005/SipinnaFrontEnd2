@@ -1,7 +1,9 @@
 <div class="container">
-    <app-sidebar-indicator></app-sidebar-indicator>
+    <div class="sidebar">
+        <app-sidebar-indicator></app-sidebar-indicator>
+    </div>
     
-    <div class="content">
-        <app-form-indicator></app-form-indicator>
+    <div class="form">
+        <app-form-indicator (submitForm)="handleEvent($event)"></app-form-indicator>
     </div>
 </div>

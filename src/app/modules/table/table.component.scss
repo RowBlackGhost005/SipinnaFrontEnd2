@@ -20,3 +20,10 @@
 .btn-info {
     background: #960e53 !important;
 }
+
+
+@media (max-width:860px){
+    .div-custom{
+        overflow-x: scroll;
+    }
+}

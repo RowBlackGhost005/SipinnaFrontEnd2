@@ -1,33 +1,32 @@
-<div >
-    <form [formGroup]="formularioContacto">
-  
-      <div class="mb-3">
-        <label for="name" class="form-label">Nombre del Indicador <span class="required-star"> * </span></label>
-        <input [ngClass]="{'is-valid': hasErrors('name', 'required') || hasErrors('name', 'pattern')}" type="text" class="form-control" id="name" formControlName="name">
-        @if(hasErrors('name', 'required')){
-            <div class="text-danger">Nombre requerido</div>
-        }
-      </div>
-  
-      <div class="mb-3">
-        <label for="dominio" class="form-label">Dominio <span class="required-star"> * </span></label>
-        <select class="form-select" required aria-label="select example" id="dominio">
-          <option value="">-Seleccione-</option>
-          @for (dominio of dominiosData; track $index) {
-            <option value="{{dominio.iddominio}}">{{dominio.nombre}}</option>
-          }
-        </select>
-      </div>
-  
-      <div class="mb-3">
-        <label for="metadatos" class="form-label">Metadatos</label>
-        <p class="label-custom"><small>Solo se permiten archivos de extensión .xls, .xlsx</small></p>
-        <input type="file" class="form-control" aria-label="file example" required id="metadatos">
-      </div>
-    </form>
-  
-    <div class="button-container">
-        <button type="button" class="button cancel-button">Cancelar</button>
-        <button type="button" class="button save-button">Guardar</button>
+<div class="container">
+  <form [formGroup]="formularioIndicador" (ngSubmit)="onSubmit()">
+
+    <div class="mb-3">
+      <label for="nombre" class="form-label">Nombre del Indicador <span class="required-star"> * </span></label>
+      <input [ngClass]="{'is-valid': hasErrors('nombre', 'required') || hasErrors('nombre', 'pattern')}" type="text"
+        class="form-control" id="nombre" formControlName="nombre">
+      @if(hasErrors('nombre', 'required')){
+      <div class="text-danger">Nombre requerido</div>
+      }
     </div>
-  </div>
+
+    <div class="mb-3">
+      <label for="dominioNavId" class="form-label">Dominio <span class="required-star"> * </span></label>
+      <select class="form-select" required aria-label="select example" id="dominioNavId" formControlName="dominioNavId">
+        <option value="">-Seleccione-</option>
+        @for (dominio of dominiosData; track $index) {
+        <option value="{{dominio.iddominio}}">{{dominio.nombre}}</option>
+        }
+      </select>
+    </div>
+
+    <div class="mb-3">
+      <label for="metadatos" class="form-label">Metadatos</label>
+      <p class="label-custom"><small>Solo se permiten archivos de extensión .xls, .xlsx</small></p>
+      <input type="file" #fileInput class="form-control" aria-label="file example" required accept=".xlsx" id="metadatos"
+        formControlName="metadato">
+    </div>
+    <button type="submit" [disabled]="formularioIndicador.invalid"  [ngClass]="{'disabled-button': formularioIndicador.invalid}" class="button save-button">Guardar</button>
+    <button type="reset" class="button cancel-button">Cancelar</button>
+  </form>
+</div>
