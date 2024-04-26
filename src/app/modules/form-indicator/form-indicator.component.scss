@@ -32,6 +32,11 @@
     background-color: #6d0a3b;
 }
 
+.disabled-button {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
 input[type=file] {
     width: 350px;
     max-width: 100%;
@@ -39,12 +44,12 @@ input[type=file] {
     padding: 5px;
     border-radius: 10px;
     border: 1px solid #555;
-  }
+}
 
-  input[type=file]::file-selector-button {
+input[type=file]::file-selector-button {
     margin-right: 20px;
     background: #52857c;
     padding: 10px 20px;
     border-radius: 10px;
     color: #fff;
-  }
+}

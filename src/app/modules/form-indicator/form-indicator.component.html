@@ -1,5 +1,5 @@
 <div class="container">
-  <form [formGroup]="formularioContacto" (ngSubmit)="onSubmit(formularioContacto.value)">
+  <form [formGroup]="formularioIndicador" (ngSubmit)="onSubmit()">
 
     <div class="mb-3">
       <label for="nombre" class="form-label">Nombre del Indicador <span class="required-star"> * </span></label>
@@ -11,8 +11,8 @@
     </div>
 
     <div class="mb-3">
-      <label for="dominio" class="form-label">Dominio <span class="required-star"> * </span></label>
-      <select class="form-select" required aria-label="select example" id="dominio" formControlName="dominio">
+      <label for="dominioNavId" class="form-label">Dominio <span class="required-star"> * </span></label>
+      <select class="form-select" required aria-label="select example" id="dominioNavId" formControlName="dominioNavId">
         <option value="">-Seleccione-</option>
         @for (dominio of dominiosData; track $index) {
         <option value="{{dominio.iddominio}}">{{dominio.nombre}}</option>
@@ -23,10 +23,10 @@
     <div class="mb-3">
       <label for="metadatos" class="form-label">Metadatos</label>
       <p class="label-custom"><small>Solo se permiten archivos de extensión .xls, .xlsx</small></p>
-      <input type="file" class="form-control" aria-label="file example" required accept=".xlsx" id="metadatos"
+      <input type="file" #fileInput class="form-control" aria-label="file example" required accept=".xlsx" id="metadatos"
         formControlName="metadato">
     </div>
-    <button type="submit" class="button save-button">Guardar</button>
+    <button type="submit" [disabled]="formularioIndicador.invalid"  [ngClass]="{'disabled-button': formularioIndicador.invalid}" class="button save-button">Guardar</button>
     <button type="reset" class="button cancel-button">Cancelar</button>
   </form>
 </div>
