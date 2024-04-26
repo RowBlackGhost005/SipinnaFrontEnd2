@@ -49,6 +49,8 @@ export class EnlacesComponent {
       console.log(this.tableData);
     });
   }
+
+  
   agregarFunc() {
     this.openModal('Agregar Enlace', 'Titulo del enlace', 'CAPTURE EL TITULO DEL ENLACE',
       'Url', 'CAPTURE LA URL DEL ENLACE', true,
