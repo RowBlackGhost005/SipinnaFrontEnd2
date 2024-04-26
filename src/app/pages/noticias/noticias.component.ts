@@ -36,6 +36,15 @@ export class NoticiasComponent {
 
 
   ngOnInit(): void {
+   this.cargarDatos();
+
+    //Se queda escuchando para ver si se emite el evento de búsqueda
+    this._searchbarService.eventObservable$.subscribe((event) => {
+      this.filtrar(event)
+    })
+  }
+
+  cargarDatos(){
     this._noticiaService.getNoticias().subscribe((data: INoticia[]) => {
       console.log(data);
       this.tableData = data;
@@ -43,11 +52,6 @@ export class NoticiasComponent {
 
       this.tableJson.set(JSON.stringify(this.tableData))
       console.log(this.tableJson())
-    })
-
-    //Se queda escuchando para ver si se emite el evento de búsqueda
-    this._searchbarService.eventObservable$.subscribe((event) => {
-      this.filtrar(event)
     })
   }
 
@@ -72,6 +76,12 @@ export class NoticiasComponent {
     this.modal?.openModal(title, lblNombre, placeholderNombre,showSwitchInput,
       lblUrl, placeholderUrl, showUrlInput,
       lblImagen, showImagenInput,accion);
+
+       // Escuchar el evento de la noticia guardada y actualizar la tabla
+    this.modal?.nuevoGuardado.subscribe(() => {
+      this.cargarDatos();
+
+    });
   }
 
   /**
