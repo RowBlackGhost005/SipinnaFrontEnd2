@@ -18,6 +18,9 @@ import { SearchbarService } from '../../services/searchbar.service';
 })
 
 export class DominiosComponent implements OnInit {
+  
+  
+
   private _dominioService = inject(DominioService);
   private _searchbarService = inject(SearchbarService)
   @ViewChild(ModalComponent) modal?: ModalComponent;
@@ -35,7 +38,6 @@ export class DominiosComponent implements OnInit {
 
   ngOnInit(): void {
     this.cargarDatos();
-
     //Se queda escuchando para ver si se emite el evento de búsqueda
     this._searchbarService.eventObservable$.subscribe((event) => {
       this.filtrar(event)
@@ -65,8 +67,9 @@ export class DominiosComponent implements OnInit {
     // Lógica para la funcionalidad de editar
   }
 
+  
   eliminarFunc() {
-    // Lógica para la funcionalidad de eliminar
+
   }
 
   // Funcion para el boton de agregar, se abre el modal.
