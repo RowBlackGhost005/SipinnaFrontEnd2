@@ -38,7 +38,6 @@ export class DominiosComponent implements OnInit {
 
   ngOnInit(): void {
     this.cargarDatos();
-
     //Se queda escuchando para ver si se emite el evento de búsqueda
     this._searchbarService.eventObservable$.subscribe((event) => {
       this.filtrar(event)

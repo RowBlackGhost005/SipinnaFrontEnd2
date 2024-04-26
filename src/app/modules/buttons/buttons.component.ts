@@ -12,4 +12,5 @@ export class ButtonsComponent {
   @Output() agregar = new EventEmitter<void>();
   @Output() editar = new EventEmitter<void>();
   @Output() eliminar = new EventEmitter<void>();
+  
 }
