@@ -3,7 +3,7 @@
         <app-buttons 
         (agregar)="agregarFunc()"
         (editar)="editarFunc()"
-        (eliminar)="eliminarFunc()">
+        [mostrarEliminar]="mostrarEliminar">
         </app-buttons>
         <div class="topRight">
             <app-export-table [tableContent]="tableJson()" [fileName]="'Indicadores'"></app-export-table>

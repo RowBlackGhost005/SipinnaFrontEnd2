@@ -19,7 +19,6 @@ export class EnlacesComponent {
   @ViewChild(ModalComponent) modal?: ModalComponent;
   private _enlaceService = inject(EnlaceService);
   private _searchbarService = inject(SearchbarService);
-
   tableData: IEnlace[] = [];
   dataAux: IEnlace[] = [];
   filteredTable: IEnlace[] = [];
@@ -50,6 +49,8 @@ export class EnlacesComponent {
       console.log(this.tableData);
     });
   }
+
+  
   agregarFunc() {
     this.openModal('Agregar Enlace', 'Titulo del enlace', 'CAPTURE EL TITULO DEL ENLACE',
       'Url', 'CAPTURE LA URL DEL ENLACE', true,
@@ -61,9 +62,12 @@ export class EnlacesComponent {
     // Lógica para la funcionalidad de editar
   }
 
+
+
   eliminarFunc() {
-    // Lógica para la funcionalidad de eliminar
+ 
   }
+
 
   // Funcion para el boton de agregar, se abre el modal.
   openModal(title: string, lblNombre: string, placeholderNombre: string,
@@ -73,7 +77,7 @@ export class EnlacesComponent {
       lblUrl, placeholderUrl, showUrlInput,
       lblImagen, showImagenInput, accion);
 
-    // Escuchar el evento de dominio guardado y actualizar la tabla
+    // Escuchar el evento de evento guardado y actualizar la tabla
     this.modal?.nuevoGuardado.subscribe(() => {
       this.cargarDatos();
 

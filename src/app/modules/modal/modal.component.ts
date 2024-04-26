@@ -80,7 +80,7 @@ export class ModalComponent {
     private noticiaService: NoticiaService,
     private http: HttpClient) { }
 
-  //GUARDAR DOMINIO (Falta actualizar la tabla despues de guardar)
+  //GUARDAR DOMINIO
   guardarDominio(nombreDominio: string) {
     const nuevoDominio: IDominio = {
       nombre: nombreDominio
