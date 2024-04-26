@@ -29,6 +29,12 @@ export class EnlacesComponent {
     { header: 'Enlace', field: 'enlace' }
   ];
 
+  enlaceSeleccionado: IEnlace = {
+    titulo: '',
+    enlace: '',
+    idenlaces: 0
+  };
+
   tableJson = signal("")
 
   ngOnInit(): void {
@@ -50,7 +56,6 @@ export class EnlacesComponent {
     });
   }
 
-  
   agregarFunc() {
     this.openModal('Agregar Enlace', 'Titulo del enlace', 'CAPTURE EL TITULO DEL ENLACE',
       'Url', 'CAPTURE LA URL DEL ENLACE', true,
@@ -62,12 +67,19 @@ export class EnlacesComponent {
     // Lógica para la funcionalidad de editar
   }
 
-
-
   eliminarFunc() {
- 
+    if (this.enlaceSeleccionado && typeof this.enlaceSeleccionado.idenlaces !== 'undefined') {
+      this._enlaceService.deleteEnlace(this.enlaceSeleccionado.idenlaces).subscribe(response =>{
+        this.cargarDatos();
+      });
+    } else {
+      console.error('No se puede eliminar el enlace seleccionado porque idenlaces es null o undefined');
+    }
   }
 
+  recibeIndicador(indicador: IEnlace){
+    this.enlaceSeleccionado = indicador;
+  }
 
   // Funcion para el boton de agregar, se abre el modal.
   openModal(title: string, lblNombre: string, placeholderNombre: string,
@@ -83,7 +95,6 @@ export class EnlacesComponent {
 
     });
   }
-
 
   /**
  * Función para filtrar los datos que se van a mostrar dentro de la tabla, utiliza filteredTable

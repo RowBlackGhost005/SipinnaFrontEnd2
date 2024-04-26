@@ -7,5 +7,5 @@
             <app-export-table [tableContent]="tableJson()" [fileName]="'Enlaces'"></app-export-table>
         </div>
     </div>
-    <app-table [columns]="tableColumns" [data]="tableData"></app-table>
+    <app-table (selectEvent)="recibeIndicador($event)" [columns]="tableColumns" [data]="tableData"></app-table>
 </div>

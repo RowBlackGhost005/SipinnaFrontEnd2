@@ -27,6 +27,6 @@ export class EnlaceService {
   }
 
   public deleteEnlace(id: number): Observable<IEnlace>{
-    return this._http.delete<IEnlace>(`${this.urlBase}/${id}`);
+    return this._http.delete<IEnlace>(`${this.urlBase}?id=${id}`);
   }
 }

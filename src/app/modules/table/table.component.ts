@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, SimpleChanges, ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { TableModel } from '../../models/table';
 import { UpperCasePipe } from '@angular/common';
 import { NgxPaginationModule } from 'ngx-pagination';
@@ -20,11 +20,20 @@ export class TableComponent implements OnChanges{
   @Input() columns: TableModel[] = [];
   @Input() data: any[] = [];
 
+  @Output() selectEvent = new EventEmitter<any>();
+
+  selectElement: any = {}; 
+
   selectItem(index: number){
     this.selectedItemIndex = index;
-    console.log(this.selectedItemIndex);
+    this.sendElement();
   }
-
+  
+  sendElement(){
+    this.selectElement = this.data[this.selectedItemIndex];
+    this.selectEvent.emit(this.selectElement); 
+  }
+  
   isText(value: any): boolean {
     return typeof value === 'string';
   }
