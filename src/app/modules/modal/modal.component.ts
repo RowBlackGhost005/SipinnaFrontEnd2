@@ -24,30 +24,41 @@ export class ModalComponent {
   title: string = '';
   lblNombre: string = '';
   placeholderNombre: string = '';
+  showNameInput:boolean=false;
   activo: boolean = true;
-  showSwitchInput:boolean=true;
+  showSwitchInput:boolean=false;
   lblUrl: string = '';
   placeholderUrl: string = '';
-  isDomainNameRequired: boolean = true;
+  isNameRequired: boolean = true;
   name: string = '';
   url: string = '';
   showUrlInput: boolean = false;
-  lblImagen: string = ''
-  showImagenInput = false;
+  advertenciaFormato:string='';
+  lblFile: string = ''
+  showFileInput:boolean= false;
+  lblRubro:string='';
+  showDropdownInput:boolean=false;
   accionBtnGuardar: string = '';
 
-  openModal(title: string, lblNombre: string, placeholderNombre: string,showSwitchInput:boolean,
+  openModal(title: string, lblNombre: string, placeholderNombre: string, showNameInput:boolean,
+    showSwitchInput:boolean,
     lblUrl: string, placeholderUrl: string, showUrlInput: boolean,
-    lblImagen: string, showImagenInput: boolean, accion: string) {
+    lblFile: string, advertenciaFormato:string, showFileInput: boolean,
+    lblRubro:string,showDropdownInput:boolean, 
+    accion: string) {
     this.title = title;
     this.lblNombre = lblNombre;
     this.placeholderNombre = placeholderNombre;
+    this.showNameInput=showNameInput;
     this.showSwitchInput=showSwitchInput;
     this.lblUrl = lblUrl;
     this.placeholderUrl = placeholderUrl;
     this.showUrlInput = showUrlInput;
-    this.lblImagen = lblImagen;
-    this.showImagenInput = showImagenInput;
+    this.lblFile = lblFile;
+    this.advertenciaFormato=advertenciaFormato;
+    this.showFileInput = showFileInput;
+    this.lblRubro=lblRubro;
+    this.showDropdownInput=showDropdownInput;
     this.accionBtnGuardar = accion;
     $(this.modal?.nativeElement).modal('show');
   }
@@ -55,6 +66,20 @@ export class ModalComponent {
   closeModal() {
     $(this.modal?.nativeElement).modal('hide');
   }
+
+  dropdownOptions = [
+    { label: '<1', value: '<1' },
+    { label: '1 a 2', value: '1 a 2' },
+    { label: '3 a 5', value: '3 a 5' },
+    { label: '0 a 11', value: '0 a 11' },
+    { label: '0 a 17', value: '0 a 17' },
+    { label: '12 a 17', value: '12 a 17' },
+    { label: '6 a 11', value: '6 a 11' }
+  ];
+
+  // Variable para almacenar la opción seleccionada
+  selectedOption: string | null = null;
+
 
   imageUrl: string = '';
   selectedFileName: string = '';
@@ -84,6 +109,8 @@ export class ModalComponent {
       this.guardarEnlace(nombre, url);
     } else if (this.accionBtnGuardar === 'noticia') {
       this.guardarNoticia(nombre,url,imagen);
+    }else if (this.accionBtnGuardar === 'rubro') {
+
     }
   }
 
