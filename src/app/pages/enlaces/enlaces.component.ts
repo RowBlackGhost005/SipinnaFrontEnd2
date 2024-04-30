@@ -7,11 +7,12 @@ import { ModalComponent } from '../../modules/modal/modal.component';
 import { EnlaceService } from '../../services/enlace.service';
 import { IEnlace } from '../../models/enlace.model';
 import { SearchbarService } from '../../services/searchbar.service';
+import { DialogComponent } from '../../modules/dialog/dialog.component';
 
 @Component({
   selector: 'app-enlaces',
   standalone: true,
-  imports: [TableComponent, ButtonsComponent, ExportTableComponent, ModalComponent],
+  imports: [TableComponent, ButtonsComponent, ExportTableComponent, ModalComponent, DialogComponent],
   templateUrl: './enlaces.component.html',
   styleUrl: './enlaces.component.scss'
 })
@@ -22,6 +23,8 @@ export class EnlacesComponent {
   tableData: IEnlace[] = [];
   dataAux: IEnlace[] = [];
   filteredTable: IEnlace[] = [];
+  mensajeAlerta: string = '';
+  mostrar: boolean = false;
 
   tableColumns: TableModel[] = [
     { header: 'ID', field: 'idenlaces' },
@@ -57,9 +60,12 @@ export class EnlacesComponent {
   }
 
   agregarFunc() {
-    this.openModal('Agregar Enlace', 'Titulo del enlace', 'CAPTURE EL TITULO DEL ENLACE',false,
+    this.openModal('Agregar Enlace', 'Titulo del enlace', 'CAPTURE EL TITULO DEL ENLACE', true,
+      false,
       'Url', 'CAPTURE LA URL DEL ENLACE', true,
-      '', false, 'enlace');
+      '', '', false,
+      '', false,
+      'enlace');
 
   }
 
@@ -69,27 +75,35 @@ export class EnlacesComponent {
 
   eliminarFunc() {
     if (this.enlaceSeleccionado && typeof this.enlaceSeleccionado.idenlaces !== 'undefined') {
-      this._enlaceService.deleteEnlace(this.enlaceSeleccionado.idenlaces).subscribe(response =>{
+      this._enlaceService.deleteEnlace(this.enlaceSeleccionado.idenlaces).subscribe(response => {
         this.cargarDatos();
+        this.mensajeAlerta = 'El enlace se eliminó correctamente.'
+        this.mostrar = true;
       });
     } else {
       console.error('No se puede eliminar el enlace seleccionado porque idenlaces es null o undefined');
     }
   }
 
-  recibeIndicador(indicador: IEnlace){
+  recibeIndicador(indicador: IEnlace) {
     this.enlaceSeleccionado = indicador;
   }
 
   // Funcion para el boton de agregar, se abre el modal.
-  openModal(title: string, lblNombre: string, placeholderNombre: string,showSwitchInput:boolean,
+  openModal(title: string, lblNombre: string, placeholderNombre: string, showNameInput: boolean,
+    showSwitchInput: boolean,
     lblUrl: string, placeholderUrl: string, showUrlInput: boolean,
-    lblImagen: string, showImagenInput: boolean, accion: string) {
-    this.modal?.openModal(title, lblNombre, placeholderNombre,showSwitchInput,
+    lblFile: string, advertenciaFormato: string, showFileInput: boolean,
+    lblRubro: string, showDropdownInput: boolean,
+    accion: string) {
+    this.modal?.openModal(title, lblNombre, placeholderNombre, showNameInput,
+      showSwitchInput,
       lblUrl, placeholderUrl, showUrlInput,
-      lblImagen, showImagenInput, accion);
+      lblFile, advertenciaFormato, showFileInput,
+      lblRubro, showDropdownInput,
+      accion);
 
-    // Escuchar el evento de evento guardado y actualizar la tabla
+    // Escuchar el evento de dominio guardado y actualizar la tabla
     this.modal?.nuevoGuardado.subscribe(() => {
       this.cargarDatos();
 

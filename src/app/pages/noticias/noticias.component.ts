@@ -56,9 +56,12 @@ export class NoticiasComponent {
   }
 
   agregarFunc() {
-    this.openModal('Agregar Noticia', 'Titulo', 'CAPTURE EL TITULO DE LA NOTICIA', false,
+    this.openModal('Agregar Noticia', 'Titulo', 'CAPTURE EL TITULO DE LA NOTICIA', true,
+    false,
     'Url', 'CAPTURE LA URL DE LA NOTICIA', true,
-    'Fotografia de la noticia',true,'noticia');
+    'Fotografia de la noticia','Solo se permiten archivos de extension .png .jpg .jpeg y maximo de 2mb',true,
+    '',false,
+    'noticia');
 
   }
 
@@ -70,14 +73,20 @@ export class NoticiasComponent {
     // Lógica para la funcionalidad de eliminar
   }
 
-  openModal(title: string, lblNombre: string, placeholderNombre: string,showSwitchInput:boolean,
+  openModal(title: string, lblNombre: string, placeholderNombre: string, showNameInput:boolean,
+    showSwitchInput:boolean,
     lblUrl: string, placeholderUrl: string, showUrlInput: boolean,
-    lblImagen: string, showImagenInput: boolean,accion:string) {
-    this.modal?.openModal(title, lblNombre, placeholderNombre,showSwitchInput,
+    lblFile: string, advertenciaFormato:string, showFileInput: boolean,
+    lblRubro:string,showDropdownInput:boolean, 
+    accion: string) {
+    this.modal?.openModal(title, lblNombre, placeholderNombre, showNameInput,
+      showSwitchInput,
       lblUrl, placeholderUrl, showUrlInput,
-      lblImagen, showImagenInput,accion);
+      lblFile, advertenciaFormato,showFileInput, 
+      lblRubro,showDropdownInput, 
+      accion);
 
-       // Escuchar el evento de la noticia guardada y actualizar la tabla
+    // Escuchar el evento de dominio guardado y actualizar la tabla
     this.modal?.nuevoGuardado.subscribe(() => {
       this.cargarDatos();
 

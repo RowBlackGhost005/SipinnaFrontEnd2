@@ -2,7 +2,7 @@
     <div class="sidebar">
         <app-sidebar-indicator></app-sidebar-indicator>
     </div>
-    
+    <app-dialog [mensajeDialog]="mensajeAlerta" [showModal]="mostrar"></app-dialog>
     <div class="form">
         <app-form-indicator (submitForm)="handleEvent($event)"></app-form-indicator>
     </div>

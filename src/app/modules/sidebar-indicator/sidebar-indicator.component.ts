@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterLink, Router } from '@angular/router';
 
 @Component({
@@ -9,9 +9,10 @@ import { RouterLink, Router } from '@angular/router';
   styleUrl: './sidebar-indicator.component.scss'
 })
 export class SidebarIndicatorComponent {
-  constructor(private router: Router) {}
+  private router = inject(Router);
 
-  isActiveRoute(route: string): boolean {
-    return this.router.isActive(route, true);
+  isActiveRoute(baseRoute: string): boolean {
+    const currentRoute = this.router.url;
+    return currentRoute.startsWith(baseRoute);
   }
 }
