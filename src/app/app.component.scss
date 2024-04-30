@@ -1,64 +1,68 @@
-.content{
-    display: flex;
-}
-
-.router{
-    margin-top: 6rem;
-    width: 100%;
-}
-
-
-.toggle-sidebar{
-    position:absolute;
-    z-index: 1050;
-    display: none;
-    font-size: large;
-    background: #FFFFFF;
-}
-
-.hide {
-    position:absolute;
-    z-index: 1021;
+ *{
+    margin: 0;
     padding: 0;
-    color: white;
-    border: 2px solid white;
-    border-radius: 3rem;
-    text-align: center;
-    width: 1.5rem;
-    height: 1.5rem;
-    line-height: calc(1.2rem - 2px);
-    font-size: 1rem;
-    background-color: transparent;
-    margin-left: 230px;
-    margin-top: 10px;
-}
-
-@media (max-width:860px) {
-    .toggle-sidebar{
-        display:flex;
-        margin-left: 1rem;
-        margin-top: 2rem;
-        border: 0px;
+    height: 100vh;
     }
 
-    .sidebar{
-        display: none;
-       }
-
-}
 
 
-@media (min-width:860.2px) {
-    .hide{
-        display:none
-    }
+// .router{
+//     margin-top: 6rem;
+//     width: 100%;
+// }
+
+
+// .toggle-sidebar{
+//     position:absolute;
+//     z-index: 1050;
+//     display: none;
+//     font-size: large;
+//     background: #FFFFFF;
+// }
+
+// .hide {
+//     position:absolute;
+//     z-index: 1021;
+//     padding: 0;
+//     color: white;
+//     border: 2px solid white;
+//     border-radius: 3rem;
+//     text-align: center;
+//     width: 1.5rem;
+//     height: 1.5rem;
+//     line-height: calc(1.2rem - 2px);
+//     font-size: 1rem;
+//     background-color: transparent;
+//     margin-left: 230px;
+//     margin-top: 10px;
+// }
+
+// @media (max-width:860px) {
+//     .toggle-sidebar{
+//         display:flex;
+//         margin-left: 1rem;
+//         margin-top: 2rem;
+//         border: 0px;
+//     }
+
+//     .sidebar{
+//         display: none;
+//        }
+
+// }
+
+
+// @media (min-width:860.2px) {
+//     .hide{
+//         display:none
+//     }
     
-}
-/**
+// }
+// /**
 
-app-sidebar{
-    position: absolute;
-    z-index: 1090;
-   }
+// app-sidebar{
+//     position: absolute;
+//     z-index: 1090;
+//    }
 
-   **/
+//    **/
