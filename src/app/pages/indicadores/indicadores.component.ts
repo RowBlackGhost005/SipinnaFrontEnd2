@@ -26,8 +26,8 @@ export class IndicadoresComponent implements OnInit {
   private _searchbarService = inject(SearchbarService);
   private router = inject(Router);
 
-mostrarEliminar:boolean=false;
-
+  mostrarEliminar: boolean = false;
+  tableJson = signal("");
   tableData: IIndicador[] = [];
   dataAux: IIndicador[] = [];
   filteredTable: IIndicador[] = [];
@@ -38,16 +38,23 @@ mostrarEliminar:boolean=false;
     { header: 'Dominio', field: 'dominio' }
   ];
 
-
+  indicadorSeleccionado: IIndicador = {
+    idindicador: 0,
+    nombre: '',
+    metadato: ''
+  };
 
   agregarFunc() {
     this.router.navigateByUrl('/datos');
   }
 
   editarFunc() {
-    // Lógica para la funcionalidad de editar
+    this.router.navigateByUrl(`/datos/${this.indicadorSeleccionado.idindicador}`);
   }
-  tableJson = signal("")
+
+  recibeIndicador(indicador: IIndicador) {
+    this.indicadorSeleccionado = indicador;
+  }
 
   ngOnInit(): void {
     this._indicadorService.getIndicadores().subscribe((data: IIndicador[]) => {
@@ -68,7 +75,7 @@ mostrarEliminar:boolean=false;
           //columna de dominios le aparezca al usuario el nombre del dominio en lugar del número 
           pendientes--;
           if (pendientes === 0) {
-            tableAux = data.map(({ metadato, dominioNav, ...resto }) => {
+            tableAux = data.map(({ metadato, dominioNavId, ...resto }) => {
               // La desestructuración extrae "metadato" y "dominioNav" del objeto, y "resto" contiene el resto de las claves
               return resto;
             });
@@ -91,8 +98,6 @@ mostrarEliminar:boolean=false;
       })
 
     });
-
-
   }
 
   /**

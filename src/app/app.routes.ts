@@ -38,6 +38,11 @@ export const routes: Routes = [
 			import('./pages/datos/datos.component').then((c) => c.DatosComponent),
     },
     {
+        path:'datos/:id',
+        loadComponent: () =>
+			import('./pages/datos/datos.component').then((c) => c.DatosComponent),
+    },
+    {
         path:'rubros',
         loadComponent: () =>
 			import('./pages/rubros/rubros.component').then((c) => c.RubrosComponent),

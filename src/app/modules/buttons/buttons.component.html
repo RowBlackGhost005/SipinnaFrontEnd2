@@ -6,13 +6,15 @@
     </button>
 </div>
 <div>
-    <button class="button editar-button">
+    <button (click)="editar.emit()" class="button editar-button">
         <i class="fas fa-pen"></i><span class="button-text">Editar</span>
     </button>
 </div>
 <div>
-    <button *ngIf="mostrarEliminar" (click)="eliminar.emit()" class="button eliminar-button">
-        <i class="fas fa-trash"></i><span class="button-text">Eliminar</span>
-    </button>
+    @if(mostrarEliminar){
+        <button (click)="eliminar.emit()" class="button eliminar-button">
+            <i class="fas fa-trash"></i><span class="button-text">Eliminar</span>
+        </button>
+    }
 </div>
 </div>
