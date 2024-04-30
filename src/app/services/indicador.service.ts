@@ -22,8 +22,8 @@ export class IndicadorService {
     return this._http.post<FormData>(`${this.urlBase}`, indicador);
   }
 
-  public putIndicador(id: number, indicador: IIndicador): Observable<IIndicador>{
-    return this._http.put<IIndicador>(`${this.urlBase}/${id}`, indicador);
+  public putIndicador(id: number, indicador: FormData): Observable<FormData>{
+    return this._http.put<FormData>(`${this.urlBase}/${id}`, indicador);
   }
 
   public deleteIndicador(id: number): Observable<IIndicador>{

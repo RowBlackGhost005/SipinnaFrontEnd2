@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { TableModel } from '../../models/table';
 import { UpperCasePipe } from '@angular/common';
 import { NgxPaginationModule } from 'ngx-pagination';
@@ -9,7 +9,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
   imports: [UpperCasePipe, NgxPaginationModule],
   templateUrl: './table.component.html',
   styleUrl: './table.component.scss',
-  encapsulation: ViewEncapsulation.None 
+  encapsulation: ViewEncapsulation.None
 })
 export class TableComponent implements OnChanges{
   selectedItemIndex: number = -1;
@@ -22,18 +22,19 @@ export class TableComponent implements OnChanges{
 
   @Output() selectEvent = new EventEmitter<any>();
 
-  selectElement: any = {}; 
+  selectElement: any = {};
 
-  selectItem(index: number){
-    this.selectedItemIndex = index;
+  selectItem(localIndex: number) {
+    const globalIndex = (this.page - 1) * this.pageSize + localIndex;
+    this.selectedItemIndex = globalIndex;
     this.sendElement();
   }
-  
-  sendElement(){
+
+  sendElement() {
     this.selectElement = this.data[this.selectedItemIndex];
-    this.selectEvent.emit(this.selectElement); 
+    this.selectEvent.emit(this.selectElement);
   }
-  
+
   isText(value: any): boolean {
     return typeof value === 'string';
   }

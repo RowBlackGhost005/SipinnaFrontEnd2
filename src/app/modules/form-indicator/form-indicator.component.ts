@@ -61,4 +61,11 @@ export class FormIndicatorComponent {
     this.submitForm.emit(formData);
     this.formularioIndicador.reset();
   }
+
+  setIndicadorValues(indicador: any) {
+    this.formularioIndicador.patchValue({
+      nombre: indicador.nombre,
+      dominioNavId: 5,
+    });
+  }
 }
