@@ -56,9 +56,8 @@ h3{
 }
 
 .file-upload-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center; 
+  display: block;
+ text-align: left;
 }
 
 .custom-file-button {
@@ -72,4 +71,17 @@ h3{
 
 .custom-file-button:hover {
   background-color: #35605b;
+}
+
+.form-check-input:checked {
+  background-color: #A84868;
+  border-color: #A84868;
+}
+
+.advertenciaFormato{
+  font-size: 12px;
+}
+
+.nombreArchivo{
+  margin-left: 10px;
 }

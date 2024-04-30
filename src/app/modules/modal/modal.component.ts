@@ -6,7 +6,6 @@ import { IDominio } from '../../models/dominio.model';
 import { EnlaceService } from '../../services/enlace.service';
 import { IEnlace } from '../../models/enlace.model';
 import { NoticiaService } from '../../services/noticia.service';
-import { HttpClient } from '@angular/common/http';
 import { INoticia } from '../../models/noticia.model';
 import { Output } from '@angular/core';
 import { EventEmitter } from '@angular/core';
@@ -15,7 +14,7 @@ const $: any = window['$']
 @Component({
   selector: 'app-modal',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule,],
   templateUrl: './modal.component.html',
   styleUrl: './modal.component.scss'
 })
@@ -25,28 +24,41 @@ export class ModalComponent {
   title: string = '';
   lblNombre: string = '';
   placeholderNombre: string = '';
+  showNameInput:boolean=false;
+  activo: boolean = true;
+  showSwitchInput:boolean=false;
   lblUrl: string = '';
   placeholderUrl: string = '';
-  isDomainNameRequired: boolean = true;
+  isNameRequired: boolean = true;
   name: string = '';
   url: string = '';
   showUrlInput: boolean = false;
-  lblImagen: string = ''
-  showImagenInput = false;
+  advertenciaFormato:string='';
+  lblFile: string = ''
+  showFileInput:boolean= false;
+  lblRubro:string='';
+  showDropdownInput:boolean=false;
   accionBtnGuardar: string = '';
 
-
-  openModal(title: string, lblNombre: string, placeholderNombre: string,
+  openModal(title: string, lblNombre: string, placeholderNombre: string, showNameInput:boolean,
+    showSwitchInput:boolean,
     lblUrl: string, placeholderUrl: string, showUrlInput: boolean,
-    lblImagen: string, showImagenInput: boolean, accion: string) {
+    lblFile: string, advertenciaFormato:string, showFileInput: boolean,
+    lblRubro:string,showDropdownInput:boolean, 
+    accion: string) {
     this.title = title;
     this.lblNombre = lblNombre;
     this.placeholderNombre = placeholderNombre;
+    this.showNameInput=showNameInput;
+    this.showSwitchInput=showSwitchInput;
     this.lblUrl = lblUrl;
     this.placeholderUrl = placeholderUrl;
     this.showUrlInput = showUrlInput;
-    this.lblImagen = lblImagen;
-    this.showImagenInput = showImagenInput;
+    this.lblFile = lblFile;
+    this.advertenciaFormato=advertenciaFormato;
+    this.showFileInput = showFileInput;
+    this.lblRubro=lblRubro;
+    this.showDropdownInput=showDropdownInput;
     this.accionBtnGuardar = accion;
     $(this.modal?.nativeElement).modal('show');
   }
@@ -55,21 +67,50 @@ export class ModalComponent {
     $(this.modal?.nativeElement).modal('hide');
   }
 
+  dropdownOptions = [
+    { label: '<1', value: '<1' },
+    { label: '1 a 2', value: '1 a 2' },
+    { label: '3 a 5', value: '3 a 5' },
+    { label: '0 a 11', value: '0 a 11' },
+    { label: '0 a 17', value: '0 a 17' },
+    { label: '12 a 17', value: '12 a 17' },
+    { label: '6 a 11', value: '6 a 11' }
+  ];
 
-  //Funcion para guardar Noticia, el archivo de la imagen
-  selectedFile: File | null = null;
-  onFileSelected(event: any) {
-    this.selectedFile = event.target.files[0] as File;
+  // Variable para almacenar la opción seleccionada
+  selectedOption: string | null = null;
+
+
+  imageUrl: string = '';
+  selectedFileName: string = '';
+  onFileSelected(event: any):void{
+    const file: File = event.target.files[0];
+  if (file) {
+    // Verificar si el tipo de archivo es una imagen
+  if (file.type.match(/^image\/.*/) != null) {
+      this.selectedFileName = file.name; 
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = (e: any) => {
+         this.imageUrl = e.target.result;
+         console.log("nombre de la imagen:", this.imageUrl);
+      };
+    } else {
+      console.log('Error: El archivo seleccionado no es una imagen.');
+    }
+  }
   }
 
   //Funcion para el boton de guardar, recibe parametros para saber que accion ejecutar
-  ejecutarAccion(nombre: string, urlEnlace: string) {
+  ejecutarAccion(nombre: string, url: string,imagen:string) {
     if (this.accionBtnGuardar === 'dominio') {
       this.guardarDominio(nombre);
     } else if (this.accionBtnGuardar === 'enlace') {
-      this.guardarEnlace(nombre, urlEnlace);
+      this.guardarEnlace(nombre, url);
     } else if (this.accionBtnGuardar === 'noticia') {
-      this.guardarEnlace(nombre, urlEnlace);
+      this.guardarNoticia(nombre,url,imagen);
+    }else if (this.accionBtnGuardar === 'rubro') {
+
     }
   }
 
@@ -77,8 +118,9 @@ export class ModalComponent {
   //Constructor de las Interfaces
   constructor(private dominioService: DominioService,
     private enlaceService: EnlaceService,
-    private noticiaService: NoticiaService,
-    private http: HttpClient) { }
+    private noticiaService:NoticiaService){}
+
+
 
   //GUARDAR DOMINIO
   guardarDominio(nombreDominio: string) {
@@ -99,7 +141,7 @@ export class ModalComponent {
     this.closeModal()
   }
 
-  //GUARDAR ENLACE (Falta actualizar la tabla despues de guardar)
+  //GUARDAR ENLACE 
 
   guardarEnlace(tituloEnlace: string, urlEnlace: string) {
     const nuevoEnlace: IEnlace = {
@@ -120,16 +162,28 @@ export class ModalComponent {
     this.closeModal()
   }
 
-  // //GUARDAR NOTICIA (Falta actualizar la tabla despues de guardar)
-  // guardarNoticia(tituloNoticia: string, urlNoticia: string) {
-  //  //Comprobar si se selecciono una imagen
-  //  if(this.selectedFile){
-  //   const formData=new FormData();
-  //   formData.append('file',this.selectedFile);
 
-  //   this.http.post<any>()
-  //  }
-  // }
+  //GUARDAR NOTICIA
+  guardarNoticia(  titulo: string, enlace: string,imagen: string ) {
+    const nuevaNoticia: INoticia = {
+      titulo: titulo,
+      imagen: imagen,
+      enlace: enlace
+    };
+
+    this.noticiaService.postNoticia(nuevaNoticia).subscribe(
+      response => {
+        console.log('Noticia guardada correctamente: ', response);
+        this.nuevoGuardado.emit();
+      },
+      error => {
+        console.error('error al guardar la noticia: ', error);
+      }
+    );
+
+    this.closeModal()
+  }
+
 
 }
 

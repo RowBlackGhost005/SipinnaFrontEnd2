@@ -36,6 +36,15 @@ export class NoticiasComponent {
 
 
   ngOnInit(): void {
+   this.cargarDatos();
+
+    //Se queda escuchando para ver si se emite el evento de búsqueda
+    this._searchbarService.eventObservable$.subscribe((event) => {
+      this.filtrar(event)
+    })
+  }
+
+  cargarDatos(){
     this._noticiaService.getNoticias().subscribe((data: INoticia[]) => {
       console.log(data);
       this.tableData = data;
@@ -44,17 +53,15 @@ export class NoticiasComponent {
       this.tableJson.set(JSON.stringify(this.tableData))
       console.log(this.tableJson())
     })
-
-    //Se queda escuchando para ver si se emite el evento de búsqueda
-    this._searchbarService.eventObservable$.subscribe((event) => {
-      this.filtrar(event)
-    })
   }
 
   agregarFunc() {
-    // this.openModal('Agregar Noticia', 'Titulo', 'CAPTURE EL TITULO DE LA NOTICIA',
-    // 'Url', 'CAPTURE LA URL DE LA NOTICIA', false,
-    // 'Fotografia de la noticia',true,'noticia');
+    this.openModal('Agregar Noticia', 'Titulo', 'CAPTURE EL TITULO DE LA NOTICIA', true,
+    false,
+    'Url', 'CAPTURE LA URL DE LA NOTICIA', true,
+    'Fotografia de la noticia','Solo se permiten archivos de extension .png .jpg .jpeg y maximo de 2mb',true,
+    '',false,
+    'noticia');
 
   }
 
@@ -65,12 +72,25 @@ export class NoticiasComponent {
   eliminarFunc() {
     // Lógica para la funcionalidad de eliminar
   }
-  openModal(title: string, lblNombre: string, placeholderNombre: string,
+
+  openModal(title: string, lblNombre: string, placeholderNombre: string, showNameInput:boolean,
+    showSwitchInput:boolean,
     lblUrl: string, placeholderUrl: string, showUrlInput: boolean,
-    lblImagen: string, showImagenInput: boolean,accion:string) {
-    this.modal?.openModal(title, lblNombre, placeholderNombre,
+    lblFile: string, advertenciaFormato:string, showFileInput: boolean,
+    lblRubro:string,showDropdownInput:boolean, 
+    accion: string) {
+    this.modal?.openModal(title, lblNombre, placeholderNombre, showNameInput,
+      showSwitchInput,
       lblUrl, placeholderUrl, showUrlInput,
-      lblImagen, showImagenInput,accion);
+      lblFile, advertenciaFormato,showFileInput, 
+      lblRubro,showDropdownInput, 
+      accion);
+
+    // Escuchar el evento de dominio guardado y actualizar la tabla
+    this.modal?.nuevoGuardado.subscribe(() => {
+      this.cargarDatos();
+
+    });
   }
 
   /**
