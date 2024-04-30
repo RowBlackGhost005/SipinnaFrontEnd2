@@ -58,8 +58,11 @@ export class DominiosComponent implements OnInit {
 
   agregarFunc() {
     this.openModal('Agregar Dominio', 'Dominio', 'CAPTURE EL NOMBRE DEL DOMINIO',true,
+    true,
       '', '', false,
-      '', false, 'dominio');
+      '','', false,
+      '',false,
+      'dominio');
 
   }
 
@@ -73,12 +76,18 @@ export class DominiosComponent implements OnInit {
   }
 
   // Funcion para el boton de agregar, se abre el modal.
-  openModal(title: string, lblNombre: string, placeholderNombre: string, showSwitchInput:boolean,
+  openModal(title: string, lblNombre: string, placeholderNombre: string, showNameInput:boolean,
+    showSwitchInput:boolean,
     lblUrl: string, placeholderUrl: string, showUrlInput: boolean,
-    lblImagen: string, showImagenInput: boolean, accion: string) {
-    this.modal?.openModal(title, lblNombre, placeholderNombre, showSwitchInput,
+    lblFile: string, advertenciaFormato:string, showFileInput: boolean,
+    lblRubro:string,showDropdownInput:boolean, 
+    accion: string) {
+    this.modal?.openModal(title, lblNombre, placeholderNombre, showNameInput,
+      showSwitchInput,
       lblUrl, placeholderUrl, showUrlInput,
-      lblImagen, showImagenInput, accion);
+      lblFile, advertenciaFormato,showFileInput, 
+      lblRubro,showDropdownInput, 
+      accion);
 
     // Escuchar el evento de dominio guardado y actualizar la tabla
     this.modal?.nuevoGuardado.subscribe(() => {
