@@ -4,13 +4,14 @@ import { FormIndicatorComponent } from '../../modules/form-indicator/form-indica
 import { IndicadorService } from '../../services/indicador.service';
 import { DialogComponent } from '../../modules/dialog/dialog.component';
 import { ActivatedRoute } from '@angular/router';
+import { TopMenuComponent } from "../../modules/top-menu/top-menu.component";
 
 @Component({
-  selector: 'app-datos',
-  standalone: true,
-  imports: [SidebarIndicatorComponent, FormIndicatorComponent, DialogComponent],
-  templateUrl: './datos.component.html',
-  styleUrl: './datos.component.scss'
+    selector: 'app-datos',
+    standalone: true,
+    templateUrl: './datos.component.html',
+    styleUrl: './datos.component.scss',
+    imports: [SidebarIndicatorComponent, FormIndicatorComponent, DialogComponent, TopMenuComponent]
 })
 export class DatosComponent implements OnInit {
   @ViewChild(DialogComponent) dialog?: DialogComponent;

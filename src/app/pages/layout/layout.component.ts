@@ -16,9 +16,6 @@ export class LayoutComponent {
   title = 'sipinna-frontend';
   titleTop = signal("Inicio")
   //es para mostrar o no la barra de búsqueda
-  showSearch = signal(true);
-
-  showsidebar = signal(false);
 
   @ViewChild('sidebar') sidebar!: ElementRef<HTMLDivElement>;
 
@@ -26,62 +23,63 @@ export class LayoutComponent {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
     //Add 'implements OnInit' to the class.
     this.getTitle();
-    this.getSearchbarStatus();
+    // this.getSearchbarStatus();
   }
 
    @HostListener('window:resize')
    onWindowResize(){
     this.updateSidebarDisplay();
     this.getTitle();
-    this.getSearchbarStatus();
+    // this.getSearchbarStatus();
    }
 
   //Función para cambiar el título del header de la aplicación dependiendo de la sección en la que se encuentre el usuario
   //Los numeros del switch hacen referencia al orden en el que estan los botones del menú.
   //En el sidebar component, en los eventos click hay una función llamada OptionHandler(), esa funcion recibe un número como parámetro,
   //dicho número es el que vale el parámetro de event en este caso
-  changeTitleTop(event:number){
-    switch(event){
-    case 1:
-      this.titleTop.set("Inicio");
-      this.showSearch.set(false);
-      this.saveSearchbarStatus();
-      this.saveTitle();
-      break;
-    case 2:
-      this.titleTop.set("Dominios");
-      this.showSearch.set(true);
-      this.saveSearchbarStatus();
-      this.saveTitle()
-      break;
-    case 3:
-      this.titleTop.set("Indicadores");
-      this.showSearch.set(true);
-      this.saveSearchbarStatus();
-      this.saveTitle();
-      break;
-    case 4:
-      this.titleTop.set("Noticias");
-      this.showSearch.set(true);
-      this.saveSearchbarStatus();
-      this.saveTitle();
-      break;
-    case 5:
-      this.titleTop.set("Enlaces");
-      this.showSearch.set(true);
-      this.saveSearchbarStatus();
-      this.saveTitle();
-      break;
-    case 6:
-      this.titleTop.set("Usuarios");
-      this.showSearch.set(true);
-      this.saveSearchbarStatus();
-      this.saveTitle();
-      break;
-    default:
-      break;
-    }
-  }
+  // changeTitleTop(event:number){
+  //   switch(event){
+  //   case 1:
+  //     this.titleTop.set("Inicio");
+  //     this.showSearch.set(false);
+  //     this.saveSearchbarStatus();
+  //     this.saveTitle();
+  //     break;
+  //   case 2:
+  //     this.titleTop.set("Dominios");
+  //     this.showSearch.set(true);
+  //     this.saveSearchbarStatus();
+  //     this.saveTitle()
+  //     break;
+  //   case 3:
+  //     this.titleTop.set("Indicadores");
+  //     this.showSearch.set(true);
+  //     this.saveSearchbarStatus();
+  //     this.saveTitle();
+  //     break;
+  //   case 4:
+  //     this.titleTop.set("Noticias");
+  //     this.showSearch.set(true);
+  //     this.saveSearchbarStatus();
+  //     this.saveTitle();
+  //     break;
+  //   case 5:
+  //     this.titleTop.set("Enlaces");
+  //     this.showSearch.set(true);
+  //     this.saveSearchbarStatus();
+  //     this.saveTitle();
+  //     break;
+  //   case 6:
+  //     this.titleTop.set("Usuarios");
+  //     this.showSearch.set(true);
+  //     this.saveSearchbarStatus();
+  //     this.saveTitle();
+  //     break;
+  //   default:
+  //     break;
+  //   }
+  // }
+
   /**
    * Cuando recargas la página y te encuentras en dominio, indicadores, etc..., el titulo dice que se encuentra en 
    * inicio, con esta funcion guardamos el titulo en el localstorage para que ya no aparezca
@@ -111,27 +109,27 @@ export class LayoutComponent {
    * Cuando se recarga la página y te encuentras en el inicio, vuelve a aparecer el buscador, para evitar que aparezca
    * en inicio, se guarda el boolean en el localstorage
    */
-  saveSearchbarStatus(){
-    const showSearch:boolean = this.showSearch()
+  // saveSearchbarStatus(){
+  //   const showSearch:boolean = this.showSearch()
 
-    const jsonShow = JSON.stringify(showSearch)
+  //   const jsonShow = JSON.stringify(showSearch)
 
-    localStorage.setItem('showSearch', jsonShow)
-  }
+  //   localStorage.setItem('showSearch', jsonShow)
+  // }
 
   /**
    * Para recuperar el estatus verdadero o falso para mostrar el buscador
    */
-  getSearchbarStatus(){
-    const searchbarStatusJSON = localStorage.getItem('showSearch')
+  // getSearchbarStatus(){
+  //   const searchbarStatusJSON = localStorage.getItem('showSearch')
 
-    if(searchbarStatusJSON !==null){
-      const showSearch = JSON.parse(searchbarStatusJSON)
-      this.showSearch.set(showSearch)
-    } else {
-      this.showSearch.set(false)
-    }
-  }
+  //   if(searchbarStatusJSON !==null){
+  //     const showSearch = JSON.parse(searchbarStatusJSON)
+  //     this.showSearch.set(showSearch)
+  //   } else {
+  //     this.showSearch.set(false)
+  //   }
+  // }
 
   hideSidebar(){      
     this.sidebar.nativeElement.style.display = 'none';

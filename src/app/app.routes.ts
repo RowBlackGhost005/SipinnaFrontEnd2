@@ -45,6 +45,11 @@ export const routes: Routes = [
                     import('./pages/usuarios/usuarios.component').then((c) => c.UsuariosComponent),
             },
             {
+                path: 'datos',
+                loadComponent: () =>
+                    import('./pages/datos/datos.component').then((c) => c.DatosComponent),
+            },
+            {
                 path: 'datos/:id',
                 loadComponent: () =>
                     import('./pages/datos/datos.component').then((c) => c.DatosComponent),

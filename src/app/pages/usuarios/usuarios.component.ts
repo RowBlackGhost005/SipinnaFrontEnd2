@@ -5,13 +5,14 @@ import { ExportTableComponent } from '../../modules/export-table/export-table.co
 import { IUsuarios } from '../../models/usuario.model';
 import { TableModel } from '../../models/table';
 import { UsuarioService } from '../../services/usuario.service';
+import { TopMenuComponent } from "../../modules/top-menu/top-menu.component";
 
 @Component({
-  selector: 'app-usuarios',
-  standalone: true,
-  imports: [TableComponent,ButtonsComponent,ExportTableComponent],
-  templateUrl: './usuarios.component.html',
-  styleUrl: './usuarios.component.scss'
+    selector: 'app-usuarios',
+    standalone: true,
+    templateUrl: './usuarios.component.html',
+    styleUrl: './usuarios.component.scss',
+    imports: [TableComponent, ButtonsComponent, ExportTableComponent, TopMenuComponent]
 })
 export class UsuariosComponent {
   private _enlaceService = inject(UsuarioService); 

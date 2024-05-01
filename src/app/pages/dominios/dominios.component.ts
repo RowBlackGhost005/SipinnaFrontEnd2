@@ -8,11 +8,12 @@ import { ModalComponent } from '../../modules/modal/modal.component';
 import { DominioService } from '../../services/dominio.service';
 import { IDominio } from '../../models/dominio.model';
 import { SearchbarService } from '../../services/searchbar.service';
+import { TopMenuComponent } from '../../modules/top-menu/top-menu.component';
 
 @Component({
   selector: 'app-dominios',
   standalone: true,
-  imports: [TableComponent, ButtonsComponent, ExportTableComponent, ModalComponent],
+  imports: [TableComponent, ButtonsComponent, ExportTableComponent, ModalComponent, TopMenuComponent, TopMenuComponent],
   templateUrl: './dominios.component.html',
   styleUrl: './dominios.component.scss'
 })

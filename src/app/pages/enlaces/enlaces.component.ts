@@ -8,13 +8,14 @@ import { EnlaceService } from '../../services/enlace.service';
 import { IEnlace } from '../../models/enlace.model';
 import { SearchbarService } from '../../services/searchbar.service';
 import { DialogComponent } from '../../modules/dialog/dialog.component';
+import { TopMenuComponent } from "../../modules/top-menu/top-menu.component";
 
 @Component({
-  selector: 'app-enlaces',
-  standalone: true,
-  imports: [TableComponent, ButtonsComponent, ExportTableComponent, ModalComponent, DialogComponent],
-  templateUrl: './enlaces.component.html',
-  styleUrl: './enlaces.component.scss'
+    selector: 'app-enlaces',
+    standalone: true,
+    templateUrl: './enlaces.component.html',
+    styleUrl: './enlaces.component.scss',
+    imports: [TableComponent, ButtonsComponent, ExportTableComponent, ModalComponent, DialogComponent, TopMenuComponent]
 })
 export class EnlacesComponent {
   @ViewChild(ModalComponent) modal?: ModalComponent;
