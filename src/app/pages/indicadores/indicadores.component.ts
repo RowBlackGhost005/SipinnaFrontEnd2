@@ -10,14 +10,15 @@ import { IIndicador } from '../../models/indicador.model';
 import { IDominio } from '../../models/dominio.model';
 import { SearchbarService } from '../../services/searchbar.service';
 import { Router } from '@angular/router';
+import { TopMenuComponent } from "../../modules/top-menu/top-menu.component";
 
 
 @Component({
-  selector: 'app-indicadores',
-  standalone: true,
-  imports: [TableComponent, ButtonsComponent, ExportTableComponent, ModalComponent],
-  templateUrl: './indicadores.component.html',
-  styleUrl: './indicadores.component.scss'
+    selector: 'app-indicadores',
+    standalone: true,
+    templateUrl: './indicadores.component.html',
+    styleUrl: './indicadores.component.scss',
+    imports: [TableComponent, ButtonsComponent, ExportTableComponent, ModalComponent, TopMenuComponent]
 })
 
 export class IndicadoresComponent implements OnInit {

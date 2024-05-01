@@ -1,5 +1,6 @@
 <app-modal></app-modal>
 <div class="content">
+    <app-top-menu [title]="'Enlaces'" [needSearchbar]="true"></app-top-menu>
     <div class="horizontalView">
         <app-buttons (agregar)="agregarFunc()" (editar)="editarFunc()" (eliminar)="eliminarFunc()"></app-buttons>
         <app-dialog [mensajeDialog]="mensajeAlerta" [showModal]="mostrar"></app-dialog>

@@ -7,13 +7,14 @@ import { RubroService } from '../../services/rubro.service';
 import { IRubro } from '../../models/rubro.model';
 import { ExportTableComponent } from '../../modules/export-table/export-table.component';
 import { ModalComponent } from '../../modules/modal/modal.component';
+import { TopMenuComponent } from "../../modules/top-menu/top-menu.component";
 
 @Component({
-  selector: 'app-rubros',
-  standalone: true,
-  imports: [SidebarIndicatorComponent, ButtonsComponent, TableComponent, ExportTableComponent,ModalComponent],
-  templateUrl: './rubros.component.html',
-  styleUrl: './rubros.component.scss'
+    selector: 'app-rubros',
+    standalone: true,
+    templateUrl: './rubros.component.html',
+    styleUrl: './rubros.component.scss',
+    imports: [SidebarIndicatorComponent, ButtonsComponent, TableComponent, ExportTableComponent, ModalComponent, TopMenuComponent]
 })
 export class RubrosComponent {
 

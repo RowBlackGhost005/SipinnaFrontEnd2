@@ -8,13 +8,14 @@ import { ModalComponent } from '../../modules/modal/modal.component';
 import { NoticiaService } from '../../services/noticia.service';
 import { INoticia } from '../../models/noticia.model';
 import { SearchbarService } from '../../services/searchbar.service';
+import { TopMenuComponent } from "../../modules/top-menu/top-menu.component";
 
 @Component({
-  selector: 'app-noticias',
-  standalone: true,
-  imports: [TableComponent, ButtonsComponent, ExportTableComponent, ModalComponent],
-  templateUrl: './noticias.component.html',
-  styleUrl: './noticias.component.scss'
+    selector: 'app-noticias',
+    standalone: true,
+    templateUrl: './noticias.component.html',
+    styleUrl: './noticias.component.scss',
+    imports: [TableComponent, ButtonsComponent, ExportTableComponent, ModalComponent, TopMenuComponent]
 })
 export class NoticiasComponent {
   @ViewChild(ModalComponent) modal?: ModalComponent;
