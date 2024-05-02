@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-dialog',
@@ -10,12 +10,14 @@ import { Component, Input } from '@angular/core';
 export class DialogComponent {
   @Input() mensajeDialog: string = '';
   @Input() showModal: boolean = false;
-
+  @Output() close = new EventEmitter<void>();  
+  
   openModal() {
     this.showModal = true;
   }
 
   closeModal() {
     this.showModal = false;
+    this.close.emit();
   }
 }

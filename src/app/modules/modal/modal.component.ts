@@ -1,4 +1,4 @@
-import { Component, ElementRef, NgModule, ViewChild } from '@angular/core';
+import { Component, ElementRef, NgModule, ViewChild, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { DominioService } from '../../services/dominio.service';
@@ -9,6 +9,8 @@ import { NoticiaService } from '../../services/noticia.service';
 import { INoticia } from '../../models/noticia.model';
 import { Output } from '@angular/core';
 import { EventEmitter } from '@angular/core';
+import { RubroService } from '../../services/rubro.service';
+import { IRubro } from '../../models/rubro.model';
 // @ts-ignore
 const $: any = window['$']
 @Component({
@@ -21,6 +23,7 @@ const $: any = window['$']
 export class ModalComponent {
   @Output() nuevoGuardado:EventEmitter<void>=new EventEmitter<void>();
   @ViewChild('modal') modal?: ElementRef;
+  private _rubroService = inject(RubroService);
   title: string = '';
   lblNombre: string = '';
   placeholderNombre: string = '';
@@ -184,6 +187,20 @@ export class ModalComponent {
     this.closeModal()
   }
 
+  guardarRubroDeIndicador(nombreRubro: string, datos: File, idIndicador: number){
+    const rubro = nombreRubro;
+    const datoss = datos;
+    const id = idIndicador.toString();
 
+    const formData = new FormData();
+    formData.append('rubro', rubro);
+    formData.append('datos', datoss);
+    formData.append('idindicador', id);
+
+    this._rubroService.postRubroIndicador(formData).subscribe((data: IRubro) => {
+      console.log('Se agregó correctamente el rubro del indicador');
+    }, error => {
+      console.log('Error al guardar el rubro');
+    });
+  }
 }
-

@@ -9,20 +9,22 @@ import { NoticiaService } from '../../services/noticia.service';
 import { INoticia } from '../../models/noticia.model';
 import { SearchbarService } from '../../services/searchbar.service';
 import { TopMenuComponent } from "../../modules/top-menu/top-menu.component";
+import { DialogComponent } from '../../modules/dialog/dialog.component';
 
 @Component({
     selector: 'app-noticias',
     standalone: true,
     templateUrl: './noticias.component.html',
     styleUrl: './noticias.component.scss',
-    imports: [TableComponent, ButtonsComponent, ExportTableComponent, ModalComponent, TopMenuComponent]
+    imports: [TableComponent, ButtonsComponent, ExportTableComponent, ModalComponent, TopMenuComponent, DialogComponent]
 })
 export class NoticiasComponent {
   @ViewChild(ModalComponent) modal?: ModalComponent;
 
   private _noticiaService = inject(NoticiaService);
   private _searchbarService = inject(SearchbarService);
-
+  mensajeAlerta: string = '';
+  mostrar: boolean = false;
   tableData: INoticia[] = [];
   dataAux: INoticia[] = [];
   filteredTable: INoticia[] = [];
@@ -33,6 +35,12 @@ export class NoticiasComponent {
     { header: 'Titulo', field: 'titulo' },
     { header: 'Enlace', field: 'enlace' }
   ];
+
+  noticiaSeleccionada: INoticia = {
+    titulo: '',
+    imagen: '',
+    enlace: ''
+  };
   tableJson = signal("")
 
 
@@ -71,7 +79,19 @@ export class NoticiasComponent {
   }
 
   eliminarFunc() {
-    // Lógica para la funcionalidad de eliminar
+    if (this.noticiaSeleccionada && typeof this.noticiaSeleccionada.idnoticias !== 'undefined') {
+      this._noticiaService.deleteNoticia(this.noticiaSeleccionada.idnoticias).subscribe(response => {
+        this.cargarDatos();
+        this.mensajeAlerta = 'La noticia se eliminó correctamente.'
+        this.mostrar = true;
+      });
+    } else {
+      console.error('No se puede eliminar la noticia seleccionada porque id es null o undefined');
+    }
+  }
+
+  recibeNoticia(noticia: INoticia) {
+    this.noticiaSeleccionada = noticia;
   }
 
   openModal(title: string, lblNombre: string, placeholderNombre: string, showNameInput:boolean,
