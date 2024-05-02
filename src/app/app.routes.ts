@@ -55,7 +55,7 @@ export const routes: Routes = [
                     import('./pages/datos/datos.component').then((c) => c.DatosComponent),
             },
             {
-                path: 'rubros',
+                path: 'rubros/:id',
                 loadComponent: () =>
                     import('./pages/rubros/rubros.component').then((c) => c.RubrosComponent),
             }

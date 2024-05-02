@@ -4,9 +4,10 @@
     <div class="horizontalView">
         <app-buttons (agregar)="agregarFunc()" (editar)="editarFunc()" (eliminar)="eliminarFunc()">
         </app-buttons>
+        <app-dialog [mensajeDialog]="mensajeAlerta" [showModal]="mostrar"></app-dialog>
         <div class="topRight">
             <app-export-table [tableContent]="tableJson()" [fileName]="'Noticias'"></app-export-table>
         </div>
     </div>
-    <app-table [columns]="tableColumns" [data]="tableData"></app-table>
+    <app-table (selectEvent)="recibeNoticia($event)" [columns]="tableColumns" [data]="tableData"></app-table>
 </div>

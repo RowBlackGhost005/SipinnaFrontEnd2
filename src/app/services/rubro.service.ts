@@ -29,4 +29,12 @@ export class RubroService {
   public deleteRubro(id: number): Observable<IRubro>{
     return this._http.delete<IRubro>(`${this.urlBase}/${id}`);
   }
+
+  public getRubrosDeIndicador(id: number): Observable<IRubro[]>{
+    return this._http.get<IRubro[]>(`${this.urlBase}/rubroIndicador/${id}`);
+  }
+
+  public postRubroIndicador(formData: FormData): Observable<IRubro>{
+    return this._http.post<IRubro>(`${this.urlBase}/rubroIndicador`, formData);
+  }
 }

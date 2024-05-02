@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, Input, inject } from '@angular/core';
 import { RouterLink, Router } from '@angular/router';
 
 @Component({
@@ -10,6 +10,11 @@ import { RouterLink, Router } from '@angular/router';
 })
 export class SidebarIndicatorComponent {
   private router = inject(Router);
+  @Input() idRubro: string = '';
+  
+  actualizarIdRubro(nuevoId: string) {
+    this.idRubro = nuevoId;
+  }
 
   isActiveRoute(baseRoute: string): boolean {
     const currentRoute = this.router.url;

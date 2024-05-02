@@ -27,6 +27,6 @@ export class NoticiaService {
   }
 
   public deleteNoticia(id: number): Observable<INoticia>{
-    return this._http.delete<INoticia>(`${this.urlBase}/${id}`);
+    return this._http.delete<INoticia>(`${this.urlBase}?id=${id}`);
   }
 }

@@ -8,6 +8,7 @@ import { IRubro } from '../../models/rubro.model';
 import { ExportTableComponent } from '../../modules/export-table/export-table.component';
 import { ModalComponent } from '../../modules/modal/modal.component';
 import { TopMenuComponent } from "../../modules/top-menu/top-menu.component";
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
     selector: 'app-rubros',
@@ -20,7 +21,7 @@ export class RubrosComponent {
 
   @ViewChild(ModalComponent) modal?: ModalComponent;
   private _rubroService = inject(RubroService);
-
+  private _route = inject(ActivatedRoute);
   tableJson = signal("")
   tableData: IRubro[] = [];
   tableColumns: TableModel[] = [
@@ -29,12 +30,22 @@ export class RubrosComponent {
     { header: 'Archivo', field: 'datos' }
   ];
 
+  mensajeAlerta: string = '';
+  mostrar: boolean = false;
+  idIndicador: number = 0;
+  rubroSeleccionado: IRubro = {
+    idrubro: 0,
+    rubro: '',
+    datos: ''
+  };
+
   ngOnInit(): void {
-   this.cargarDatos();
+   this.idIndicador = this._route.snapshot.params['id'];
+    this.cargarDatos(this.idIndicador);
   }
 
-  cargarDatos():void{
-    this._rubroService.getRubros().subscribe((data: IRubro[]) => {
+  cargarDatos(id: number): void {
+    this._rubroService.getRubrosDeIndicador(id).subscribe((data: IRubro[]) => {
       this.tableData = data;
       this.tableJson.set(JSON.stringify(this.tableData))
     })
@@ -53,7 +64,17 @@ export class RubrosComponent {
 
   editarFunc(){}
 
-  eliminarFunc(){}
+  eliminarFunc() { 
+    // if (this.rubroSeleccionado && typeof this.rubroSeleccionado.idrubro !== 'undefined') {
+    //   this._rubroService.deleteRubro(this.rubroSeleccionado.idrubro).subscribe(response => {
+    //     this.cargarDatos(this.idIndicador);
+    //     this.mensajeAlerta = 'El rubro se eliminó correctamente.'
+    //     this.mostrar = true;
+    //   });
+    // } else {
+    //   console.error('No se puede eliminar el rubro seleccionado porque idenlaces es null o undefined');
+    // }
+  }
 
   // Funcion para el boton de agregar, se abre el modal.
   openModal(title: string, 
@@ -72,7 +93,7 @@ export class RubrosComponent {
 
     // Escuchar el evento de dominio guardado y actualizar la tabla
     this.modal?.nuevoGuardado.subscribe(() => {
-      this.cargarDatos();
+      this.cargarDatos(this.idIndicador);
 
     });
   }
