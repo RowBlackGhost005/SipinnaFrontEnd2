@@ -2,7 +2,9 @@
     <div class="title">
         <p>{{title}}</p>
     </div>
-        <app-searchbar #searchbar *ngIf="needSearchbar"></app-searchbar>
+    <div class="searchBar">
+        <app-searchbar #searchbar *ngIf="needSearchbar" [alphanumericOnly]="alphanumericOnly"></app-searchbar>
+    </div>
     <div class="dropdown">
         <app-dropdown-menu-user></app-dropdown-menu-user>
     </div>

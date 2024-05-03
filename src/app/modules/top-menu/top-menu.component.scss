@@ -23,6 +23,7 @@
 .title{
 width: 11vw;
 margin-top: 8px;
+font-size: 32px;
 }
 
 @media (max-width: 860px) {
@@ -35,11 +36,19 @@ margin-top: 8px;
      }
   }
 
-  @media (max-width:620px) {
+  @media (max-width:640px) {
    .title{
-      font-size: smaller;
+      width: 9vw;
+      margin-left: 50px;
+      font-size: 24px;
+      }
    }
-}
+
+   @media (max-width:530px) {
+      .title{
+         font-size: 18px;
+         }
+      }
 
 @media (max-width:420px) {
    .title{
@@ -50,4 +59,11 @@ margin-top: 8px;
       position:absolute;
       margin-left: 78vw;
    }
+}
+
+@media (max-width:390px) {
+   .searchBar{
+      margin-left: 20px;
+   }
+
 }
