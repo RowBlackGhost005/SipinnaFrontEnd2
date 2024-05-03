@@ -1,4 +1,4 @@
 <div class="input-container">
     <i class="mdi mdi-magnify"></i>
-    <input type="text" class="form-control" placeholder="Buscar" (keydown.enter)="handleEnter()" [formControl]="searchControl">
+    <input #validate type="text" class="form-control" placeholder="Buscar" (keydown.enter)="handleEnter()" [formControl]="searchControl">
 </div>
