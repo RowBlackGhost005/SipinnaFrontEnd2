@@ -11,6 +11,7 @@ import { Output } from '@angular/core';
 import { EventEmitter } from '@angular/core';
 import { RubroService } from '../../services/rubro.service';
 import { IRubro } from '../../models/rubro.model';
+import { ActivatedRoute } from '@angular/router';
 // @ts-ignore
 const $: any = window['$']
 @Component({
@@ -24,6 +25,7 @@ export class ModalComponent implements OnInit{
   @Output() nuevoGuardado: EventEmitter<void> = new EventEmitter<void>();
   @ViewChild('modal') modal?: ElementRef;
   @ViewChild('validar') inputElementRef!: ElementRef<HTMLInputElement>;
+  private _route = inject(ActivatedRoute);
 
   enlaceSeleccionado: IEnlace | null = null;
 
@@ -203,8 +205,6 @@ export class ModalComponent implements OnInit{
     { label: '6 a 11', value: '6 a 11' }
   ];
 
-
-
   onFileSelected(event: any): void {
     const file: File = event.target.files[0];
     if (file) {
@@ -223,7 +223,6 @@ export class ModalComponent implements OnInit{
     }
   }
 
-
   //Funcion para el boton de guardar, recibe parametros para saber que accion ejecutar
   ejecutarAccion(nombre: string, url: string, imagen: string) {
     if (this.accionBtnGuardar === 'dominio') {
@@ -241,16 +240,14 @@ export class ModalComponent implements OnInit{
     } else if (this.accionBtnGuardar === 'rubro') {
       // Verifica si selectedFile no es null antes de llamar a guardarRubroDeIndicador
     if (this.selectedFile) {
-      // Llama a guardarRubroDeIndicador y pasa el archivo seleccionado
-      this.guardarRubroDeIndicador(nombre, this.selectedFile,0);
+      // Obtiene el id del indicador al que pertenece de la ruta
+      const id = this._route.snapshot.params['id'];
+      this.guardarRubroDeIndicador(nombre, this.selectedFile,id);
     } else {
       console.error('No se ha seleccionado ningún archivo.');
     }
   }
   }
-
-
-
 
   //GUARDAR DOMINIO
   guardarDominio(nombreDominio: string, estadoDominio:boolean) {
@@ -271,11 +268,6 @@ export class ModalComponent implements OnInit{
 
     this.closeModal()
   }
-
-
-  
- 
-
 
   //FUNCIONES PARA GUARDAR Y EDITAR ENLACES
 
@@ -334,7 +326,6 @@ actualizarEnlace(id: number, titulo: string, enlace: string): void {
 }
   
 
-
   //GUARDAR NOTICIA (Funciona pero falta solucionar la imagen)
   guardarNoticia(titulo: string, enlace: string, imagen: string) {
     const nuevaNoticia: INoticia = {
@@ -356,10 +347,9 @@ actualizarEnlace(id: number, titulo: string, enlace: string): void {
     this.closeModal()
   }
 
-
-  //NO FUNCIONA
+  // GUARDAR RUBRO: funciona
  guardarRubroDeIndicador(nombreRubro: string, datos: File, idIndicador: number){
-    const rubro = nombreRubro;
+    const rubro = this.obtenerOpcionSeleccionada();
     const datoss = datos;
     const id = idIndicador.toString();
 
@@ -369,10 +359,21 @@ actualizarEnlace(id: number, titulo: string, enlace: string): void {
     formData.append('idindicador', id);
 
     this._rubroService.postRubroIndicador(formData).subscribe((data: IRubro) => {
-      console.log('Se agregó correctamente el rubro del indicador');
+      this.nuevoGuardado.emit();
     }, error => {
-      console.log('Error al guardar el rubro');
+      console.log('Error al guardar el rubro', error);
     });
+
+    this.closeModal()
+  }
+
+  // Metodo para obtener el rubro seleccionado y verificar que no sea nulo
+  obtenerOpcionSeleccionada(): string {
+    if (this.selectedOption !== null && this.selectedOption !== undefined) {
+      return this.selectedOption;
+    } else {
+      return "";
+    }
   }
 
   validarAlfanumerico(){

@@ -10,6 +10,7 @@
                 <div class="horizontalView">
                     <app-buttons (agregar)="agregarFunc()" (editar)="editarFunc()" (eliminar)="eliminarFunc()">
                     </app-buttons>
+                    <app-dialog [mensajeDialog]="mensajeAlerta" [showModal]="mostrar"></app-dialog>
                     <div class="topRight">
                         <app-export-table [tableContent]="tableJson()" [fileName]="'Rubros'"></app-export-table>
                     </div>
