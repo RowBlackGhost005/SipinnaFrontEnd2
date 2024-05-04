@@ -200,7 +200,7 @@ export class ModalComponent {
   //Funcion para el boton de guardar, recibe parametros para saber que accion ejecutar
   ejecutarAccion(nombre: string, url: string, imagen: string) {
     if (this.accionBtnGuardar === 'dominio') {
-      this.guardarDominio(nombre);
+      this.guardarDominio(nombre, this.activo);
     } else if (this.accionBtnGuardar === 'guardarEnlace') {
       this.guardarEnlace(nombre, url);
     } else if (this.accionBtnGuardar === 'noticia') {
@@ -218,10 +218,11 @@ export class ModalComponent {
 
 
 
-  //GUARDAR DOMINIO (Funciona)
-  guardarDominio(nombreDominio: string) {
+  //GUARDAR DOMINIO
+  guardarDominio(nombreDominio: string, estadoDominio:boolean) {
     const nuevoDominio: IDominio = {
-      nombre: nombreDominio
+      nombre: nombreDominio,
+      estado: estadoDominio
     };
 
     this.dominioService.postDominio(nuevoDominio).subscribe(
