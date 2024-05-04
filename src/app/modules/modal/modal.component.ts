@@ -21,55 +21,151 @@ const $: any = window['$']
   styleUrl: './modal.component.scss'
 })
 export class ModalComponent {
-  @Output() nuevoGuardado:EventEmitter<void>=new EventEmitter<void>();
+  @Output() nuevoGuardado: EventEmitter<void> = new EventEmitter<void>();
   @ViewChild('modal') modal?: ElementRef;
   private _rubroService = inject(RubroService);
+
+  //Variable para el titulo del modal
   title: string = '';
+
+  //Variables para los datos del input de Nombres
+  //
+  //lblNombre: Texto que estara en el label
+  //placeholderNombre: Mensaje que estara en el input
+  //showNameInput: Para si deseas mostrar ese input
+  //activo: Switch para activar o desactivar dominio.
+  //showSwitchInput: Para si deseas mostrar el switch
   lblNombre: string = '';
   placeholderNombre: string = '';
-  showNameInput:boolean=false;
+  showNameInput: boolean = false;
   activo: boolean = true;
-  showSwitchInput:boolean=false;
+  showSwitchInput: boolean = false;
+
+  //Variables para los datos del input de la Url
+  //
+  //lblUrl: Texto que estara en el label
+  //placeholderUrl: Mensaje que estara en el input
+  //showUrlInput: Para si deseas mostrar ese input
   lblUrl: string = '';
   placeholderUrl: string = '';
-  isNameRequired: boolean = true;
-  name: string = '';
-  url: string = '';
   showUrlInput: boolean = false;
-  advertenciaFormato:string='';
+
+  //Variables para los datos del input del input File
+  //
+  //lblFile: Texto que estara en el label
+  //showFileInput: Para si deseas mostrar ese input
+  //advertenciaFormato: Para mostrar en texto, el formato que debe subirse.
   lblFile: string = ''
-  showFileInput:boolean= false;
-  lblRubro:string='';
-  showDropdownInput:boolean=false;
+  showFileInput: boolean = false;
+  advertenciaFormato: string = '';
+
+
+  //Variables para los datos del input Dropdown
+  //
+  //lblRubro: Texto que estara en el label
+  //showDropdownInput: Para si deseas mostrar ese input
+  lblRubro: string = '';
+  showDropdownInput: boolean = false;
+
+  //Variable para poner el signo de "*" al lado de las label 
+  isNameRequired: boolean = true;
+
+  //Parametro que se envia al boton de guardar:
+  //Nombre dominio, enlace, noticia.
+  name: string = '';
+  //Url de enlace o noticia.
+  url: string = '';
+  // Variable para almacenar la opción seleccionada del dropdown para los rubros.
+  selectedOption: string | null = null;
+  //Variable para guardar el nombre de la imagen o archivo seleccionado
+  imageUrl: string = '';
+
+  selectedFileName: string = '';
+
+
+  //Para manejar la accion que realizara el boton de guardar
   accionBtnGuardar: string = '';
 
-  openModal(title: string, lblNombre: string, placeholderNombre: string, showNameInput:boolean,
-    showSwitchInput:boolean,
-    lblUrl: string, placeholderUrl: string, showUrlInput: boolean,
-    lblFile: string, advertenciaFormato:string, showFileInput: boolean,
-    lblRubro:string,showDropdownInput:boolean, 
+
+
+  openModalDominio(title: string,
+    lblNombre: string, placeholderNombre: string, showNameInput: boolean,
+    showSwitchInput: boolean,
     accion: string) {
     this.title = title;
     this.lblNombre = lblNombre;
     this.placeholderNombre = placeholderNombre;
-    this.showNameInput=showNameInput;
-    this.showSwitchInput=showSwitchInput;
+    this.showNameInput = showNameInput;
+    this.showSwitchInput = showSwitchInput;
+    this.accionBtnGuardar = accion;
+
+    $(this.modal?.nativeElement).modal('show');
+  }
+
+  openModalNoticia(title: string,
+    lblNombre: string, placeholderNombre: string, showNameInput: boolean,
+    lblUrl: string, placeholderUrl: string, showUrlInput: boolean,
+    lblFile: string, advertenciaFormato: string, showFileInput: boolean,
+    accion: string) {
+    this.title = title;
+    this.lblNombre = lblNombre;
+    this.placeholderNombre = placeholderNombre;
+    this.showNameInput = showNameInput;
     this.lblUrl = lblUrl;
     this.placeholderUrl = placeholderUrl;
     this.showUrlInput = showUrlInput;
     this.lblFile = lblFile;
-    this.advertenciaFormato=advertenciaFormato;
+    this.advertenciaFormato = advertenciaFormato;
     this.showFileInput = showFileInput;
-    this.lblRubro=lblRubro;
-    this.showDropdownInput=showDropdownInput;
+
     this.accionBtnGuardar = accion;
+
     $(this.modal?.nativeElement).modal('show');
   }
 
+  openModalEnlace(title: string,
+    lblNombre: string, placeholderNombre: string, showNameInput: boolean,
+    lblUrl: string, placeholderUrl: string, showUrlInput: boolean,
+    accion: string) {
+    this.title = title;
+    this.lblNombre = lblNombre;
+    this.placeholderNombre = placeholderNombre;
+    this.showNameInput = showNameInput;
+    this.lblUrl = lblUrl;
+    this.placeholderUrl = placeholderUrl;
+    this.showUrlInput = showUrlInput;
+    this.accionBtnGuardar = accion;
+
+    $(this.modal?.nativeElement).modal('show');
+  }
+
+
+
+  openModalRubro(title: string,
+    lblFile: string, advertenciaFormato: string, showFileInput: boolean,
+    lblRubro: string, showDropdownInput: boolean,
+    accion: string) {
+    this.title = title;
+    this.lblFile = lblFile;
+    this.advertenciaFormato = advertenciaFormato;
+    this.showFileInput = showFileInput;
+    this.lblRubro = lblRubro;
+    this.showDropdownInput = showDropdownInput;
+    this.accionBtnGuardar = accion;
+
+    $(this.modal?.nativeElement).modal('show');
+  }
+
+
+  //Funcion para cerrar el modal
   closeModal() {
     $(this.modal?.nativeElement).modal('hide');
   }
 
+
+  //Valores del dropdown
+  //label: Lo que se muestra
+  //value:Valor real tipo string
   dropdownOptions = [
     { label: '<1', value: '<1' },
     { label: '1 a 2', value: '1 a 2' },
@@ -80,39 +176,36 @@ export class ModalComponent {
     { label: '6 a 11', value: '6 a 11' }
   ];
 
-  // Variable para almacenar la opción seleccionada
-  selectedOption: string | null = null;
 
 
-  imageUrl: string = '';
-  selectedFileName: string = '';
-  onFileSelected(event: any):void{
+  onFileSelected(event: any): void {
     const file: File = event.target.files[0];
-  if (file) {
-    // Verificar si el tipo de archivo es una imagen
-  if (file.type.match(/^image\/.*/) != null) {
-      this.selectedFileName = file.name; 
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = (e: any) => {
-         this.imageUrl = e.target.result;
-         console.log("nombre de la imagen:", this.imageUrl);
-      };
-    } else {
-      console.log('Error: El archivo seleccionado no es una imagen.');
+    if (file) {
+      // Verificar si el tipo de archivo es una imagen
+      if (file.type.match(/^image\/.*/) != null) {
+        this.selectedFileName = file.name;
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = (e: any) => {
+          this.imageUrl = e.target.result;
+          console.log("nombre de la imagen:", this.imageUrl);
+        };
+      } else {
+        console.log('Error: El archivo seleccionado no es una imagen.');
+      }
     }
   }
-  }
+
 
   //Funcion para el boton de guardar, recibe parametros para saber que accion ejecutar
-  ejecutarAccion(nombre: string, url: string,imagen:string) {
+  ejecutarAccion(nombre: string, url: string, imagen: string) {
     if (this.accionBtnGuardar === 'dominio') {
       this.guardarDominio(nombre);
-    } else if (this.accionBtnGuardar === 'enlace') {
+    } else if (this.accionBtnGuardar === 'guardarEnlace') {
       this.guardarEnlace(nombre, url);
     } else if (this.accionBtnGuardar === 'noticia') {
-      this.guardarNoticia(nombre,url,imagen);
-    }else if (this.accionBtnGuardar === 'rubro') {
+      this.guardarNoticia(nombre, url, imagen);
+    } else if (this.accionBtnGuardar === 'rubro') {
 
     }
   }
@@ -121,11 +214,11 @@ export class ModalComponent {
   //Constructor de las Interfaces
   constructor(private dominioService: DominioService,
     private enlaceService: EnlaceService,
-    private noticiaService:NoticiaService){}
+    private noticiaService: NoticiaService) { }
 
 
 
-  //GUARDAR DOMINIO
+  //GUARDAR DOMINIO (Funciona)
   guardarDominio(nombreDominio: string) {
     const nuevoDominio: IDominio = {
       nombre: nombreDominio
@@ -144,15 +237,25 @@ export class ModalComponent {
     this.closeModal()
   }
 
-  //GUARDAR ENLACE 
 
+
+
+
+
+  enlaceI: IEnlace = {
+    titulo: '',
+    enlace: '',
+    idenlaces: 0
+  };
+  //GUARDAR ENLACE (Funciona)
   guardarEnlace(tituloEnlace: string, urlEnlace: string) {
-    const nuevoEnlace: IEnlace = {
+    this.enlaceI = {
+      idenlaces: 0,
       titulo: tituloEnlace,
       enlace: urlEnlace
     };
 
-    this.enlaceService.postEnlace(nuevoEnlace).subscribe(
+    this.enlaceService.postEnlace(this.enlaceI).subscribe(
       response => {
         console.log('Enlace guardado correctamente: ', response);
         this.nuevoGuardado.emit();
@@ -166,8 +269,9 @@ export class ModalComponent {
   }
 
 
-  //GUARDAR NOTICIA
-  guardarNoticia(  titulo: string, enlace: string,imagen: string ) {
+
+  //GUARDAR NOTICIA (Funciona pero falta solucionar la imagen)
+  guardarNoticia(titulo: string, enlace: string, imagen: string) {
     const nuevaNoticia: INoticia = {
       titulo: titulo,
       imagen: imagen,
@@ -187,7 +291,9 @@ export class ModalComponent {
     this.closeModal()
   }
 
-  guardarRubroDeIndicador(nombreRubro: string, datos: File, idIndicador: number){
+
+  //NO FUNCIONA
+  guardarRubroDeIndicador(nombreRubro: string, datos: File, idIndicador: number) {
     const rubro = nombreRubro;
     const datoss = datos;
     const id = idIndicador.toString();
