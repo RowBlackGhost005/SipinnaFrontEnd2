@@ -10,7 +10,7 @@ import { IIndicador } from '../../models/indicador.model';
 import { IDominio } from '../../models/dominio.model';
 import { SearchbarService } from '../../services/searchbar.service';
 import { Router } from '@angular/router';
-import { TopMenuComponent } from "../../modules/top-menu/top-menu.component";
+import { TopMenuComponent } from "../../modules/top-menu-components/top-menu/top-menu.component";
 
 
 @Component({

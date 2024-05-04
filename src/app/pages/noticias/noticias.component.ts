@@ -8,7 +8,7 @@ import { ModalComponent } from '../../modules/modal/modal.component';
 import { NoticiaService } from '../../services/noticia.service';
 import { INoticia } from '../../models/noticia.model';
 import { SearchbarService } from '../../services/searchbar.service';
-import { TopMenuComponent } from "../../modules/top-menu/top-menu.component";
+import { TopMenuComponent } from "../../modules/top-menu-components/top-menu/top-menu.component";
 import { DialogComponent } from '../../modules/dialog/dialog.component';
 
 @Component({

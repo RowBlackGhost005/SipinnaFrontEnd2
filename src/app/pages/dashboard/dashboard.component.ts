@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { TopMenuComponent } from '../../modules/top-menu/top-menu.component';
+import { TopMenuComponent } from '../../modules/top-menu-components/top-menu/top-menu.component';
 
 @Component({
   selector: 'app-dashboard',

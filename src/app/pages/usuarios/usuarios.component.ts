@@ -5,7 +5,7 @@ import { ExportTableComponent } from '../../modules/export-table/export-table.co
 import { IUsuarios } from '../../models/usuario.model';
 import { TableModel } from '../../models/table';
 import { UsuarioService } from '../../services/usuario.service';
-import { TopMenuComponent } from "../../modules/top-menu/top-menu.component";
+import { TopMenuComponent } from "../../modules/top-menu-components/top-menu/top-menu.component";
 
 @Component({
     selector: 'app-usuarios',

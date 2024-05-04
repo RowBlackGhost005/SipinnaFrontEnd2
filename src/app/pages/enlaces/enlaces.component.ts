@@ -8,7 +8,7 @@ import { EnlaceService } from '../../services/enlace.service';
 import { IEnlace } from '../../models/enlace.model';
 import { SearchbarService } from '../../services/searchbar.service';
 import { DialogComponent } from '../../modules/dialog/dialog.component';
-import { TopMenuComponent } from "../../modules/top-menu/top-menu.component";
+import { TopMenuComponent } from "../../modules/top-menu-components/top-menu/top-menu.component";
 
 @Component({
     selector: 'app-enlaces',
