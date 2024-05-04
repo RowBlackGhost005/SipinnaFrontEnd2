@@ -18,6 +18,7 @@ import { TopMenuComponent } from "../../modules/top-menu/top-menu.component";
     imports: [TableComponent, ButtonsComponent, ExportTableComponent, ModalComponent, DialogComponent, TopMenuComponent]
 })
 export class EnlacesComponent {
+  
   @ViewChild(ModalComponent) modal?: ModalComponent;
   private _enlaceService = inject(EnlaceService);
   private _searchbarService = inject(SearchbarService);
@@ -73,12 +74,7 @@ export class EnlacesComponent {
 
   editarFunc() {
     if (this.enlaceSeleccionado && this.enlaceSeleccionado.idenlaces !== 0 && this.enlaceSeleccionado.titulo !== '' && this.enlaceSeleccionado.enlace !== '') {
-      console.log('Datos del enlace seleccionado:', this.enlaceSeleccionado);
-      this.enlaceService.setEnlaceSeleccionado(this.enlaceSeleccionado);
-      this.openModalEnlace('Editar Enlace', 
-      'Nuevo Título', 'Ingrese el nuevo título del enlace', true,
-        'Nuevo URL', 'Ingrese el nuevo URL del enlace', true,
-        'editarEnlace');
+      this.modal?.editarEnlace(); // Llama al método editarEnlace del modal component
     } else {
       this.mensajeAlerta = 'Seleccione un enlace para editar.';
       this.mostrar = true;
@@ -106,6 +102,7 @@ export class EnlacesComponent {
 
   recibeIndicador(indicador: IEnlace) {
     this.enlaceSeleccionado = indicador;
+    this.enlaceService.actualizarEnlaceSeleccionado(indicador);
   }
 
   // Funcion para el boton de agregar, se abre el modal.
