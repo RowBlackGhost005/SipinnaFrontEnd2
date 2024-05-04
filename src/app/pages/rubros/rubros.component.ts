@@ -9,19 +9,21 @@ import { ExportTableComponent } from '../../modules/export-table/export-table.co
 import { ModalComponent } from '../../modules/modal/modal.component';
 import { TopMenuComponent } from "../../modules/top-menu-components/top-menu/top-menu.component";
 import { ActivatedRoute } from '@angular/router';
+import { DialogComponent } from '../../modules/dialog/dialog.component';
 
 @Component({
     selector: 'app-rubros',
     standalone: true,
     templateUrl: './rubros.component.html',
     styleUrl: './rubros.component.scss',
-    imports: [SidebarIndicatorComponent, ButtonsComponent, TableComponent, ExportTableComponent, ModalComponent, TopMenuComponent]
+    imports: [SidebarIndicatorComponent, ButtonsComponent, TableComponent, ExportTableComponent, ModalComponent, TopMenuComponent, DialogComponent]
 })
 export class RubrosComponent {
 
   @ViewChild(ModalComponent) modal?: ModalComponent;
   private _rubroService = inject(RubroService);
   private _route = inject(ActivatedRoute);
+  
   tableJson = signal("")
   tableData: IRubro[] = [];
   tableColumns: TableModel[] = [
@@ -45,7 +47,7 @@ export class RubrosComponent {
   }
 
   cargarDatos(id: number): void {
-    this._rubroService.getRubrosDeIndicador(id).subscribe((data: IRubro[]) => {
+    this._rubroService.getRubrosDeIndicador(id).subscribe((data: any[]) => {
       this.tableData = data;
       this.tableJson.set(JSON.stringify(this.tableData))
     })
@@ -62,15 +64,19 @@ export class RubrosComponent {
   editarFunc(){}
 
   eliminarFunc() { 
-    // if (this.rubroSeleccionado && typeof this.rubroSeleccionado.idrubro !== 'undefined') {
-    //   this._rubroService.deleteRubro(this.rubroSeleccionado.idrubro).subscribe(response => {
-    //     this.cargarDatos(this.idIndicador);
-    //     this.mensajeAlerta = 'El rubro se eliminó correctamente.'
-    //     this.mostrar = true;
-    //   });
-    // } else {
-    //   console.error('No se puede eliminar el rubro seleccionado porque idenlaces es null o undefined');
-    // }
+    if (this.rubroSeleccionado && typeof this.rubroSeleccionado.idrubro !== 'undefined') {
+      this._rubroService.deleteRubro(this.rubroSeleccionado.idrubro).subscribe(response => {
+        this.cargarDatos(this.idIndicador);
+        this.mensajeAlerta = 'El rubro se eliminó correctamente.'
+        this.mostrar = true;
+      });
+    } else {
+      console.error('No se puede eliminar el rubro seleccionado porque idenlaces es null o undefined');
+    }
+  }
+
+  recibeRubro(rubro: IRubro) {
+    this.rubroSeleccionado = rubro;
   }
 
   // Funcion para el boton de agregar, se abre el modal.
@@ -85,9 +91,9 @@ export class RubrosComponent {
 
     // Escuchar el evento de dominio guardado y actualizar la tabla
     this.modal?.nuevoGuardado.subscribe(() => {
+      this.mensajeAlerta = 'Se agregó el rubro correctamente.'
       this.cargarDatos(this.idIndicador);
-
+      this.mostrar = true;
     });
   }
-
 }
