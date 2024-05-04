@@ -64,15 +64,19 @@ export class RubrosComponent {
   editarFunc(){}
 
   eliminarFunc() { 
-    // if (this.rubroSeleccionado && typeof this.rubroSeleccionado.idrubro !== 'undefined') {
-    //   this._rubroService.deleteRubro(this.rubroSeleccionado.idrubro).subscribe(response => {
-    //     this.cargarDatos(this.idIndicador);
-    //     this.mensajeAlerta = 'El rubro se eliminó correctamente.'
-    //     this.mostrar = true;
-    //   });
-    // } else {
-    //   console.error('No se puede eliminar el rubro seleccionado porque idenlaces es null o undefined');
-    // }
+    if (this.rubroSeleccionado && typeof this.rubroSeleccionado.idrubro !== 'undefined') {
+      this._rubroService.deleteRubro(this.rubroSeleccionado.idrubro).subscribe(response => {
+        this.cargarDatos(this.idIndicador);
+        this.mensajeAlerta = 'El rubro se eliminó correctamente.'
+        this.mostrar = true;
+      });
+    } else {
+      console.error('No se puede eliminar el rubro seleccionado porque idenlaces es null o undefined');
+    }
+  }
+
+  recibeRubro(rubro: IRubro) {
+    this.rubroSeleccionado = rubro;
   }
 
   // Funcion para el boton de agregar, se abre el modal.
