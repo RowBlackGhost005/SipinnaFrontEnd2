@@ -220,7 +220,7 @@ export class ModalComponent implements OnInit{
       this.guardarEnlace(nombre, url);
     } else if (this.accionBtnGuardar === 'editarEnlace') {
       if (this.enlaceSeleccionado) {
-        this.actualizarEnlace(this.enlaceSeleccionado.idenlaces, { idenlaces: this.enlaceSeleccionado.idenlaces,titulo: nombre, enlace: url });
+        this.actualizarEnlace(this.enlaceSeleccionado.idenlaces,nombre, url);
       } else {
         console.error('this.enlaceSeleccionado es null.');
       }
@@ -262,8 +262,8 @@ export class ModalComponent implements OnInit{
   //GUARDAR ENLACE (Funciona)
   guardarEnlace(tituloEnlace: string, urlEnlace: string) {
     const enlaceI: IEnlace = {
-      titulo: '',
-      enlace: '',
+      titulo: tituloEnlace,
+      enlace: urlEnlace,
       idenlaces: 0
     };
     this.enlaceService.postEnlace(enlaceI).subscribe(
@@ -279,7 +279,7 @@ export class ModalComponent implements OnInit{
     this.closeModal()
   }
 
-  //EDITAR ENLACE
+  //Funcion que se llama desde en enlacesComponent para abrir el modal y traerse los datos
   editarEnlace() {
   // Verifica que haya un enlace seleccionado
   if (this.enlaceSeleccionado) {
@@ -294,21 +294,24 @@ export class ModalComponent implements OnInit{
   }
 }
 
-  actualizarEnlace(id: number, enlaceActualizado: IEnlace): void {
-    console.log('Datos del enlace seleccionado:', this.enlaceSeleccionado);
-    this.enlaceService?.putEnlace(id, enlaceActualizado)?.subscribe(
-      response => {
-        console.log('Enlace actualizado correctamente:', response);
-        this.nuevoGuardado.emit();
-        this.closeModal();
-      },
-      error => {
-        console.error('Error al actualizar el enlace:', error);
-        console.log('Datos del enlace actualizado:', enlaceActualizado);
-      }
-      
-    );
-  }
+//Funcion para actualizar el Enlace  (FUNCIONA)
+actualizarEnlace(id: number, titulo: string, enlace: string): void {
+  const enlaceActualizado: IEnlace = {
+    idenlaces: id,
+    titulo: titulo,
+    enlace: enlace
+  };
+  this.enlaceService?.putEnlace(enlaceActualizado)?.subscribe(
+    response => {
+      console.log('Enlace actualizado correctamente:', response);
+      this.nuevoGuardado.emit();
+      this.closeModal();
+    },
+    error => {
+      console.error('Error al actualizar el enlace:', error);
+    }
+  );
+}
   
 
   //GUARDAR NOTICIA (Funciona pero falta solucionar la imagen)

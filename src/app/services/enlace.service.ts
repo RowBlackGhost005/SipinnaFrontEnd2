@@ -35,8 +35,8 @@ export class EnlaceService {
     return this._http.post<IEnlace>(`${this.urlBase}`, enlace);
   }
 
-  public putEnlace(id: number, enlace: IEnlace): Observable<IEnlace>{
-    return this._http.put<IEnlace>(`${this.urlBase}/${id}`, enlace);
+  public putEnlace(enlace: IEnlace): Observable<IEnlace>{
+    return this._http.put<IEnlace>(this.urlBase, enlace);
   }
 
   public deleteEnlace(id: number): Observable<IEnlace>{
