@@ -259,6 +259,8 @@ export class ModalComponent implements OnInit{
  
 
 
+  //FUNCIONES PARA GUARDAR Y EDITAR ENLACES
+
   //GUARDAR ENLACE (Funciona)
   guardarEnlace(tituloEnlace: string, urlEnlace: string) {
     const enlaceI: IEnlace = {
@@ -313,6 +315,8 @@ actualizarEnlace(id: number, titulo: string, enlace: string): void {
   );
 }
   
+
+
 
   //GUARDAR NOTICIA (Funciona pero falta solucionar la imagen)
   guardarNoticia(titulo: string, enlace: string, imagen: string) {
