@@ -7,7 +7,7 @@
       <div class="modal-body">
         <div class="mb-3" *ngIf="showNameInput" >
           <label for="name" class="form-label">{{lblNombre}}<span class="required" *ngIf="isNameRequired">*</span></label>
-          <input type="text" class="form-control" id="name" placeholder="{{placeholderNombre}}" [(ngModel)]="name">
+          <input #validar type="text" class="form-control" id="name" placeholder="{{placeholderNombre}}" [(ngModel)]="name" (input)="validarAlfanumerico()">
         </div>
         <div class="mb-3 form-check form-switch" *ngIf="showSwitchInput">
           <label class="form-check-label" for="activoSwitch">{{ activo ? 'Activo' : 'Inactivo' }}</label>
