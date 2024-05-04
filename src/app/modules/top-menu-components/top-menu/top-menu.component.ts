@@ -13,6 +13,7 @@ import { CommonModule } from '@angular/common';
 export class TopMenuComponent {
   @Input({required:true}) title!:String
   @Input({required:true}) needSearchbar!:boolean
+  @Input({required:true}) alphanumericOnly!:boolean;
   @ViewChild('topmenu') topmenu!: ElementRef<HTMLDivElement>;
   @ViewChild('searchbar') searchbar!: ElementRef<HTMLDivElement>;
 

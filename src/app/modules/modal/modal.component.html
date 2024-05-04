@@ -7,7 +7,7 @@
       <div class="modal-body">
         <div class="mb-3" *ngIf="showNameInput" >
           <label for="name" class="form-label">{{lblNombre}}<span class="required" *ngIf="isNameRequired">*</span></label>
-          <input type="text" class="form-control" id="name" placeholder="{{placeholderNombre}}" [(ngModel)]="name">
+          <input #validar type="text" class="form-control" id="name" placeholder="{{placeholderNombre}}" [(ngModel)]="name" (input)="validarAlfanumerico()">
         </div>
         <div class="mb-3 form-check form-switch" *ngIf="showSwitchInput">
           <label class="form-check-label" for="activoSwitch">{{ activo ? 'Activo' : 'Inactivo' }}</label>
@@ -37,7 +37,7 @@
         <div class="linea-final"></div> 
         <div class="botones">
           <button type="button" class="btn btn-cancelar" data-bs-dismiss="modal">Cancelar</button>
-          <button (click)="ejecutarAccion(name,url,selectedFileName) "type="button" class="btn btn-guardar" [disabled]="!name">Guardar</button>
+          <button (click)="ejecutarAccion(name,url,selectedFileName) "type="button" class="btn btn-guardar">Guardar</button>
       </div>
     </div>
   </div>

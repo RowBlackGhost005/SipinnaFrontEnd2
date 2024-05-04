@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output, ViewChild, inject } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Output, ViewChild, inject } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { IDominio } from '../../models/dominio.model';
 import { DominioService } from '../../services/dominio.service';
@@ -19,6 +19,8 @@ export class FormIndicatorComponent {
 
   @Output() submitForm: EventEmitter<FormData> = new EventEmitter<FormData>();
   @ViewChild('fileInput') fileInput: any;
+  @ViewChild('validate') inputElementRef!: ElementRef<HTMLInputElement>;
+
 
   constructor(private form: FormBuilder) {
     this.formularioIndicador = this.form.group({
@@ -68,4 +70,21 @@ export class FormIndicatorComponent {
       dominioNavId: 5,
     });
   }
+
+  /**
+   * Este método es para validar que en el buscador solo se agreguen caracteres alfanuméricos cuando se pulsan las teclas, sin caracteres especiales.
+   * Solo en caso de que se necesite de esta validación
+   * 
+   * -Acepta caracteres de la A-Z, números 0-9 y los espacios. Y toda tecla pulsada la transformará a mayúscula.-
+   */
+    validateAlphanumeric() {
+        const inputElement = this.inputElementRef.nativeElement;
+        let value = inputElement.value;
+  
+        value = value.replace(/[^a-zA-Z0-9\sáéíóúÁÉÍÓÚñÑüÜ]/g, '');
+        value = value.toUpperCase();
+  
+        inputElement.value = value;
+      
+    }
 }

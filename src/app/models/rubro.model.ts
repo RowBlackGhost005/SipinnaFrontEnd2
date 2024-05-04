@@ -1,5 +1,5 @@
 export interface IRubro {
-    idrubro: number;
+    idrubro?: number;
     rubro: string;
     datos: string;
 }

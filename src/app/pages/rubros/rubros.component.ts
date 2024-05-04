@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, inject, signal } from '@angular/core';
-import { SidebarIndicatorComponent } from '../../modules/sidebar-indicator/sidebar-indicator.component';
+import { SidebarIndicatorComponent } from '../../modules/sidebar-components/sidebar-indicator/sidebar-indicator.component';
 import { ButtonsComponent } from '../../modules/buttons/buttons.component';
 import { TableComponent } from '../../modules/table/table.component';
 import { TableModel } from '../../models/table';
@@ -7,7 +7,7 @@ import { RubroService } from '../../services/rubro.service';
 import { IRubro } from '../../models/rubro.model';
 import { ExportTableComponent } from '../../modules/export-table/export-table.component';
 import { ModalComponent } from '../../modules/modal/modal.component';
-import { TopMenuComponent } from "../../modules/top-menu/top-menu.component";
+import { TopMenuComponent } from "../../modules/top-menu-components/top-menu/top-menu.component";
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -52,10 +52,7 @@ export class RubrosComponent {
   }
 
   agregarFunc() {
-    this.openModal('Agregar Rubro', 
-      '', '',false,
-      false,
-      '', '', false,
+    this.openModalRubro('Agregar Rubro', 
       'Excel (XLS|XLSX)','Solo se permiten archivos de extension .xlsc .xls', true, 
       'Rubro',true,
       'rubro');
@@ -77,16 +74,11 @@ export class RubrosComponent {
   }
 
   // Funcion para el boton de agregar, se abre el modal.
-  openModal(title: string, 
-    lblNombre: string, placeholderNombre: string, showNameInput:boolean,
-    showSwitchInput:boolean,
-    lblUrl: string, placeholderUrl: string, showUrlInput: boolean,
+  openModalRubro(title: string, 
     lblFile: string, advertenciaFormato:string, showFileInput: boolean,
     lblRubro:string,showDropdownInput:boolean, 
     accion: string) {
-    this.modal?.openModal(title, lblNombre, placeholderNombre, showNameInput,
-      showSwitchInput,
-      lblUrl, placeholderUrl, showUrlInput,
+    this.modal?.openModalRubro(title,
       lblFile, advertenciaFormato,showFileInput, 
       lblRubro,showDropdownInput, 
       accion);

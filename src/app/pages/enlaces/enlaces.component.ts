@@ -8,7 +8,7 @@ import { EnlaceService } from '../../services/enlace.service';
 import { IEnlace } from '../../models/enlace.model';
 import { SearchbarService } from '../../services/searchbar.service';
 import { DialogComponent } from '../../modules/dialog/dialog.component';
-import { TopMenuComponent } from "../../modules/top-menu/top-menu.component";
+import { TopMenuComponent } from "../../modules/top-menu-components/top-menu/top-menu.component";
 
 @Component({
     selector: 'app-enlaces',
@@ -18,6 +18,7 @@ import { TopMenuComponent } from "../../modules/top-menu/top-menu.component";
     imports: [TableComponent, ButtonsComponent, ExportTableComponent, ModalComponent, DialogComponent, TopMenuComponent]
 })
 export class EnlacesComponent {
+  
   @ViewChild(ModalComponent) modal?: ModalComponent;
   private _enlaceService = inject(EnlaceService);
   private _searchbarService = inject(SearchbarService);
@@ -61,18 +62,28 @@ export class EnlacesComponent {
   }
 
   agregarFunc() {
-    this.openModal('Agregar Enlace', 'Titulo del enlace', 'CAPTURE EL TITULO DEL ENLACE', true,
-      false,
+    this.openModalEnlace('Agregar Enlace', 
+    'Titulo del enlace', 'CAPTURE EL TITULO DEL ENLACE', true,
       'Url', 'CAPTURE LA URL DEL ENLACE', true,
-      '', '', false,
-      '', false,
-      'enlace');
+      'guardarEnlace');
 
   }
+
+
+  constructor(private enlaceService: EnlaceService) {}
 
   editarFunc() {
-    // Lógica para la funcionalidad de editar
+    if (this.enlaceSeleccionado && this.enlaceSeleccionado.idenlaces !== 0 && this.enlaceSeleccionado.titulo !== '' && this.enlaceSeleccionado.enlace !== '') {
+      this.modal?.editarEnlace(); // Llama al método editarEnlace del modal component
+    } else {
+      this.mensajeAlerta = 'Seleccione un enlace para editar.';
+      this.mostrar = true;
+      setTimeout(() => {
+        this.mostrar = false;
+      }, 3000); 
+    }
   }
+ 
 
   eliminarFunc() {
     if (this.enlaceSeleccionado && typeof this.enlaceSeleccionado.idenlaces !== 'undefined') {
@@ -80,6 +91,9 @@ export class EnlacesComponent {
         this.cargarDatos();
         this.mensajeAlerta = 'El enlace se eliminó correctamente.'
         this.mostrar = true;
+        setTimeout(() => {
+          this.mostrar = false;
+        }, 3000); 
       });
     } else {
       console.error('No se puede eliminar el enlace seleccionado porque idenlaces es null o undefined');
@@ -88,20 +102,16 @@ export class EnlacesComponent {
 
   recibeIndicador(indicador: IEnlace) {
     this.enlaceSeleccionado = indicador;
+    this.enlaceService.actualizarEnlaceSeleccionado(indicador);
   }
 
   // Funcion para el boton de agregar, se abre el modal.
-  openModal(title: string, lblNombre: string, placeholderNombre: string, showNameInput: boolean,
-    showSwitchInput: boolean,
+  openModalEnlace(title: string, 
+    lblNombre: string, placeholderNombre: string, showNameInput: boolean,
     lblUrl: string, placeholderUrl: string, showUrlInput: boolean,
-    lblFile: string, advertenciaFormato: string, showFileInput: boolean,
-    lblRubro: string, showDropdownInput: boolean,
     accion: string) {
-    this.modal?.openModal(title, lblNombre, placeholderNombre, showNameInput,
-      showSwitchInput,
+    this.modal?.openModalEnlace(title, lblNombre, placeholderNombre, showNameInput,
       lblUrl, placeholderUrl, showUrlInput,
-      lblFile, advertenciaFormato, showFileInput,
-      lblRubro, showDropdownInput,
       accion);
 
     // Escuchar el evento de dominio guardado y actualizar la tabla
