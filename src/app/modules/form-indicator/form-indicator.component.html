@@ -3,8 +3,8 @@
 
     <div class="mb-3">
       <label for="nombre" class="form-label">Nombre del Indicador <span class="required-star"> * </span></label>
-      <input [ngClass]="{'is-valid': hasErrors('nombre', 'required') || hasErrors('nombre', 'pattern')}" type="text"
-        class="form-control" id="nombre" formControlName="nombre">
+      <input #validate [ngClass]="{'is-valid': hasErrors('nombre', 'required') || hasErrors('nombre', 'pattern')}" type="text"
+        class="form-control" id="nombre" formControlName="nombre" (input)="validateAlphanumeric()">
       @if(hasErrors('nombre', 'required')){
       <div class="text-danger">Nombre requerido</div>
       }

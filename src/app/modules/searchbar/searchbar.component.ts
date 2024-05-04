@@ -71,7 +71,7 @@ export class SearchbarComponent {
       const inputElement = this.inputElementRef.nativeElement;
       let value = inputElement.value;
 
-      value = value.replace(/[^a-zA-Z0-9\s]/g, '');
+      value = value.replace(/[^a-zA-Z0-9\sáéíóúÁÉÍÓÚñÑüÜ]/g, '');
       value = value.toUpperCase();
 
       inputElement.value = value;

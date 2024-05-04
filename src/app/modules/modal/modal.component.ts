@@ -1,4 +1,4 @@
-import { Component, ElementRef, NgModule, OnInit, ViewChild, inject } from '@angular/core';
+import { Component, ElementRef, NgModule, OnInit, SimpleChanges, ViewChild, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { DominioService } from '../../services/dominio.service';
@@ -23,6 +23,7 @@ const $: any = window['$']
 export class ModalComponent implements OnInit{
   @Output() nuevoGuardado: EventEmitter<void> = new EventEmitter<void>();
   @ViewChild('modal') modal?: ElementRef;
+  @ViewChild('validar') inputElementRef!: ElementRef<HTMLInputElement>;
 
   enlaceSeleccionado: IEnlace | null = null;
 
@@ -105,7 +106,7 @@ export class ModalComponent implements OnInit{
   //Para manejar la accion que realizara el boton de guardar
   accionBtnGuardar: string = '';
 
-
+  alphanumericOnly: boolean = false;
 
   openModalDominio(title: string,
     lblNombre: string, placeholderNombre: string, showNameInput: boolean,
@@ -117,8 +118,12 @@ export class ModalComponent implements OnInit{
     this.showNameInput = showNameInput;
     this.showSwitchInput = showSwitchInput;
     this.accionBtnGuardar = accion;
+    this.alphanumericOnly = true;
 
     $(this.modal?.nativeElement).modal('show');
+
+
+
   }
 
   openModalNoticia(title: string,
@@ -136,6 +141,7 @@ export class ModalComponent implements OnInit{
     this.lblFile = lblFile;
     this.advertenciaFormato = advertenciaFormato;
     this.showFileInput = showFileInput;
+    this.alphanumericOnly = false;
 
     this.accionBtnGuardar = accion;
 
@@ -154,6 +160,7 @@ export class ModalComponent implements OnInit{
     this.placeholderUrl = placeholderUrl;
     this.showUrlInput = showUrlInput;
     this.accionBtnGuardar = accion;
+    this.alphanumericOnly = false;
 
     $(this.modal?.nativeElement).modal('show');
   }
@@ -171,6 +178,7 @@ export class ModalComponent implements OnInit{
     this.lblRubro = lblRubro;
     this.showDropdownInput = showDropdownInput;
     this.accionBtnGuardar = accion;
+    this.alphanumericOnly = false;
 
     $(this.modal?.nativeElement).modal('show');
   }
@@ -365,5 +373,17 @@ actualizarEnlace(id: number, titulo: string, enlace: string): void {
     }, error => {
       console.log('Error al guardar el rubro');
     });
+  }
+
+  validarAlfanumerico(){
+    if(this.alphanumericOnly===true){
+      const inputElement = this.inputElementRef.nativeElement;
+      let value = inputElement.value;
+
+      value = value.replace(/[^a-zA-Z0-9\sáéíóúÁÉÍÓÚñÑüÜ]/g, '');
+      value = value.toUpperCase();
+
+      inputElement.value = value;
+    }
   }
 }
