@@ -95,6 +95,10 @@ export class ModalComponent implements OnInit{
   //Variable para guardar el nombre de la imagen o archivo seleccionado
   imageUrl: string = '';
 
+  //Variable para guardar el file que se selecciona en el input
+  selectedFile: File | null = null;
+
+
   selectedFileName: string = '';
 
 
@@ -197,17 +201,17 @@ export class ModalComponent implements OnInit{
     const file: File = event.target.files[0];
     if (file) {
       // Verificar si el tipo de archivo es una imagen
-      if (file.type.match(/^image\/.*/) != null) {
+      // if (file.type.match(/^image\/.*/) != null) {
+        this.selectedFile = file;
         this.selectedFileName = file.name;
         const reader = new FileReader();
         reader.readAsDataURL(file);
         reader.onload = (e: any) => {
           this.imageUrl = e.target.result;
-          console.log("nombre de la imagen:", this.imageUrl);
         };
-      } else {
-        console.log('Error: El archivo seleccionado no es una imagen.');
-      }
+      // } else {
+      //   console.log('Error: El archivo seleccionado no es una imagen.');
+      // }
     }
   }
 
@@ -227,8 +231,14 @@ export class ModalComponent implements OnInit{
     } else if (this.accionBtnGuardar === 'noticia') {
       this.guardarNoticia(nombre, url, imagen);
     } else if (this.accionBtnGuardar === 'rubro') {
-
+      // Verifica si selectedFile no es null antes de llamar a guardarRubroDeIndicador
+    if (this.selectedFile) {
+      // Llama a guardarRubroDeIndicador y pasa el archivo seleccionado
+      this.guardarRubroDeIndicador(nombre, this.selectedFile,0);
+    } else {
+      console.error('No se ha seleccionado ningún archivo.');
     }
+  }
   }
 
 
@@ -258,6 +268,8 @@ export class ModalComponent implements OnInit{
   
  
 
+
+  //FUNCIONES PARA GUARDAR Y EDITAR ENLACES
 
   //GUARDAR ENLACE (Funciona)
   guardarEnlace(tituloEnlace: string, urlEnlace: string) {
@@ -314,6 +326,7 @@ actualizarEnlace(id: number, titulo: string, enlace: string): void {
 }
   
 
+
   //GUARDAR NOTICIA (Funciona pero falta solucionar la imagen)
   guardarNoticia(titulo: string, enlace: string, imagen: string) {
     const nuevaNoticia: INoticia = {
@@ -337,7 +350,7 @@ actualizarEnlace(id: number, titulo: string, enlace: string): void {
 
 
   //NO FUNCIONA
-  guardarRubroDeIndicador(nombreRubro: string, datos: File, idIndicador: number) {
+ guardarRubroDeIndicador(nombreRubro: string, datos: File, idIndicador: number){
     const rubro = nombreRubro;
     const datoss = datos;
     const id = idIndicador.toString();
