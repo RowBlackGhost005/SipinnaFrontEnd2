@@ -1,4 +1,4 @@
-import { Component, ElementRef, NgModule, ViewChild, inject } from '@angular/core';
+import { Component, ElementRef, NgModule, OnInit, ViewChild, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { DominioService } from '../../services/dominio.service';
@@ -20,10 +20,25 @@ const $: any = window['$']
   templateUrl: './modal.component.html',
   styleUrl: './modal.component.scss'
 })
-export class ModalComponent {
+export class ModalComponent implements OnInit{
   @Output() nuevoGuardado: EventEmitter<void> = new EventEmitter<void>();
   @ViewChild('modal') modal?: ElementRef;
+
+  enlaceSeleccionado: IEnlace | null = null;
+
   private _rubroService = inject(RubroService);
+
+  //Constructor de las Interfaces
+    constructor(private dominioService: DominioService,
+      private enlaceService: EnlaceService,
+      private noticiaService: NoticiaService) { }
+
+    ngOnInit(): void {
+      this.enlaceService.enlaceSeleccionado$.subscribe(enlace => {
+        this.enlaceSeleccionado = enlace;
+      });
+    }
+  
 
   //Variable para el titulo del modal
   title: string = '';
@@ -203,6 +218,12 @@ export class ModalComponent {
       this.guardarDominio(nombre, this.activo);
     } else if (this.accionBtnGuardar === 'guardarEnlace') {
       this.guardarEnlace(nombre, url);
+    } else if (this.accionBtnGuardar === 'editarEnlace') {
+      if (this.enlaceSeleccionado) {
+        this.actualizarEnlace(this.enlaceSeleccionado.idenlaces, { idenlaces: this.enlaceSeleccionado.idenlaces,titulo: nombre, enlace: url });
+      } else {
+        console.error('this.enlaceSeleccionado es null.');
+      }
     } else if (this.accionBtnGuardar === 'noticia') {
       this.guardarNoticia(nombre, url, imagen);
     } else if (this.accionBtnGuardar === 'rubro') {
@@ -210,11 +231,6 @@ export class ModalComponent {
     }
   }
 
-
-  //Constructor de las Interfaces
-  constructor(private dominioService: DominioService,
-    private enlaceService: EnlaceService,
-    private noticiaService: NoticiaService) { }
 
 
 
@@ -239,24 +255,18 @@ export class ModalComponent {
   }
 
 
+  
+ 
 
 
-
-
-  enlaceI: IEnlace = {
-    titulo: '',
-    enlace: '',
-    idenlaces: 0
-  };
   //GUARDAR ENLACE (Funciona)
   guardarEnlace(tituloEnlace: string, urlEnlace: string) {
-    this.enlaceI = {
-      idenlaces: 0,
-      titulo: tituloEnlace,
-      enlace: urlEnlace
+    const enlaceI: IEnlace = {
+      titulo: '',
+      enlace: '',
+      idenlaces: 0
     };
-
-    this.enlaceService.postEnlace(this.enlaceI).subscribe(
+    this.enlaceService.postEnlace(enlaceI).subscribe(
       response => {
         console.log('Enlace guardado correctamente: ', response);
         this.nuevoGuardado.emit();
@@ -269,7 +279,37 @@ export class ModalComponent {
     this.closeModal()
   }
 
+  //EDITAR ENLACE
+  editarEnlace() {
+  // Verifica que haya un enlace seleccionado
+  if (this.enlaceSeleccionado) {
+    // Carga los datos del enlace seleccionado en los campos del formulario
+    this.name = this.enlaceSeleccionado.titulo;
+    this.url = this.enlaceSeleccionado.enlace;
+    // Abre el modal
+    this.openModalEnlace('Editar Enlace', 
+      'Nuevo Título', 'Ingrese el nuevo título del enlace', true,
+      'Nuevo URL', 'Ingrese el nuevo URL del enlace', true,
+      'editarEnlace');
+  }
+}
 
+  actualizarEnlace(id: number, enlaceActualizado: IEnlace): void {
+    console.log('Datos del enlace seleccionado:', this.enlaceSeleccionado);
+    this.enlaceService?.putEnlace(id, enlaceActualizado)?.subscribe(
+      response => {
+        console.log('Enlace actualizado correctamente:', response);
+        this.nuevoGuardado.emit();
+        this.closeModal();
+      },
+      error => {
+        console.error('Error al actualizar el enlace:', error);
+        console.log('Datos del enlace actualizado:', enlaceActualizado);
+      }
+      
+    );
+  }
+  
 
   //GUARDAR NOTICIA (Funciona pero falta solucionar la imagen)
   guardarNoticia(titulo: string, enlace: string, imagen: string) {

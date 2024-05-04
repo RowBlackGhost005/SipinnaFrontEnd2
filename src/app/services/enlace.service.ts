@@ -11,9 +11,13 @@ export class EnlaceService {
   private urlBase: string = 'https://localhost:7247/api/enlaces';
   
   private enlaceSeleccionadoSource = new BehaviorSubject<IEnlace | null>(null);
-  enlaceSeleccionado$ = this.enlaceSeleccionadoSource.asObservable();
+  enlaceSeleccionado$: Observable<IEnlace | null> = this.enlaceSeleccionadoSource.asObservable();
 
-  constructor() {}
+  constructor() { }
+
+  actualizarEnlaceSeleccionado(enlace: IEnlace | null): void {
+    this.enlaceSeleccionadoSource.next(enlace);
+  }
 
   setEnlaceSeleccionado(enlace: IEnlace | null) {
     this.enlaceSeleccionadoSource.next(enlace);
