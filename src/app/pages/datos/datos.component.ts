@@ -1,10 +1,10 @@
 import { Component, OnInit, ViewChild, inject } from '@angular/core';
-import { SidebarIndicatorComponent } from '../../modules/sidebar-indicator/sidebar-indicator.component';
+import { SidebarIndicatorComponent } from '../../modules/sidebar-components/sidebar-indicator/sidebar-indicator.component';
 import { FormIndicatorComponent } from '../../modules/form-indicator/form-indicator.component';
 import { IndicadorService } from '../../services/indicador.service';
 import { DialogComponent } from '../../modules/dialog/dialog.component';
 import { ActivatedRoute, Router } from '@angular/router';
-import { TopMenuComponent } from "../../modules/top-menu/top-menu.component";
+import { TopMenuComponent } from "../../modules/top-menu-components/top-menu/top-menu.component";
 
 @Component({
     selector: 'app-datos',

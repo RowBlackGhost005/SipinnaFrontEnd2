@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, inject, signal } from '@angular/core';
-import { SidebarIndicatorComponent } from '../../modules/sidebar-indicator/sidebar-indicator.component';
+import { SidebarIndicatorComponent } from '../../modules/sidebar-components/sidebar-indicator/sidebar-indicator.component';
 import { ButtonsComponent } from '../../modules/buttons/buttons.component';
 import { TableComponent } from '../../modules/table/table.component';
 import { TableModel } from '../../models/table';
@@ -7,7 +7,7 @@ import { RubroService } from '../../services/rubro.service';
 import { IRubro } from '../../models/rubro.model';
 import { ExportTableComponent } from '../../modules/export-table/export-table.component';
 import { ModalComponent } from '../../modules/modal/modal.component';
-import { TopMenuComponent } from "../../modules/top-menu/top-menu.component";
+import { TopMenuComponent } from "../../modules/top-menu-components/top-menu/top-menu.component";
 import { ActivatedRoute } from '@angular/router';
 
 @Component({

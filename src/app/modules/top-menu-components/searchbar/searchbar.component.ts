@@ -1,5 +1,5 @@
 import { Component, ElementRef, EventEmitter, Input, Output, ViewChild, inject } from '@angular/core';
-import { SearchbarService } from '../../services/searchbar.service';
+import { SearchbarService } from '../../../services/searchbar.service';
 import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 
 @Component({

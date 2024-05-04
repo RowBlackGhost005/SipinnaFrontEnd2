@@ -1,8 +1,8 @@
 import { Component, ElementRef, HostListener, ViewChild, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { SidebarItemComponent } from '../../modules/sidebar-item/sidebar-item.component';
-import { SidebarComponent } from '../../modules/sidebar/sidebar.component';
-import { TopMenuComponent } from '../../modules/top-menu/top-menu.component';
+import { SidebarItemComponent } from '../../modules/sidebar-components/sidebar-item/sidebar-item.component';
+import { SidebarComponent } from '../../modules/sidebar-components/sidebar/sidebar.component';
+import { TopMenuComponent } from '../../modules/top-menu-components/top-menu/top-menu.component';
 import { DashboardComponent } from '../dashboard/dashboard.component';
 
 @Component({

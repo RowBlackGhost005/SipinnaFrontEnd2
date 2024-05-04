@@ -8,7 +8,7 @@ import { ModalComponent } from '../../modules/modal/modal.component';
 import { DominioService } from '../../services/dominio.service';
 import { IDominio } from '../../models/dominio.model';
 import { SearchbarService } from '../../services/searchbar.service';
-import { TopMenuComponent } from '../../modules/top-menu/top-menu.component';
+import { TopMenuComponent } from '../../modules/top-menu-components/top-menu/top-menu.component';
 
 @Component({
   selector: 'app-dominios',
