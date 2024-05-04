@@ -65,11 +65,10 @@ export class NoticiasComponent {
   }
 
   agregarFunc() {
-    this.openModal('Agregar Noticia', 'Titulo', 'CAPTURE EL TITULO DE LA NOTICIA', true,
-    false,
-    'Url', 'CAPTURE LA URL DE LA NOTICIA', true,
+    this.openModalNoticia('Agregar Noticia',
+     'Titulo', 'CAPTURE EL TITULO DE LA NOTICIA', true,
+    'Url', 'CAPTURE LA URL DE LA NOTICIA',true,
     'Fotografia de la noticia','Solo se permiten archivos de extension .png .jpg .jpeg y maximo de 2mb',true,
-    '',false,
     'noticia');
 
   }
@@ -94,17 +93,15 @@ export class NoticiasComponent {
     this.noticiaSeleccionada = noticia;
   }
 
-  openModal(title: string, lblNombre: string, placeholderNombre: string, showNameInput:boolean,
-    showSwitchInput:boolean,
-    lblUrl: string, placeholderUrl: string, showUrlInput: boolean,
-    lblFile: string, advertenciaFormato:string, showFileInput: boolean,
-    lblRubro:string,showDropdownInput:boolean, 
+  openModalNoticia(title: string,
+     lblNombre: string, placeholderNombre: string, showNameInput:boolean,
+    lblUrl: string, placeholderUrl: string, showUrlInput:boolean,
+    lblFile: string, advertenciaFormato:string,showFileInput:boolean,
     accion: string) {
-    this.modal?.openModal(title, lblNombre, placeholderNombre, showNameInput,
-      showSwitchInput,
+    this.modal?.openModalNoticia(title, 
+      lblNombre, placeholderNombre, showNameInput,
       lblUrl, placeholderUrl, showUrlInput,
-      lblFile, advertenciaFormato,showFileInput, 
-      lblRubro,showDropdownInput, 
+      lblFile, advertenciaFormato, showFileInput,
       accion);
 
     // Escuchar el evento de dominio guardado y actualizar la tabla

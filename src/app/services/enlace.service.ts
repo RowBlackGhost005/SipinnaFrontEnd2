@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { IEnlace } from '../models/enlace.model';
 
 @Injectable({
@@ -10,6 +10,15 @@ export class EnlaceService {
   private _http = inject(HttpClient);
   private urlBase: string = 'https://localhost:7247/api/enlaces';
   
+  private enlaceSeleccionadoSource = new BehaviorSubject<IEnlace | null>(null);
+  enlaceSeleccionado$ = this.enlaceSeleccionadoSource.asObservable();
+
+  constructor() {}
+
+  setEnlaceSeleccionado(enlace: IEnlace | null) {
+    this.enlaceSeleccionadoSource.next(enlace);
+  }
+
   public getEnlaces(): Observable<IEnlace[]>{
     return this._http.get<IEnlace[]>(this.urlBase);
   }
