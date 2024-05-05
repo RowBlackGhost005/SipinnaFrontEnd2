@@ -2,6 +2,7 @@
     <app-top-menu [title]="'Indicadores'" [needSearchbar]="true" [alphanumericOnly]="true"></app-top-menu>
     <div class="horizontalView">
         <app-buttons (agregar)="agregarFunc()" (editar)="editarFunc()" [mostrarEliminar]="mostrarEliminar"></app-buttons>
+        <app-dialog [mensajeDialog]="mensajeAlerta" [showModal]="mostrar"></app-dialog>
         <div class="topRight">
             <app-export-table [tableContent]="tableJson()" [fileName]="'Indicadores'"></app-export-table>
         </div>

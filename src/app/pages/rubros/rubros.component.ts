@@ -29,7 +29,7 @@ export class RubrosComponent {
   tableColumns: TableModel[] = [
     { header: 'ID', field: 'idrubro' },
     { header: 'Rubro', field: 'rubro' },
-    { header: 'Archivo', field: 'datos' }
+    { header: 'Archivo', field: 'datos', clickable:true}
   ];
 
   mensajeAlerta: string = '';
@@ -50,6 +50,9 @@ export class RubrosComponent {
     this._rubroService.getRubrosDeIndicador(id).subscribe((data: any[]) => {
       this.tableData = data;
       this.tableJson.set(JSON.stringify(this.tableData))
+      for(let i=0; i<this.tableData.length; i++){
+        this.tableData[i].datos = 'Descargar'
+      }
     })
   }
 
@@ -71,7 +74,7 @@ export class RubrosComponent {
         this.mostrar = true;
       });
     } else {
-      console.error('No se puede eliminar el rubro seleccionado porque idenlaces es null o undefined');
+      console.error('No se puede eliminar el rubro seleccionado porque id es null o undefined');
     }
   }
 
@@ -88,12 +91,38 @@ export class RubrosComponent {
       lblFile, advertenciaFormato,showFileInput, 
       lblRubro,showDropdownInput, 
       accion);
+      console.log(this.tableData)
 
     // Escuchar el evento de dominio guardado y actualizar la tabla
     this.modal?.nuevoGuardado.subscribe(() => {
       this.mensajeAlerta = 'Se agregó el rubro correctamente.'
       this.cargarDatos(this.idIndicador);
       this.mostrar = true;
+    });
+  }
+  
+  descargarArchivo(event: number) {
+    this._rubroService.getRubroDescarga(event).subscribe((response: Blob) => {
+      // Crear una URL a partir de la respuesta Blob
+      const url = window.URL.createObjectURL(response);
+  
+      const a = document.createElement('a');
+      a.href = url;
+      
+      //Busca en el arreglo un objeto que tenga un id que coincida con el que fue emitido
+      //Y usa el nombre del rubro para nombrar al excel
+      const rubroObj = this.tableData.find(obj => obj.idrubro === event);
+
+      a.download = `${rubroObj?.rubro}.xlsx`;
+      
+
+      // Hacer clic en el elemento de anclaje para iniciar la descarga
+      document.body.appendChild(a);
+      a.click();
+  
+      // Limpiar
+      document.body.removeChild(a);
+      window.URL.revokeObjectURL(url);
     });
   }
 }
