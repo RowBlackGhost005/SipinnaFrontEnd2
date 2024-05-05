@@ -11,6 +11,7 @@ import { IDominio } from '../../models/dominio.model';
 import { SearchbarService } from '../../services/searchbar.service';
 import { Router } from '@angular/router';
 import { TopMenuComponent } from "../../modules/top-menu-components/top-menu/top-menu.component";
+import { DialogComponent } from '../../modules/dialog/dialog.component';
 
 
 @Component({
@@ -18,7 +19,7 @@ import { TopMenuComponent } from "../../modules/top-menu-components/top-menu/top
     standalone: true,
     templateUrl: './indicadores.component.html',
     styleUrl: './indicadores.component.scss',
-    imports: [TableComponent, ButtonsComponent, ExportTableComponent, ModalComponent, TopMenuComponent]
+    imports: [TableComponent, ButtonsComponent, ExportTableComponent, ModalComponent, TopMenuComponent,DialogComponent]
 })
 
 export class IndicadoresComponent implements OnInit {
@@ -28,10 +29,17 @@ export class IndicadoresComponent implements OnInit {
   private router = inject(Router);
 
   mostrarEliminar: boolean = false;
+
+  mensajeAlerta: string = '';
+  mostrar: boolean = false;
+
   tableJson = signal("");
   tableData: IIndicador[] = [];
   dataAux: IIndicador[] = [];
   filteredTable: IIndicador[] = [];
+
+  @ViewChild(ModalComponent) modal?: ModalComponent;
+
 
   tableColumns: TableModel[] = [
     { header: 'ID', field: 'idindicador' },
@@ -49,8 +57,20 @@ export class IndicadoresComponent implements OnInit {
     this.router.navigateByUrl('/datos');
   }
 
+  // editarFunc() {
+  //   this.router.navigateByUrl(`/datos/${this.indicadorSeleccionado.idindicador}`);
+  // }
+
   editarFunc() {
-    this.router.navigateByUrl(`/datos/${this.indicadorSeleccionado.idindicador}`);
+    if (this.indicadorSeleccionado && this.indicadorSeleccionado.idindicador !== 0 && this.indicadorSeleccionado.nombre !== '' && this.indicadorSeleccionado.metadato !== '') {
+      this.router.navigateByUrl(`/datos/${this.indicadorSeleccionado.idindicador}`);
+    } else {
+      this.mensajeAlerta = 'Seleccione un indicador para editar.';
+      this.mostrar = true;
+      setTimeout(() => {
+        this.mostrar = false;
+      }, 3000); 
+    }
   }
 
   recibeIndicador(indicador: IIndicador) {
