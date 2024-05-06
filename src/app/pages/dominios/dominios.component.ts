@@ -32,7 +32,8 @@ export class DominiosComponent implements OnInit {
 
   tableColumns: TableModel[] = [
     { header: 'ID', field: 'iddominio' },
-    { header: 'Dominio', field: 'nombre' }
+    { header: 'Dominio', field: 'nombre' },
+    {header:'Estado',field:'estado'}
   ];
 
   tableJson = signal("")
