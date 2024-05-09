@@ -23,7 +23,9 @@ export class RubrosComponent {
   @ViewChild(ModalComponent) modal?: ModalComponent;
   private _rubroService = inject(RubroService);
   private _route = inject(ActivatedRoute);
-  
+  //los tableJson son señales que guardan el JSON de la tabla que esta viendo los datos.
+  //No necesariamente guarda todos los datos, si se hace una busqueda, el tableJson guarda solo los 
+  //datos de la búsqueda
   tableJson = signal("")
   tableData: IRubro[] = [];
   tableColumns: TableModel[] = [
