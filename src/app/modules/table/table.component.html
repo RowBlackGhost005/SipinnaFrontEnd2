@@ -21,7 +21,7 @@
                     @if(column.field == 'enlace'){
                         <td>{{ item[column.field] }} </td>
                     } @else {
-                        <td>{{ isText(item[column.field]) ? (item[column.field] | uppercase) : item[column.field] }} </td>
+                        <td #clickable>{{ isText(item[column.field]) ? (item[column.field] | uppercase) : item[column.field] }} </td>
                     }
                 }
             </tr>

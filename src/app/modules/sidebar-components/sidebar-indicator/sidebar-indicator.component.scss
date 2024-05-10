@@ -52,3 +52,15 @@
 .menu-item.active .triangle {
     display: block;
 }
+
+@media(max-width: 1190px){
+    .sidebar{
+        width: 120px;
+    }
+}
+
+@media(max-width: 530px){
+    .sidebar{
+        width: 80px;
+    }
+}

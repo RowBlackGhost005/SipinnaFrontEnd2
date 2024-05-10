@@ -224,7 +224,7 @@ export class ModalComponent implements OnInit{
   }
 
   //Funcion para el boton de guardar, recibe parametros para saber que accion ejecutar
-  ejecutarAccion(nombre: string, url: string, imagen: string) {
+  ejecutarAccion(nombre: string,activo:boolean, url: string, imagen: string) {
     if (this.accionBtnGuardar === 'dominio') {
       this.guardarDominio(nombre, this.activo);
     } else if (this.accionBtnGuardar === 'guardarEnlace') {

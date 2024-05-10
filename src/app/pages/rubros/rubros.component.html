@@ -15,7 +15,7 @@
                         <app-export-table [tableContent]="tableJson()" [fileName]="'Rubros'"></app-export-table>
                     </div>
                 </div>
-                <app-table (selectEvent)="recibeRubro($event)" [columns]="tableColumns" [data]="tableData"></app-table>
+                <app-table (selectEvent)="recibeRubro($event)" [columns]="tableColumns" [data]="tableData" (emitDownload)="descargarArchivo($event)"></app-table>
             </div>
         </div>
     </div>

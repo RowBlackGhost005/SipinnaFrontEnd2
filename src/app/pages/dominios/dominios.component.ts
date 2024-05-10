@@ -32,9 +32,12 @@ export class DominiosComponent implements OnInit {
 
   tableColumns: TableModel[] = [
     { header: 'ID', field: 'iddominio' },
-    { header: 'Dominio', field: 'nombre' }
+    { header: 'Dominio', field: 'nombre' },
+    {header:'Estado',field:'estado'}
   ];
-
+  //los tableJson son señales que guardan el JSON de la tabla que esta viendo los datos.
+  //No necesariamente guarda todos los datos, si se hace una busqueda, el tableJson guarda solo los 
+  //datos de la búsqueda
   tableJson = signal("")
 
   ngOnInit(): void {

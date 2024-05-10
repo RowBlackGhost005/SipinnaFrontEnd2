@@ -37,4 +37,10 @@ export class RubroService {
   public postRubroIndicador(formData: FormData): Observable<IRubro>{
     return this._http.post<IRubro>(`${this.urlBase}/rubroIndicador`, formData);
   }
+
+  public getRubroDescarga(id: number): Observable<Blob> {
+    return this._http.get(`${this.urlBase}/descargas/?id=${id}`, {
+        responseType: 'blob'
+    });
+  }
 }
