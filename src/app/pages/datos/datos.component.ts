@@ -25,6 +25,10 @@ export class DatosComponent implements OnInit {
   mostrar: boolean = false;
   indicadorId = 0;
 
+  /**
+   * Esta función cuando se inicializa el componente, obtiene el id del indicador de la ruta,
+   * si este es nulo la opción es agregar y si contiene el id es editar.
+   */
   ngOnInit(): void {
     if (this._route.snapshot.params['id'] != undefined) {
       this.indicadorId = this._route.snapshot.params['id'];
@@ -34,6 +38,10 @@ export class DatosComponent implements OnInit {
     }
   }
 
+  /**
+   * Maneja el evento para recibir el formulario y ejecutar la opción correspondiente
+   * @param formData FormData recibido del formulario
+   */
   handleEvent(formData: FormData) {
     if(this.opcionSeleccionada == 'agregar'){
       this.agregar(formData);
@@ -42,6 +50,10 @@ export class DatosComponent implements OnInit {
     }
   }
 
+  /**
+   * Agrega el elemento a la dao de indicador
+   * @param formData FormFata a agregar
+   */
   agregar(formData: FormData) {
     this._indicadorService.postIndicador(formData).subscribe(response => {
       this.mensajeAlerta = 'El indicador se guardó correctamente.'
@@ -52,6 +64,10 @@ export class DatosComponent implements OnInit {
     });
   }
 
+  /**
+   * Actualiza el elemento en la dao de indicador
+   * @param formData FormData a actualizar
+   */
   editar(formData: FormData) {
     this._route.params.subscribe(params => {
       this._indicadorService.putIndicador(params['id'], formData).subscribe(response => {
@@ -63,12 +79,21 @@ export class DatosComponent implements OnInit {
     })
   }
 
+  /**
+   * Esta función obtiene los datos de un indicador a partir de su id y muestra esos datos
+   * en el formulario
+   * @param indicadorId Id del indicador a buscar
+   */
   obtenerIndicador(indicadorId: number) {
     this._indicadorService.getIndicador(indicadorId).subscribe((indicador: any) => {
       this.formIndicatorComponent.setIndicadorValues(indicador);
     });
   }
 
+  /**
+   * Esta función navega a la url de los rubros del indicador cuando se cierra
+   * el dialog que muestra el mensaje
+   */
   onDialogClose(): void {
     this.router.navigateByUrl(`/rubros/${this.indicadorId}`);
   }
