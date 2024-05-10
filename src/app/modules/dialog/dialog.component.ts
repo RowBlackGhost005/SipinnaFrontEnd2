@@ -10,12 +10,18 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 export class DialogComponent {
   @Input() mensajeDialog: string = '';
   @Input() showModal: boolean = false;
-  @Output() close = new EventEmitter<void>();  
+  @Output() close = new EventEmitter<void>();  // Emite el evento cuando se cierra
   
+  /**
+   * Esta función muestra el cuadro diálogo
+   */
   openModal() {
     this.showModal = true;
   }
 
+  /**
+   * Esta función cierra el cuadro diálogo
+   */
   closeModal() {
     this.showModal = false;
     this.close.emit();

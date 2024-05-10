@@ -10,12 +10,21 @@ import { RouterLink, Router } from '@angular/router';
 })
 export class SidebarIndicatorComponent {
   private router = inject(Router);
-  @Input() idRubro: string = '';
+  @Input() idIndicador: string = '';
   
-  actualizarIdRubro(nuevoId: string) {
-    this.idRubro = nuevoId;
+  /**
+   * Esta función actualiza el Id del indicador 
+   * @param nuevoId Id del indicador
+   */
+  actualizarIdIndicador(nuevoId: string) {
+    this.idIndicador = nuevoId;
   }
 
+  /**
+   * Esta función muestra activa una ruta en el sidebar
+   * @param baseRoute Ruta a mostrar activa
+   * @returns Ruta activa
+   */
   isActiveRoute(baseRoute: string): boolean {
     const currentRoute = this.router.url;
     return currentRoute.startsWith(baseRoute);
