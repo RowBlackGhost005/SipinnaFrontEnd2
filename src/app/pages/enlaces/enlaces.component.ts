@@ -25,6 +25,7 @@ export class EnlacesComponent {
   tableData: IEnlace[] = [];
   dataAux: IEnlace[] = [];
   filteredTable: IEnlace[] = [];
+
   mensajeAlerta: string = '';
   mostrar: boolean = false;
 
@@ -73,14 +74,14 @@ export class EnlacesComponent {
   constructor(private enlaceService: EnlaceService) {}
 
   editarFunc() {
-    if (this.enlaceSeleccionado && this.enlaceSeleccionado.idenlaces !== 0 && this.enlaceSeleccionado.titulo !== '' && this.enlaceSeleccionado.enlace !== '') {
-      this.modal?.editarEnlace(); // Llama al método editarEnlace del modal component
-    } else {
-      this.mensajeAlerta = 'Seleccione un enlace para editar.';
-      this.mostrar = true;
-      setTimeout(() => {
-        this.mostrar = false;
-      }, 3000); 
+      if (this.enlaceSeleccionado && this.enlaceSeleccionado.idenlaces !== 0 && this.enlaceSeleccionado.titulo !== '' && this.enlaceSeleccionado.enlace !== '') {
+        this.modal?.editarEnlace(); // Llama al método editarEnlace del modal component
+      } else {
+        this.mensajeAlerta = 'Seleccione un enlace a editar.';
+        this.mostrar = true;
+        setTimeout(() => {
+          this.mostrar = false;
+        }, 3000); 
     }
   }
  

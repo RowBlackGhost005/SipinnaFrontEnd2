@@ -1,5 +1,5 @@
 
-import { Component, OnInit, inject, signal, ViewChild, SimpleChanges } from '@angular/core';
+import { Component, OnInit, inject, signal, ViewChild } from '@angular/core';
 import { ExportTableComponent } from '../../modules/export-table/export-table.component';
 import { TableModel } from '../../models/table';
 import { TableComponent } from '../../modules/table/table.component';
@@ -9,32 +9,41 @@ import { DominioService } from '../../services/dominio.service';
 import { IDominio } from '../../models/dominio.model';
 import { SearchbarService } from '../../services/searchbar.service';
 import { TopMenuComponent } from '../../modules/top-menu-components/top-menu/top-menu.component';
+import { DialogComponent } from "../../modules/dialog/dialog.component";
 
 @Component({
-  selector: 'app-dominios',
-  standalone: true,
-  imports: [TableComponent, ButtonsComponent, ExportTableComponent, ModalComponent, TopMenuComponent, TopMenuComponent],
-  templateUrl: './dominios.component.html',
-  styleUrl: './dominios.component.scss'
+    selector: 'app-dominios',
+    standalone: true,
+    templateUrl: './dominios.component.html',
+    styleUrl: './dominios.component.scss',
+    imports: [TableComponent, ButtonsComponent, ExportTableComponent, ModalComponent, TopMenuComponent, DialogComponent]
 })
 
-export class DominiosComponent implements OnInit {
+export class DominiosComponent {
   
   
-
+  @ViewChild(ModalComponent) modal?: ModalComponent;
   private _dominioService = inject(DominioService);
   private _searchbarService = inject(SearchbarService)
-  @ViewChild(ModalComponent) modal?: ModalComponent;
   tableData: IDominio[] = [];
   dataAux: IDominio[] = [];
   filteredTable: IDominio[] = [];
   filteredItems: IDominio[] = [];
+
+  mensajeAlerta: string = '';
+  mostrar: boolean = false;
 
   tableColumns: TableModel[] = [
     { header: 'ID', field: 'iddominio' },
     { header: 'Dominio', field: 'nombre' },
     {header:'Estado',field:'estado'}
   ];
+
+  dominioSeleccionado: IDominio = {
+    nombre: '',
+    estado: false,
+    iddominio: 0
+  };
 
   tableJson = signal("")
 
@@ -47,6 +56,7 @@ export class DominiosComponent implements OnInit {
 
   }
 
+ 
   cargarDatos(): void {
     this._dominioService.getDominios().subscribe((data: IDominio[]) => {
       console.log(data);
@@ -62,18 +72,45 @@ export class DominiosComponent implements OnInit {
     this.openModalDominio('Agregar Dominio',
      'Dominio', 'CAPTURE EL NOMBRE DEL DOMINIO', true,
     true,
-      'dominio');
+      'guardarDominio');
 
   }
+
 
   editarFunc() {
-    // Lógica para la funcionalidad de editar
+    if (this.dominioSeleccionado && this.dominioSeleccionado.iddominio !== 0 && this.dominioSeleccionado.nombre !== '' && this.dominioSeleccionado.estado !== undefined) {
+      this.modal?.editarDominio(); // Llama al método editarDominio del modal component
+    } else {
+      this.mensajeAlerta = 'Seleccione un dominio a editar.';
+      this.mostrar = true;
+      setTimeout(() => {
+        this.mostrar = false;
+      }, 3000); 
   }
-
-  
+  }
+  //No estaba dentro de nuestra definicion de proyecto.
   eliminarFunc() {
-
+    // if (this.dominioSeleccionado && typeof this.dominioSeleccionado.iddominio !== 'undefined') {
+    //   this._dominioService.deleteDominio(this.dominioSeleccionado.iddominio).subscribe(response => {
+    //     this.cargarDatos();
+    //     this.mensajeAlerta = 'El dominio se eliminó correctamente.'
+    //     this.mostrar = true;
+    //     setTimeout(() => {
+    //       this.mostrar = false;
+    //     }, 3000); 
+    //   });
+    // } else {
+    //   console.error('No se puede eliminar el enlace seleccionado porque idenlaces es null o undefined');
+    // }
   }
+
+ 
+    recibeIndicador(indicador: IDominio) {
+      this.dominioSeleccionado = indicador;
+      console.log('Dominio seleccionado:', this.dominioSeleccionado);
+      this._dominioService.actualizarDominioSeleccionado(indicador);
+  }
+  
 
   // Funcion para el boton de agregar, se abre el modal.
   openModalDominio(title: string, 
