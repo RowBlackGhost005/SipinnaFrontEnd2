@@ -1,7 +1,7 @@
 <div class="container">
     <app-top-menu [title]="'Indicador'" [needSearchbar]="false" [alphanumericOnly]="false"></app-top-menu>
     <div class="sidebar">
-        <app-sidebar-indicator [idRubro]="indicadorId.toString()"></app-sidebar-indicator>
+        <app-sidebar-indicator [idIndicador]="indicadorId.toString()"></app-sidebar-indicator>
     </div>
     <app-dialog [mensajeDialog]="mensajeAlerta" [showModal]="mostrar" (close)="onDialogClose()"></app-dialog>
     <div class="form">

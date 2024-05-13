@@ -17,8 +17,8 @@ export class TableComponent implements OnChanges {
   pageSize = 6; // Total de elementos por página
   page = 1; // Página actual
 
-  @Input() columns: TableModel[] = [];
-  @Input() data: any[] = [];
+  @Input() columns: TableModel[] = []; // Títulos de las columnas
+  @Input() data: any[] = []; // Datos de la tabla
 
   @Output() selectEvent = new EventEmitter<any>();
   @Output() emitDownload = new EventEmitter<number>();
@@ -28,17 +28,30 @@ export class TableComponent implements OnChanges {
 
   selectElement: any = {};
 
+  /**
+   * Esta función maneja la paginación de la tabla, calcula el índice correcto 
+   * de acuerdo a todos los elementos de la tabla
+   * @param localIndex El índice del elemento seleccionado en la página actual
+   */
   selectItem(localIndex: number) {
     const globalIndex = (this.page - 1) * this.pageSize + localIndex;
     this.selectedItemIndex = globalIndex;
     this.sendElement();
   }
 
+  /**
+   * Esta función emite el evento con el elemento seleccionado en la tabla
+   */
   sendElement() {
     this.selectElement = this.data[this.selectedItemIndex];
     this.selectEvent.emit(this.selectElement);
   }
 
+  /**
+   * Esta función valida que un valor sea string
+   * @param value Cadena a validar
+   * @returns true si es string, false en caso contrario
+   */
   isText(value: any): boolean {
     return typeof value === 'string';
   }

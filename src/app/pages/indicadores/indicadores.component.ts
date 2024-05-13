@@ -40,19 +40,23 @@ export class IndicadoresComponent implements OnInit {
 
   @ViewChild(ModalComponent) modal?: ModalComponent;
 
-
+  // Columnas de la tabla de indicadores
   tableColumns: TableModel[] = [
     { header: 'ID', field: 'idindicador' },
     { header: 'Indicador', field: 'nombre' },
     { header: 'Dominio', field: 'dominio' }
   ];
 
+  // Indicador seleccionado para editar 
   indicadorSeleccionado: IIndicador = {
     idindicador: 0,
     nombre: '',
     metadato: ''
   };
 
+  /**
+   * Esta función navega a la ruta de datos cuando se quiere agregar un indicador
+   */
   agregarFunc() {
     this.router.navigateByUrl('/datos');
   }
@@ -61,6 +65,10 @@ export class IndicadoresComponent implements OnInit {
   //   this.router.navigateByUrl(`/datos/${this.indicadorSeleccionado.idindicador}`);
   // }
 
+  /**
+   * Esta función edita un indicador, verifica que el indicador no sea null y posteriormente 
+   * envia al usuario a la página de datos del indicador seleccionado
+   */
   editarFunc() {
     if (this.indicadorSeleccionado && this.indicadorSeleccionado.idindicador !== 0 && this.indicadorSeleccionado.nombre !== '' && this.indicadorSeleccionado.metadato !== '') {
       this.router.navigateByUrl(`/datos/${this.indicadorSeleccionado.idindicador}`);
@@ -73,10 +81,19 @@ export class IndicadoresComponent implements OnInit {
     }
   }
 
+  /**
+   * Esta función iguala el valor del indicador actual al recibido por el evento
+   * @param indicador Indicador recibido
+   */
   recibeIndicador(indicador: IIndicador) {
     this.indicadorSeleccionado = indicador;
   }
 
+  /**
+   * Esta función cuando se inicializa el componente obtiene la lista de indicadores y 
+   * para cada id de dominio del indicador obtiene el nombre para poder mostrar los datos
+   * en la tabla
+   */
   ngOnInit(): void {
     this._indicadorService.getIndicadores().subscribe((data: IIndicador[]) => {
       this.tableData = data;

@@ -17,11 +17,15 @@ export class FormIndicatorComponent {
 
   private _dominioService = inject(DominioService);
 
-  @Output() submitForm: EventEmitter<FormData> = new EventEmitter<FormData>();
+  @Output() submitForm: EventEmitter<FormData> = new EventEmitter<FormData>(); // Evento para enviar el formulario
   @ViewChild('fileInput') fileInput: any;
   @ViewChild('validate') inputElementRef!: ElementRef<HTMLInputElement>;
 
 
+  /**
+   * Inicializa el formulario vacío
+   * @param form Formulario
+   */
   constructor(private form: FormBuilder) {
     this.formularioIndicador = this.form.group({
       nombre: ['', Validators.required],
@@ -30,16 +34,30 @@ export class FormIndicatorComponent {
     })
   }
 
+  /**
+   * Cuando se inicializa el componente, obtiene todos los dominios registrados para
+   * mostrarlos en el formulario del indicador
+   */
   ngOnInit(): void {
     this._dominioService.getDominios().subscribe((data: IDominio[]) => {
       this.dominiosData = data;
     })
   }
 
+  /**
+   * Esta función valida los datos ingresados en el formulario
+   * @param controlName Nombre del campo a validar
+   * @param errorType Error que se quiera validar
+   * @returns True si el formulario contiene errores, False en caso contrario
+   */
   hasErrors(controlName: string, errorType: string) {
     return this.formularioIndicador.get(controlName)?.hasError(errorType) && this.formularioIndicador.get(controlName)?.touched
   }
 
+  /**
+   * Esta función construye un FormData con los elementos del formulario y
+   * lo emite en el evento cuando el usuario selecciona guardar
+   */
   onSubmit() {
     const formData = new FormData();
 
@@ -64,6 +82,10 @@ export class FormIndicatorComponent {
     this.formularioIndicador.reset();
   }
 
+  /**
+   * Muestra por default los valores de un indicador en el formulario
+   * @param indicador Indicador a mostrar sus datos
+   */
   setIndicadorValues(indicador: any) {
     this.formularioIndicador.patchValue({
       nombre: indicador.nombre,

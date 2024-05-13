@@ -23,9 +23,12 @@ export class RubrosComponent {
   @ViewChild(ModalComponent) modal?: ModalComponent;
   private _rubroService = inject(RubroService);
   private _route = inject(ActivatedRoute);
-  
+  //los tableJson son señales que guardan el JSON de la tabla que esta viendo los datos.
+  //No necesariamente guarda todos los datos, si se hace una busqueda, el tableJson guarda solo los 
+  //datos de la búsqueda
   tableJson = signal("")
   tableData: IRubro[] = [];
+  // Campos de la tabla de rubros
   tableColumns: TableModel[] = [
     { header: 'ID', field: 'idrubro' },
     { header: 'Rubro', field: 'rubro' },
@@ -41,11 +44,20 @@ export class RubrosComponent {
     datos: ''
   };
 
+  /**
+   * Esta función se ejecuta cuando se inicializa el componente, obtiene el id
+   * del indicador de la ruta y carga los datos de ese indicador
+   */
   ngOnInit(): void {
    this.idIndicador = this._route.snapshot.params['id'];
     this.cargarDatos(this.idIndicador);
   }
 
+  /**
+   * Esta función obtiene los rubros que pertenecen al indicador seleccionado y los
+   * muestra en la tabla
+   * @param id Id del indicador
+   */
   cargarDatos(id: number): void {
     this._rubroService.getRubrosDeIndicador(id).subscribe((data: any[]) => {
       this.tableData = data;
@@ -66,6 +78,11 @@ export class RubrosComponent {
 
   editarFunc(){}
 
+
+  /**
+   * Esta función verifica que se haya seleccionado un rubro y posteriormente 
+   * lo elimina de la dao de rubros
+   */
   eliminarFunc() { 
     if (this.rubroSeleccionado && typeof this.rubroSeleccionado.idrubro !== 'undefined') {
       this._rubroService.deleteRubro(this.rubroSeleccionado.idrubro).subscribe(response => {
@@ -78,6 +95,10 @@ export class RubrosComponent {
     }
   }
 
+  /**
+   * Esta función maneja el evento para recibir el rubro
+   * @param rubro Rubro recibido
+   */
   recibeRubro(rubro: IRubro) {
     this.rubroSeleccionado = rubro;
   }
