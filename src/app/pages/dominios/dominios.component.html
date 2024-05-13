@@ -1,13 +1,13 @@
 <app-modal></app-modal>
 <div class="content">
     <app-top-menu [title]="'Dominios'" [needSearchbar]="true" [alphanumericOnly]="true"></app-top-menu>
+    <app-dialog [mensajeDialog]="mensajeAlerta" [showModal]="mostrar"></app-dialog>
     <div class="horizontalView">
         <app-buttons (agregar)="agregarFunc()" (editar)="editarFunc()" (eliminar)="eliminarFunc()">
         </app-buttons>
-
         <div class="topRight">
             <app-export-table [tableContent]="tableJson()" [fileName]="'Dominios'"></app-export-table>
         </div>
     </div>
-    <app-table [columns]="tableColumns" [data]="tableData"></app-table>
+    <app-table (selectEvent)="recibeIndicador($event)" [columns]="tableColumns" [data]="tableData"></app-table>
 </div>

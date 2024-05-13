@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { IDominio } from '../models/dominio.model';
 
 @Injectable({
@@ -9,6 +9,19 @@ import { IDominio } from '../models/dominio.model';
 export class DominioService {
   private _http = inject(HttpClient);
   private urlBase: string = 'https://localhost:7247/api/dominio';
+
+  private dominioSeleccionadoSource = new BehaviorSubject<IDominio | null>(null);
+  dominioSeleccionado$: Observable<IDominio | null> = this.dominioSeleccionadoSource.asObservable();
+
+  constructor() { }
+
+  actualizarDominioSeleccionado(dominio: IDominio | null): void {
+    this.dominioSeleccionadoSource.next(dominio);
+  }
+
+  setDominioSeleccionado(dominio: IDominio | null) {
+    this.dominioSeleccionadoSource.next(dominio);
+  }
   
   public getDominios(): Observable<IDominio[]>{
     return this._http.get<IDominio[]>(this.urlBase);
