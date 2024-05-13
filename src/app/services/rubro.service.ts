@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { IRubro } from '../models/rubro.model';
 
 @Injectable({
@@ -9,6 +9,19 @@ import { IRubro } from '../models/rubro.model';
 export class RubroService {
   private _http = inject(HttpClient);
   private urlBase: string = 'https://localhost:7247/api/rubro';
+
+  private rubroSeleccionadoSource = new BehaviorSubject<IRubro | null>(null);
+  rubroSeleccionado$: Observable<IRubro | null> = this.rubroSeleccionadoSource.asObservable();
+
+  constructor() { }
+
+  actualizarRubroSeleccionado(rubro: IRubro| null): void {
+    this.rubroSeleccionadoSource.next(rubro);
+  }
+
+  setRubroSeleccionado(rubro: IRubro | null) {
+    this.rubroSeleccionadoSource.next(rubro);
+  }
   
   public getRubros(): Observable<IRubro[]>{
     return this._http.get<IRubro[]>(this.urlBase);
@@ -22,8 +35,8 @@ export class RubroService {
     return this._http.post<IRubro>(`${this.urlBase}`, rubro);
   }
 
-  public putRubro(id: number, rubro: IRubro): Observable<IRubro>{
-    return this._http.put<IRubro>(`${this.urlBase}/${id}`, rubro);
+  public putRubro(id: number, formData: FormData): Observable<IRubro>{
+    return this._http.put<IRubro>(`${this.urlBase}/${id}`, formData);
   }
 
   public deleteRubro(id: number): Observable<IRubro>{

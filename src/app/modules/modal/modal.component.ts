@@ -21,31 +21,39 @@ const $: any = window['$']
   templateUrl: './modal.component.html',
   styleUrl: './modal.component.scss'
 })
-export class ModalComponent implements OnInit{
+export class ModalComponent implements OnInit {
   @Output() nuevoGuardado: EventEmitter<void> = new EventEmitter<void>();
   @ViewChild('modal') modal?: ElementRef;
   @ViewChild('validar') inputElementRef!: ElementRef<HTMLInputElement>;
   private _route = inject(ActivatedRoute);
 
-  dominioSeleccionado:IDominio|null=null;
+  dominioSeleccionado: IDominio | null = null;
   enlaceSeleccionado: IEnlace | null = null;
-
+  noticiaSeleccionada: INoticia | null = null;
+  rubroSeleccionado: IRubro | null = null;
   private _rubroService = inject(RubroService);
 
   //Constructor de las Interfaces
-    constructor(private dominioService: DominioService,
-      private enlaceService: EnlaceService,
-      private noticiaService: NoticiaService) { }
+  constructor(private dominioService: DominioService,
+    private enlaceService: EnlaceService,
+    private noticiaService: NoticiaService,
+    private rubroService: RubroService) { }
 
-    ngOnInit(): void {
-      this.enlaceService.enlaceSeleccionado$.subscribe(enlace => {
-        this.enlaceSeleccionado = enlace;
-      });
-      this.dominioService.dominioSeleccionado$.subscribe(dominio => {
-        this.dominioSeleccionado = dominio;
-      });
-    }
-  
+  ngOnInit(): void {
+    this.enlaceService.enlaceSeleccionado$.subscribe(enlace => {
+      this.enlaceSeleccionado = enlace;
+    });
+    this.dominioService.dominioSeleccionado$.subscribe(dominio => {
+      this.dominioSeleccionado = dominio;
+    });
+    this.noticiaService.noticiaSeleccionada$.subscribe(noticia => {
+      this.noticiaSeleccionada = noticia;
+    });
+    this.rubroService.rubroSeleccionado$.subscribe(rubro => {
+      this.rubroSeleccionado = rubro;
+    });
+  }
+
 
   //Variable para el titulo del modal
   title: string = '';
@@ -141,12 +149,12 @@ export class ModalComponent implements OnInit{
   }
 
 
-// Esta funcion es para abrir el modal de noticias,
-// le das un titulo al modal,
-// texto del primer label, texto del primer placeholder del input de texto y si desea mostrarlo,
-// texto del segundo label, texto del segundo placeholder del input de texto y si desea mostrarlo,
-// texto para el input del file, texto para la advertencia de formato y si deseas mostrar el input File
-// accion que realizara el modal al dar en guardar.
+  // Esta funcion es para abrir el modal de noticias,
+  // le das un titulo al modal,
+  // texto del primer label, texto del primer placeholder del input de texto y si desea mostrarlo,
+  // texto del segundo label, texto del segundo placeholder del input de texto y si desea mostrarlo,
+  // texto para el input del file, texto para la advertencia de formato y si deseas mostrar el input File
+  // accion que realizara el modal al dar en guardar.
   openModalNoticia(title: string,
     lblNombre: string, placeholderNombre: string, showNameInput: boolean,
     lblUrl: string, placeholderUrl: string, showUrlInput: boolean,
@@ -170,11 +178,11 @@ export class ModalComponent implements OnInit{
   }
 
 
-// Esta funcion es para abrir el modal de enlaces, 
-// le das un titulo al modal,
-// texto del primer label, texto del primer placeholder del input de texto y si desea mostrarlo,
-// texto del segundo label, texto del segundo placeholder del input de texto y si desea mostrarlo,
-// accion que realizara el modal al dar en guardar.
+  // Esta funcion es para abrir el modal de enlaces, 
+  // le das un titulo al modal,
+  // texto del primer label, texto del primer placeholder del input de texto y si desea mostrarlo,
+  // texto del segundo label, texto del segundo placeholder del input de texto y si desea mostrarlo,
+  // accion que realizara el modal al dar en guardar.
   openModalEnlace(title: string,
     lblNombre: string, placeholderNombre: string, showNameInput: boolean,
     lblUrl: string, placeholderUrl: string, showUrlInput: boolean,
@@ -193,12 +201,12 @@ export class ModalComponent implements OnInit{
   }
 
 
-// Esta funcion es para abrir el modal de rubro,
-// este solo utiliza el input de tipo File y un Dropdown,
-// le das el titulo del modal,
-// label para el input File, texto para la advertencia de formato y si deseas mostrar el input,
-// label para el input tipo dropdown, y si deseas mostrarlo,
-// accion que realizara al dar click en el boton de guardar.
+  // Esta funcion es para abrir el modal de rubro,
+  // este solo utiliza el input de tipo File y un Dropdown,
+  // le das el titulo del modal,
+  // label para el input File, texto para la advertencia de formato y si deseas mostrar el input,
+  // label para el input tipo dropdown, y si deseas mostrarlo,
+  // accion que realizara al dar click en el boton de guardar.
   openModalRubro(title: string,
     lblFile: string, advertenciaFormato: string, showFileInput: boolean,
     lblRubro: string, showDropdownInput: boolean,
@@ -236,19 +244,19 @@ export class ModalComponent implements OnInit{
   ];
 
 
-// Funcion para manipular la accion de el File que se seleccione en el input de tipo File.
+  // Funcion para manipular la accion de el File que se seleccione en el input de tipo File.
   onFileSelected(event: any): void {
     const file: File = event.target.files[0];
     if (file) {
       // Verificar si el tipo de archivo es una imagen
       // if (file.type.match(/^image\/.*/) != null) {
-        this.selectedFile = file;
-        this.selectedFileName = file.name;
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onload = (e: any) => {
-          this.imageUrl = e.target.result;
-        };
+      this.selectedFile = file;
+      this.selectedFileName = file.name;
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = (e: any) => {
+        this.imageUrl = e.target.result;
+      };
       // } else {
       //   console.log('Error: El archivo seleccionado no es una imagen.');
       // }
@@ -261,41 +269,56 @@ export class ModalComponent implements OnInit{
       this.guardarDominio(nombre, this.activo);
     } else if (this.accionBtnGuardar === 'editarDominio') {
       if (this.dominioSeleccionado) {
-        this.actualizarDominio(this.dominioSeleccionado.iddominio,nombre, this.activo);
+        this.actualizarDominio(this.dominioSeleccionado.iddominio, nombre, this.activo);
       } else {
         console.error('this.dominioSeleccionado es null.');
-    }  
+      }
     } else if (this.accionBtnGuardar === 'guardarEnlace') {
       this.guardarEnlace(nombre, url);
     } else if (this.accionBtnGuardar === 'editarEnlace') {
       if (this.enlaceSeleccionado) {
-        this.actualizarEnlace(this.enlaceSeleccionado.idenlaces,nombre, url);
+        this.actualizarEnlace(this.enlaceSeleccionado.idenlaces, nombre, url);
       } else {
         console.error('this.enlaceSeleccionado es null.');
       }
-    } else if (this.accionBtnGuardar === 'noticia') {
+    } else if (this.accionBtnGuardar === 'guardarNoticia') {
       this.guardarNoticia(nombre, url, imagen);
-    } else if (this.accionBtnGuardar === 'rubro') {
+    } else if (this.accionBtnGuardar === 'editarNoticia') {
+      if (this.noticiaSeleccionada) {
+        this.actualizarNoticia(this.noticiaSeleccionada.idnoticias, nombre, url, imagen);
+      } else {
+        console.error('this.enlaceSeleccionado es null.');
+      }
+    } else if (this.accionBtnGuardar === 'guardarRubro') {
       // Verifica si selectedFile no es null antes de llamar a guardarRubroDeIndicador
-    if (this.selectedFile) {
-      // Obtiene el id del indicador al que pertenece de la ruta
-      const id = this._route.snapshot.params['id'];
-      this.guardarRubroDeIndicador(nombre, this.selectedFile,id);
-    } else {
-      console.error('No se ha seleccionado ningún archivo.');
+      if (this.selectedFile) {
+        // Obtiene el id del indicador al que pertenece de la ruta
+        const id = this._route.snapshot.params['id'];
+        this.guardarRubroDeIndicador(this.selectedFile, id);
+      } else {
+        console.error('No se ha seleccionado ningún archivo.');
+      }
+    } else if (this.accionBtnGuardar === 'editarRubro') {
+      if (this.rubroSeleccionado && this.selectedFile) {
+        const id = this._route.snapshot.params['id'];
+        this.actualizarRubro(this.selectedFile, this.rubroSeleccionado.idrubro)
+      } else {
+        console.error('No se ha seleccionado ningún archivo.');
+      }
     }
-  }
+
+
   }
 
 
   //FUNCIONES PARA GUARDAR Y EDITAR DOMINIOS
 
   //Funcion para guardar un nuevo dominio, recibe el nombre y el estado del dominio.
-  guardarDominio(nombreDominio: string, estadoDominio:boolean) {
+  guardarDominio(nombreDominio: string, estadoDominio: boolean) {
     const nuevoDominio: IDominio = {
       nombre: nombreDominio,
       estado: estadoDominio,
-      iddominio:0
+      iddominio: 0
     };
 
     this.dominioService.postDominio(nuevoDominio).subscribe(
@@ -311,39 +334,39 @@ export class ModalComponent implements OnInit{
     this.closeModal()
   }
 
-//Funcion que se llama desde dominiosComponent para abrir el modal y traerse los datos
-editarDominio() {
-  // Verifica que haya un enlace seleccionado
-  if (this.dominioSeleccionado) {
-    // Carga los datos del enlace seleccionado en los campos del formulario
-    this.name = this.dominioSeleccionado.nombre;
-    this.activo = this.dominioSeleccionado.estado;
-    // Abre el modal
-    this.openModalDominio('Editar Dominio',
-    'Dominio', 'CAPTURE EL NUEVO NOMBRE DEL DOMINIO', true,
-   true,
-     'editarDominio');
-  }
-}
-
-//Funcion para actualizar el dominio 
-actualizarDominio(id: number, nombre: string, estado: boolean): void {
-  const dominioActualizado: IDominio = {
-    iddominio: id,
-    nombre: nombre,
-    estado: estado
-  };
-  this.dominioService?.putDominio(id,dominioActualizado)?.subscribe(
-    response => {
-      console.log('Dominio actualizado correctamente:', response);
-      this.nuevoGuardado.emit();
-      this.closeModal();
-    },
-    error => {
-      console.error('Error al actualizar el dominio:', error);
+  //Funcion que se llama desde dominiosComponent para abrir el modal y traerse los datos
+  editarDominio() {
+    // Verifica que haya un enlace seleccionado
+    if (this.dominioSeleccionado) {
+      // Carga los datos del enlace seleccionado en los campos del formulario
+      this.name = this.dominioSeleccionado.nombre;
+      this.activo = this.dominioSeleccionado.estado;
+      // Abre el modal
+      this.openModalDominio('Editar Dominio',
+        'Dominio', 'CAPTURE EL NUEVO NOMBRE DEL DOMINIO', true,
+        true,
+        'editarDominio');
     }
-  );
-}
+  }
+
+  //Funcion para actualizar el dominio 
+  actualizarDominio(id: number, nombre: string, estado: boolean): void {
+    const dominioActualizado: IDominio = {
+      iddominio: id,
+      nombre: nombre,
+      estado: estado
+    };
+    this.dominioService?.putDominio(id, dominioActualizado)?.subscribe(
+      response => {
+        console.log('Dominio actualizado correctamente:', response);
+        this.nuevoGuardado.emit();
+        this.closeModal();
+      },
+      error => {
+        console.error('Error al actualizar el dominio:', error);
+      }
+    );
+  }
 
 
 
@@ -373,46 +396,48 @@ actualizarDominio(id: number, nombre: string, estado: boolean): void {
 
   //Funcion que se llama desde en enlacesComponent para abrir el modal y traerse los datos
   editarEnlace() {
-  // Verifica que haya un enlace seleccionado
-  if (this.enlaceSeleccionado) {
-    // Carga los datos del enlace seleccionado en los campos del formulario
-    this.name = this.enlaceSeleccionado.titulo;
-    this.url = this.enlaceSeleccionado.enlace;
-    // Abre el modal
-    this.openModalEnlace('Editar Enlace', 
-      'Nuevo Título', 'Ingrese el nuevo título del enlace', true,
-      'Nuevo URL', 'Ingrese el nuevo URL del enlace', true,
-      'editarEnlace');
-  }
-}
-
-//Funcion para actualizar el Enlace.
-actualizarEnlace(id: number, titulo: string, enlace: string): void {
-  const enlaceActualizado: IEnlace = {
-    idenlaces: id,
-    titulo: titulo,
-    enlace: enlace
-  };
-  this.enlaceService?.putEnlace(enlaceActualizado)?.subscribe(
-    response => {
-      console.log('Enlace actualizado correctamente:', response);
-      this.nuevoGuardado.emit();
-      this.closeModal();
-    },
-    error => {
-      console.error('Error al actualizar el enlace:', error);
+    // Verifica que haya un enlace seleccionado
+    if (this.enlaceSeleccionado) {
+      // Carga los datos del enlace seleccionado en los campos del formulario
+      this.name = this.enlaceSeleccionado.titulo;
+      this.url = this.enlaceSeleccionado.enlace;
+      // Abre el modal
+      this.openModalEnlace('Editar Enlace',
+        'Nuevo Título', 'Ingrese el nuevo título del enlace', true,
+        'Nuevo URL', 'Ingrese el nuevo URL del enlace', true,
+        'editarEnlace');
     }
-  );
-}
-  
-//FUNCIONES PARA GUARDAR Y EDITAR NOTICIAS.
+  }
+
+  //Funcion para actualizar el Enlace.
+  actualizarEnlace(id: number, titulo: string, enlace: string): void {
+    const enlaceActualizado: IEnlace = {
+      idenlaces: id,
+      titulo: titulo,
+      enlace: enlace
+    };
+    this.enlaceService?.putEnlace(enlaceActualizado)?.subscribe(
+      response => {
+        console.log('Enlace actualizado correctamente:', response);
+        this.nuevoGuardado.emit();
+        this.closeModal();
+      },
+      error => {
+        console.error('Error al actualizar el enlace:', error);
+      }
+    );
+  }
+
+  //FUNCIONES PARA GUARDAR Y EDITAR NOTICIAS.
 
   //Funcion para guardar noticias (Funciona pero falta solucionar la imagen)
   guardarNoticia(titulo: string, enlace: string, imagen: string) {
     const nuevaNoticia: INoticia = {
       titulo: titulo,
       imagen: imagen,
-      enlace: enlace
+      enlace: enlace,
+      idnoticias: 0
+
     };
 
     this.noticiaService.postNoticia(nuevaNoticia).subscribe(
@@ -428,12 +453,49 @@ actualizarEnlace(id: number, titulo: string, enlace: string): void {
     this.closeModal()
   }
 
+  //Funcion que se llama desde en noticiasComponent para abrir el modal y traerse los datos
+  editarNoticia() {
+    // Verifica que haya una noticia seleccionado
+    if (this.noticiaSeleccionada) {
+      // Carga los datos de la noticia seleccionada en los campos del formulario
+      this.name = this.noticiaSeleccionada.titulo;
+      this.url = this.noticiaSeleccionada.enlace;
+      this.imageUrl = this.noticiaSeleccionada.imagen;
+      // Abre el modal
+      this.openModalNoticia('Editar Noticia',
+        'Titulo', 'CAPTURE EL TITULO DE LA NOTICIA', true,
+        'Url', 'CAPTURE LA URL DE LA NOTICIA', true,
+        'Fotografia de la noticia', 'Solo se permiten archivos de extension .png .jpg .jpeg y maximo de 2mb', true,
+        'editarNoticia');
+    }
+  }
+
+  //Funcion para actualizar la noticia.
+  actualizarNoticia(id: number, titulo: string, enlace: string, imagen: string): void {
+    const noticiaActualizada: INoticia = {
+      idnoticias: id,
+      titulo: titulo,
+      enlace: enlace,
+      imagen: imagen
+    };
+    this.noticiaService?.putNoticia(noticiaActualizada)?.subscribe(
+      response => {
+        console.log('Noticia actualizada correctamente:', response);
+        this.nuevoGuardado.emit();
+        this.closeModal();
+      },
+      error => {
+        console.error('Error al actualizar la noticia:', error);
+      }
+    );
+  }
+
 
 
   //FUNCION PARA GUARDAR Y EDITAR RUBROS
 
   //Funcion para guardar Rubros
- guardarRubroDeIndicador(nombreRubro: string, datos: File, idIndicador: number){
+  guardarRubroDeIndicador(datos: File, idIndicador: number) {
     const rubro = this.obtenerOpcionSeleccionada();
     const datoss = datos;
     const id = idIndicador.toString();
@@ -452,6 +514,38 @@ actualizarEnlace(id: number, titulo: string, enlace: string): void {
     this.closeModal()
   }
 
+  //Funcion que se llama desde en rubroComponent para abrir el modal y traerse los datos
+  editarRubro() {
+    // Verifica que haya un rubro seleccionado
+    if (this.rubroSeleccionado) {
+      // Abre el modal
+      this.openModalRubro('Editar Rubro',
+        'Excel (XLS|XLSX)', 'Solo se permiten archivos de extension .xlsc .xls', true,
+        'Rubro', true,
+        'editarRubro');
+    }
+  }
+
+  //Funcion para actualizar el rubro.
+  actualizarRubro(datos: File, idIndicador: number): void {
+    const rubro = this.obtenerOpcionSeleccionada();
+    const datoss = datos;
+    const id = idIndicador.toString();
+
+    const formData = new FormData();
+    formData.append('rubro', rubro);
+    formData.append('datos', datoss);
+    formData.append('idindicador', id);
+
+    this._rubroService.putRubro(idIndicador, formData).subscribe((data: IRubro) => {
+      this.nuevoGuardado.emit();
+    }, error => {
+      console.log('Error al guardar el rubro', error);
+    });
+
+    this.closeModal()
+  }
+
   //Metodo para obtener el rubro seleccionado y verificar que no sea nulo
   obtenerOpcionSeleccionada(): string {
     if (this.selectedOption !== null && this.selectedOption !== undefined) {
@@ -461,8 +555,8 @@ actualizarEnlace(id: number, titulo: string, enlace: string): void {
     }
   }
 
-  validarAlfanumerico(){
-    if(this.alphanumericOnly===true){
+  validarAlfanumerico() {
+    if (this.alphanumericOnly === true) {
       const inputElement = this.inputElementRef.nativeElement;
       let value = inputElement.value;
 

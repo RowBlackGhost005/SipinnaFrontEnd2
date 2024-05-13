@@ -23,8 +23,12 @@ export class NoticiasComponent {
 
   private _noticiaService = inject(NoticiaService);
   private _searchbarService = inject(SearchbarService);
+
+  //Variables para manipular el modal
   mensajeAlerta: string = '';
   mostrar: boolean = false;
+
+
   tableData: INoticia[] = [];
   dataAux: INoticia[] = [];
   filteredTable: INoticia[] = [];
@@ -36,10 +40,12 @@ export class NoticiasComponent {
     { header: 'Enlace', field: 'enlace' }
   ];
 
+  //Se almacena la noticia que haya sido seleccionada
   noticiaSeleccionada: INoticia = {
     titulo: '',
     imagen: '',
-    enlace: ''
+    enlace: '',
+    idnoticias:0
   };
   //los tableJson son señales que guardan el JSON de la tabla que esta viendo los datos.
   //No necesariamente guarda todos los datos, si se hace una busqueda, el tableJson guarda solo los 
@@ -56,6 +62,7 @@ export class NoticiasComponent {
     })
   }
 
+  //Se cargan los datos de las noticias a la tabla
   cargarDatos(){
     this._noticiaService.getNoticias().subscribe((data: INoticia[]) => {
       console.log(data);
@@ -67,19 +74,29 @@ export class NoticiasComponent {
     })
   }
 
+  //Funcion para abrir el modal para guardar noticias
   agregarFunc() {
     this.openModalNoticia('Agregar Noticia',
      'Titulo', 'CAPTURE EL TITULO DE LA NOTICIA', true,
     'Url', 'CAPTURE LA URL DE LA NOTICIA',true,
     'Fotografia de la noticia','Solo se permiten archivos de extension .png .jpg .jpeg y maximo de 2mb',true,
-    'noticia');
+    'guardarNoticia');
 
   }
 
+//Funcion para editar la noticia que haya sido seleccionada de la tabla
   editarFunc() {
-    // Lógica para la funcionalidad de editar
+    if (this.noticiaSeleccionada && this.noticiaSeleccionada.idnoticias !== 0 && this.noticiaSeleccionada.titulo !== '' && this.noticiaSeleccionada.enlace !== '' && this.noticiaSeleccionada.imagen!=='') {
+      this.modal?.editarNoticia(); // Llama al método editarNoticia del modal component
+    } else {
+      this.mensajeAlerta = 'Seleccione una noticia a editar.';
+      this.mostrar = true;
+      setTimeout(() => {
+        this.mostrar = false;
+      }, 3000); 
   }
-
+  }
+//Funcion para eliminar la noticia que haya sido seleccionada de la tabla
   eliminarFunc() {
     if (this.noticiaSeleccionada && typeof this.noticiaSeleccionada.idnoticias !== 'undefined') {
       this._noticiaService.deleteNoticia(this.noticiaSeleccionada.idnoticias).subscribe(response => {
@@ -92,8 +109,11 @@ export class NoticiasComponent {
     }
   }
 
+  //Funcion para recibir la noticia que haya sido seleccionada
   recibeNoticia(noticia: INoticia) {
     this.noticiaSeleccionada = noticia;
+    this._noticiaService.actualizarNoticiaSeleccionada(noticia);
+
   }
 
   openModalNoticia(title: string,

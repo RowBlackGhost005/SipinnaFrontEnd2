@@ -1,5 +1,5 @@
 
-import { Component, OnInit, inject, signal, ViewChild } from '@angular/core';
+import { Component, inject, signal, ViewChild } from '@angular/core';
 import { ExportTableComponent } from '../../modules/export-table/export-table.component';
 import { TableModel } from '../../models/table';
 import { TableComponent } from '../../modules/table/table.component';
@@ -30,6 +30,8 @@ export class DominiosComponent {
   filteredTable: IDominio[] = [];
   filteredItems: IDominio[] = [];
 
+
+  //Variables para manipular el DialogComponent
   mensajeAlerta: string = '';
   mostrar: boolean = false;
 
@@ -39,6 +41,7 @@ export class DominiosComponent {
     {header:'Estado',field:'estado'}
   ];
 
+  //Aqui se almacena el dominio que haya sido seleccionado de la tabla
   dominioSeleccionado: IDominio = {
     nombre: '',
     estado: false,
@@ -56,7 +59,7 @@ export class DominiosComponent {
 
   }
 
- 
+ //Se cargan datos a la tabla
   cargarDatos(): void {
     this._dominioService.getDominios().subscribe((data: IDominio[]) => {
       console.log(data);
@@ -68,6 +71,7 @@ export class DominiosComponent {
     });
   }
 
+//Abre el modal para agregar un nuevo dominio
   agregarFunc() {
     this.openModalDominio('Agregar Dominio',
      'Dominio', 'CAPTURE EL NOMBRE DEL DOMINIO', true,
@@ -76,7 +80,7 @@ export class DominiosComponent {
 
   }
 
-
+//Funcion verifica que si haya un dominio seleccionado y despues abre el modal para editarlo
   editarFunc() {
     if (this.dominioSeleccionado && this.dominioSeleccionado.iddominio !== 0 && this.dominioSeleccionado.nombre !== '' && this.dominioSeleccionado.estado !== undefined) {
       this.modal?.editarDominio(); // Llama al método editarDominio del modal component
@@ -104,10 +108,9 @@ export class DominiosComponent {
     // }
   }
 
- 
+ //Funcion para recibir los datos del dominio que se seleccione de la tabla
     recibeIndicador(indicador: IDominio) {
       this.dominioSeleccionado = indicador;
-      console.log('Dominio seleccionado:', this.dominioSeleccionado);
       this._dominioService.actualizarDominioSeleccionado(indicador);
   }
   
