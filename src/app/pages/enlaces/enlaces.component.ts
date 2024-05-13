@@ -26,6 +26,8 @@ export class EnlacesComponent {
   dataAux: IEnlace[] = [];
   filteredTable: IEnlace[] = [];
 
+
+  //Funcion para manipular el Dialog
   mensajeAlerta: string = '';
   mostrar: boolean = false;
 
@@ -35,6 +37,7 @@ export class EnlacesComponent {
     { header: 'Enlace', field: 'enlace' }
   ];
 
+  //Se almacena el enlace que haya sido seleccionado de la tabla
   enlaceSeleccionado: IEnlace = {
     titulo: '',
     enlace: '',
@@ -53,7 +56,8 @@ export class EnlacesComponent {
       this.filtrar(event)
     })
   }
-
+ 
+  //Se cargan los datos a la tabla
   cargarDatos(): void {
     this._enlaceService.getEnlaces().subscribe((data: IEnlace[]) => {
       console.log(data);
@@ -64,7 +68,9 @@ export class EnlacesComponent {
       console.log(this.tableData);
     });
   }
+  
 
+  //Funcion al hacer click en agregar, se abre el modal para guardar los enlaces
   agregarFunc() {
     this.openModalEnlace('Agregar Enlace', 
     'Titulo del enlace', 'CAPTURE EL TITULO DEL ENLACE', true,
@@ -75,7 +81,8 @@ export class EnlacesComponent {
 
 
   constructor(private enlaceService: EnlaceService) {}
-
+ 
+  //Verifica que haya un enlace seleccionado y despues abre el modal, para editar enlaces
   editarFunc() {
       if (this.enlaceSeleccionado && this.enlaceSeleccionado.idenlaces !== 0 && this.enlaceSeleccionado.titulo !== '' && this.enlaceSeleccionado.enlace !== '') {
         this.modal?.editarEnlace(); // Llama al método editarEnlace del modal component
@@ -88,7 +95,7 @@ export class EnlacesComponent {
     }
   }
  
-
+//Elimina el enlace seleccionado de la tabla
   eliminarFunc() {
     if (this.enlaceSeleccionado && typeof this.enlaceSeleccionado.idenlaces !== 'undefined') {
       this._enlaceService.deleteEnlace(this.enlaceSeleccionado.idenlaces).subscribe(response => {
@@ -104,6 +111,8 @@ export class EnlacesComponent {
     }
   }
 
+
+  //Se recibe el enlace que haya sido seleccionado de la tabla y lo guarda en nuestra variable
   recibeIndicador(indicador: IEnlace) {
     this.enlaceSeleccionado = indicador;
     this.enlaceService.actualizarEnlaceSeleccionado(indicador);

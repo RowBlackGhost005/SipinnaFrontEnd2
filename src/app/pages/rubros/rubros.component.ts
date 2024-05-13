@@ -35,8 +35,10 @@ export class RubrosComponent {
     { header: 'Archivo', field: 'datos', clickable:true}
   ];
 
+    //Funcion para manipular el Dialog
   mensajeAlerta: string = '';
   mostrar: boolean = false;
+
   idIndicador: number = 0;
   rubroSeleccionado: IRubro = {
     idrubro: 0,
@@ -72,11 +74,21 @@ export class RubrosComponent {
     this.openModalRubro('Agregar Rubro', 
       'Excel (XLS|XLSX)','Solo se permiten archivos de extension .xlsc .xls', true, 
       'Rubro',true,
-      'rubro');
+      'guardarRubro');
 
   }
 
-  editarFunc(){}
+  editarFunc(){
+    if (this.rubroSeleccionado&& this.rubroSeleccionado.idrubro !== 0 && this.rubroSeleccionado.datos !== '' && this.rubroSeleccionado.rubro !== '') {
+      this.modal?.editarRubro(); // Llama al método editarRubro del modal component
+    } else {
+      this.mensajeAlerta = 'Seleccione un rubro a editar.';
+      this.mostrar = true;
+      setTimeout(() => {
+        this.mostrar = false;
+      }, 3000); 
+  }
+  }
 
 
   /**
@@ -89,6 +101,9 @@ export class RubrosComponent {
         this.cargarDatos(this.idIndicador);
         this.mensajeAlerta = 'El rubro se eliminó correctamente.'
         this.mostrar = true;
+        setTimeout(() => {
+          this.mostrar = false;
+        }, 3000); 
       });
     } else {
       console.error('No se puede eliminar el rubro seleccionado porque id es null o undefined');
@@ -101,6 +116,7 @@ export class RubrosComponent {
    */
   recibeRubro(rubro: IRubro) {
     this.rubroSeleccionado = rubro;
+    this._rubroService.actualizarRubroSeleccionado(rubro);
   }
 
   // Funcion para el boton de agregar, se abre el modal.

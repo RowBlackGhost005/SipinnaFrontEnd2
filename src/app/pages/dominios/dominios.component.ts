@@ -1,5 +1,5 @@
 
-import { Component, OnInit, inject, signal, ViewChild } from '@angular/core';
+import { Component, inject, signal, ViewChild } from '@angular/core';
 import { ExportTableComponent } from '../../modules/export-table/export-table.component';
 import { TableModel } from '../../models/table';
 import { TableComponent } from '../../modules/table/table.component';
